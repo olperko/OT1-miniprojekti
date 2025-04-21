@@ -1,10 +1,13 @@
 package com.mokkikodit.cottagereservation.application;
 
 import com.mokkikodit.cottagereservation.util.DatabaseManagement;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 import com.mokkikodit.cottagereservation.model.CottageDAO;
+
+import java.io.IOException;
 
 public class ReservationSystem extends Application {
     private CottageDAO cottageDAO;

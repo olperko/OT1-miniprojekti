@@ -1,8 +1,9 @@
 package com.mokkikodit.cottagereservation.application;
 
 import com.mokkikodit.cottagereservation.util.DatabaseManagement;
-
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import com.mokkikodit.cottagereservation.model.CottageDAO;
@@ -13,7 +14,13 @@ public class ReservationSystem extends Application {
     private CottageDAO cottageDAO;
     private DatabaseManagement databaseManagement;
 
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/mokkikodit/cottagereservation/frontend.fxml"));
+
+        Scene scene = new Scene(fxmlLoader.load(), 500, 500);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Cottage");
+        primaryStage.show();
         databaseManagement = new DatabaseManagement();
         databaseManagement.connect();
         cottageDAO = new CottageDAO(databaseManagement);

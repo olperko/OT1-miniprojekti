@@ -4,13 +4,17 @@ public class User {
 
     private int userID;
     private String email;
-    private String name;
+    private String firstName;
+    private String lastName;
+    private String role;
     private boolean isBusiness;
 
-    public User(int userID, boolean isBusiness, String email, String name) {
+    public User(int userID, String firstName, String lastName, String email, String role, boolean isBusiness) {
         this.userID = userID;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
-        this.name = name;
+        this.role = role;
         this.isBusiness = isBusiness;
     }
 
@@ -22,6 +26,22 @@ public class User {
         this.userID = userID;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -30,12 +50,12 @@ public class User {
         this.email = email;
     }
 
-    public String getName() {
-        return name;
+    public String getRole() {
+        return role;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public boolean isBusiness() {

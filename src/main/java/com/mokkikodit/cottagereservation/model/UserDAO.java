@@ -100,7 +100,7 @@ public class UserDAO {
     //
     //
 
-    public String getAllPayments() {
+    public String getAllUsers() {
         String sql = "SELECT * FROM users";
         String result ="";
 

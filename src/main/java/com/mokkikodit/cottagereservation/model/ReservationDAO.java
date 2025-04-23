@@ -110,12 +110,35 @@ public class ReservationDAO {
     // KESKEN
     //
     //
-    public void getAllReservations() {
+    public String getAllReservations() {
         String sql = "SELECT * FROM reservations";
+        String result ="";
 
-        try (Statement stmt = dbManager.getConnection().prepareStatement(sql)) {
-        } catch (SQLException e) {}
+        try (PreparedStatement stmt = dbManager.getConnection().prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int userId = rs.getInt("userID");
+                int cottageId = rs.getInt("cottageID");
+                int guestAmount = rs.getInt("guestAmount");
+                String beginningDate = rs.getString("beginningDate");
+                String beginningTime = rs.getString("beginningTime");
+                String endingDate = rs.getString("endDate");
+                String endingTime = rs.getString("endTime");
+                String reservationStatus = rs.getString("reservationStatus");
+                Boolean paymentStatus = rs.getBoolean("paymentStatus");
+
+                result += "Varauksen id: " + id + ". Varaajan id: " + userId + ". Mökin id: "
+                        + cottageId + ". Yöpyjien määrä: " + guestAmount + ".\n Varauksen alkamisaika " + beginningTime + ". Varauksen alkamispäivä: "
+                        + beginningDate + ". Varauksen loppumisaika: " + endingTime +
+                        ". Varauksen loppumispäivä: " + endingDate + ". Varauksen tila: " + reservationStatus + ". Maksun tila" + paymentStatus + ".\n";
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Virhe varausten hakemisessa: " + e.getMessage());
+        }
+        return result;
     }
 
 }

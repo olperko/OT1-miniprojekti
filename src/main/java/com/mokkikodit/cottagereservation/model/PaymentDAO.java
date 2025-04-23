@@ -104,7 +104,7 @@ public class PaymentDAO {
 
             while (rs.next()) {
                 int id = rs.getInt("id");
-                int reservationId = rs.getInt("reservationid");
+                int reservationId = rs.getInt("reservationId");
                 double amount = rs.getDouble("amount");
                 String paymentType = rs.getString("paymentType");
                 boolean paymentStatus = rs.getBoolean("paymentStatus");

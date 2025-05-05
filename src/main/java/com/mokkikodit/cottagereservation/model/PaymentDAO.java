@@ -3,6 +3,7 @@ package com.mokkikodit.cottagereservation.model;
 import com.mokkikodit.cottagereservation.util.DatabaseManagement;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -94,12 +95,28 @@ public class PaymentDAO {
     // KESKEN
     //
     //
-    public void getAllPayments() {
+    public String getAllPayments() {
         String sql = "SELECT * FROM payments";
+        String result ="";
 
-        try (Statement stmt = dbManager.getConnection().prepareStatement(sql)) {
-        } catch (SQLException e) {}
+        try (PreparedStatement stmt = dbManager.getConnection().prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int reservationId = rs.getInt("reservationId");
+                double amount = rs.getDouble("amount");
+                String paymentType = rs.getString("paymentType");
+                boolean paymentStatus = rs.getBoolean("paymentStatus");
+
+                result += "Maksun id: " + id + ". varauksen id: " + reservationId + ". Maksun summa: "
+                        + amount + ". Maksutapa: " + paymentType + ". Maksettu: " + paymentStatus + ".\n";
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Virhe maksujen hakemisessa: " + e.getMessage());
+        }
+        return result;
     }
 
 }

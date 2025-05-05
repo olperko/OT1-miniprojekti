@@ -94,12 +94,29 @@ public class ReviewDAO {
     // KESKEN
     //
     //
-    public void getAllReviews() {
+    public String getAllReviews() {
         String sql = "SELECT * FROM reviews";
+        String result ="";
 
-        try (Statement stmt = dbManager.getConnection().prepareStatement(sql)) {
-        } catch (SQLException e) {}
+        try (PreparedStatement stmt = dbManager.getConnection().prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int userId = rs.getInt("userID");
+                int cottageId = rs.getInt("cottageID");
+                double score = rs.getDouble("score");
+                String comment = rs.getString("comment");
+                String date = rs.getString("date");
+
+                result += "Arvion id: " + id + ". Arvioijan id: " + userId + ". Mökin id: "
+                        + cottageId + ". Pisteet: " + score + ". Kommentti " + comment + ". Päivämäärä: " + date + ".\n";
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Virhe arvostelujen hakemisessa: " + e.getMessage());
+        }
+        return result;
     }
 
 }

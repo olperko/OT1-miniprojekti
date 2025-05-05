@@ -2,6 +2,7 @@ package com.mokkikodit.cottagereservation.model;
 
 import com.mokkikodit.cottagereservation.util.DatabaseManagement;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -98,12 +99,30 @@ public class UserDAO {
     //
     //
     //
-    public void getAllUsers() {
+
+    public String getAllUsers() {
         String sql = "SELECT * FROM users";
+        String result ="";
 
-        try (Statement stmt = dbManager.getConnection().prepareStatement(sql)) {
-        } catch (SQLException e) {}
+        try (PreparedStatement stmt = dbManager.getConnection().prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String email = rs.getString("email");
+                String firstName = rs.getString("firstName");
+                String lastName = rs.getString("lastName");
+                String role = rs.getString("role");
+                Boolean isBusiness = rs.getBoolean("isBusiness");
+
+                result += "Asiakkaan id: " + id + ". Sähköposti: " + email + ". etunimi: "
+                        + firstName + ". sukunimi: " + lastName + ". role: " + role + ". Onko yritys: " + isBusiness + ".\n";
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Virhe asiakkaiden hakemisessa: " + e.getMessage());
+        }
+        return result;
     }
 
 }

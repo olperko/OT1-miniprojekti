@@ -4,10 +4,10 @@ import java.io.Serializable;
 
 public class Cottage implements Serializable {
 
-    private int cottageID;
-    private int ownerID;
-    private int area;
-    private int price;
+    private int id;
+    private int owner_id;
+    private double area;
+    private double price;
     private int capacity;
     private boolean isReserved;
     private String cottageName;
@@ -17,9 +17,15 @@ public class Cottage implements Serializable {
     public Cottage() {
     }
 
-    public Cottage(int cottageID, int ownerID, int area, int price, int capacity, String cottageName, boolean isReserved, String location, String description) {
-        this.cottageID = cottageID;
-        this.ownerID = ownerID;
+    public Cottage(int cottageID, String cottageName, String location) {
+        this.id = cottageID;
+        this.cottageName = cottageName;
+        this.location = location;
+    }
+
+    public Cottage(int cottageID, int owner_id, double area, double price, int capacity, String cottageName, boolean isReserved, String location, String description) {
+        this.id = cottageID;
+        this.owner_id = owner_id;
         this.area = area;
         this.price = price;
         this.capacity = capacity;
@@ -29,23 +35,35 @@ public class Cottage implements Serializable {
         this.description = description;
     }
 
-    public int getCottageID() {
-        return cottageID;
+    public Cottage(int id, int ownerId, String name, String location, double price, double size, int capacity, String description) {
+        this.id = id;
+        this.owner_id = ownerId;
+        this.cottageName = name;
+        this.location = location;
+        this.price = price;
+        this.area = size;
+        this.capacity = capacity;
+        this.description = description;
+
     }
 
-    public void setCottageID(int cottageID) {
-        this.cottageID = cottageID;
+    public int getId() {
+        return id;
     }
 
-    public int getOwnerID() {
-        return ownerID;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setOwnerID(int ownerID) {
-        this.ownerID = ownerID;
+    public int getOwner_id() {
+        return owner_id;
     }
 
-    public int getArea() {
+    public void setOwner_id(int owner_id) {
+        this.owner_id = owner_id;
+    }
+
+    public double getArea() {
         return area;
     }
 
@@ -53,7 +71,7 @@ public class Cottage implements Serializable {
         this.area = area;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 

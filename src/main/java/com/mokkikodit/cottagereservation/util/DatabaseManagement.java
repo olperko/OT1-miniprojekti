@@ -5,16 +5,27 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseManagement {
-    private Connection connection;
-    private static final String DB_URL = "jdbc:sqlite:mokkikodit.db";
+    private static Connection connection;
+    private final String DATABASE_URL = "jdbc:sqlite:mokkikodit.db";
 
-    public void connect() {
+    public boolean connect() {
         try {
-            connection = DriverManager.getConnection(DB_URL);
-            System.out.println("Tietokantaan yhdistäminen onnistui.");
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
+
+            connection = DriverManager.getConnection(DATABASE_URL);
+
+            if (connection != null) {
+                System.out.println("Connected to the database successfully.");
+                return true;
+            }
+
         } catch (SQLException e) {
-            System.out.println("Onglema tietokantaan yhdistäessä: " + e.getMessage());
+            System.err.println("Database connection error: " + e.getMessage());
+            e.printStackTrace();
         }
+        return false;
     }
 
     public void disconnect() {
@@ -29,6 +40,15 @@ public class DatabaseManagement {
     }
 
     public Connection getConnection() {
+        try {
+            if (connection == null || connection.isClosed()) {
+                connect();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error checking connection: " + e.getMessage());
+            e.printStackTrace();
+        }
+
         return connection;
     }
 }

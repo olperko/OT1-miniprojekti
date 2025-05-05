@@ -11,20 +11,38 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<Accordion maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="555.0" prefWidth="976.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1">
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<Accordion maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+           prefHeight="555.0" prefWidth="976.0"
+           xmlns:fx="http://javafx.com/fxml/1"
+           xmlns="http://javafx.com/javafx/"
+           fx:controller="com.mokkikodit.cottagereservation.controller.CottageManager">
   <panes>
     <TitledPane animated="false" prefHeight="456.0" prefWidth="889.0" text="Mökkien hallinta">
          <content>
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <ListView layoutX="193.0" layoutY="75.0" prefHeight="330.0" prefWidth="497.0" />
+                   <TableView fx:id="cottageTableView" layoutX="193.0" layoutY="75.0" prefHeight="330.0" prefWidth="497.0">
+                       <columns>
+                           <TableColumn fx:id="idColumn" text="ID" prefWidth="50" />
+                           <TableColumn fx:id="ownerIdColumn" text="Owner ID" prefWidth="70" />
+                           <TableColumn fx:id="nameColumn" text="Name" prefWidth="150" />
+                           <TableColumn fx:id="locationColumn" text="Location" prefWidth="150" />
+                           <TableColumn fx:id="priceColumn" text="Price" prefWidth="80" />
+                           <TableColumn fx:id="sizeColumn" text="Size" prefWidth="80" />
+                           <TableColumn fx:id="capacityColumn" text="Capacity" prefWidth="80" />
+                           <TableColumn fx:id="descriptionColumn" text="Description">
+                           </TableColumn>
+                       </columns>
+                   </TableView>
                   <TextField layoutX="3.0" layoutY="35.0" />
                   <Button layoutX="152.0" layoutY="35.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" text="Etsi" />
                   <TextField layoutX="710.0" layoutY="79.0" prefHeight="25.0" prefWidth="98.0" />
                   <TextArea layoutX="710.0" layoutY="201.0" prefHeight="124.0" prefWidth="214.0" />
                   <TextField layoutX="709.0" layoutY="113.0" prefHeight="25.0" prefWidth="100.0" />
                   <TextField layoutX="709.0" layoutY="151.0" prefHeight="25.0" prefWidth="100.0" />
-                  <Button layoutX="710.0" layoutY="371.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="134.0" text="Muokkaa" />
+                  <Button layoutX="710.0" layoutY="371.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="134.0" text="Muokkaa" fx:id="editButton" />
                   <Label layoutX="710.0" layoutY="39.0" prefHeight="17.0" prefWidth="198.0" text="Muokkaa mökkiä" />
                   <Label layoutX="196.0" layoutY="48.0" prefHeight="17.0" prefWidth="602.0" text="Mökin tiedot" />
                   <CheckBox layoutX="710.0" layoutY="337.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="72.0" text="Varattu" />

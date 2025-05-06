@@ -9,31 +9,32 @@ import java.sql.Statement;
 
 public class CottageDAO {
 
-    private DatabaseManagement databaseManagemer;
+    private DatabaseManagement databaseManager;
 
     public CottageDAO(DatabaseManagement databaseManager) {
-        this.databaseManagemer = databaseManager;
+        this.databaseManager = databaseManager;
     }
 
     /**
      * Luo komentotekstin, joka syötetään SQLite tietokantaan.
      */
     public void createCottageTable() {
-        String sql = """
-        CREATE TABLE IF NOT EXISTS cottages (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            owner_id INTEGER,
-            reserved BOOLEAN,
-            cottageName VARCHAR,
-            location VARCHAR,
-            price REAL,
-            area REAL,
-            capacity INTEGER,
-            description VARCHAR
-        );
-        """;
+        String sql =
+            """
+            CREATE TABLE IF NOT EXISTS cottages (
+                cottageId INTEGER PRIMARY KEY AUTOINCREMENT,
+                ownerId INTEGER,
+                reserved BOOLEAN,
+                cottageName VARCHAR,
+                location VARCHAR,
+                price REAL,
+                area REAL,
+                capacity INTEGER,
+                description VARCHAR
+            );
+            """;
 
-        try (Statement stmt = databaseManagemer.getConnection().createStatement()) {
+        try (Statement stmt = databaseManager.getConnection().createStatement()) {
             stmt.execute(sql);
             System.out.println("Mökki-taulukko luotu onnituneesti.");
         } catch (SQLException e) {
@@ -45,7 +46,7 @@ public class CottageDAO {
     /**
      * Asettaa yksittäisen mökin tiedot SQL-komennolla
      *
-     * @param owner_id
+     * @param ownerId
      * @param reserved
      * @param cottageName
      * @param location
@@ -54,18 +55,11 @@ public class CottageDAO {
      * @param capacity
      * @param description
      */
-    public void insertCottage(int owner_id, int reserved, String cottageName, String location, double price, double area, int capacity, String description) {
-
-        Connection conn = databaseManagemer.getConnection();
-        if (conn == null) {
-            System.err.println("Mökkiä ei voitu lisätä, tietokannan yhteys on > null <.");
-            return;
-        }
-
-        String sql = "INSERT INTO cottages (owner_id, reserved, cottageName, location, price, area, capacity, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement pstmt = databaseManagemer.getConnection().prepareStatement(sql)) {
-            pstmt.setInt(1, owner_id);
-            pstmt.setInt(2, reserved);
+    public void insertCottage(int ownerId, boolean reserved, String cottageName, String location, double price, double area, int capacity, String description) {
+        String sql = "INSERT INTO cottages (ownerId, reserved, cottageName, location, price, area, capacity, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement pstmt = databaseManager.getConnection().prepareStatement(sql)) {
+            pstmt.setInt(1, ownerId);
+            pstmt.setBoolean(2, reserved);
             pstmt.setString(3, cottageName);
             pstmt.setString(4, location);
             pstmt.setDouble(5, price);
@@ -73,24 +67,23 @@ public class CottageDAO {
             pstmt.setInt(7, capacity);
             pstmt.setString(8, description);
             pstmt.executeUpdate();
-            System.out.println("Tietokannan mökki-taulukko päivitetty.");
-        }
-        catch (SQLException e) {
-            System.out.println("Tietokannan mökki-taulukon päivitys ei onnistunut: " + e.getMessage());
+            System.out.println("Cottage inserted successfully.");
+        } catch (SQLException e) {
+            System.out.println("Failed to insert cottage: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    public boolean deleteCottage(int id) {
-        Connection conn = databaseManagemer.getConnection();
+    public boolean deleteCottage(int cottageId) {
+        Connection conn = databaseManager.getConnection();
         if (conn == null) {
             System.err.println("Mökkiä ei voitu poistaa, tietokannan yhteys on > null <.");
             return false;
         }
 
-        String sql = "DELETE FROM cottages WHERE id = ?";
-        try (PreparedStatement pstmt = databaseManagemer.getConnection().prepareStatement(sql)) {
-            pstmt.setInt(1, id);
+        String sql = "DELETE FROM cottages WHERE cottageId = ?";
+        try (PreparedStatement pstmt = databaseManager.getConnection().prepareStatement(sql)) {
+            pstmt.setInt(1, cottageId);
             pstmt.executeUpdate();
             System.out.println("Mökki poistettu tietokannasta.");
             return true;
@@ -102,13 +95,10 @@ public class CottageDAO {
         }
     }
 
-    public void updateCottage(int owner_id, boolean reserved, String cottageName, String location, int price, int area, int capacity, String description) {
-        String sql = "UPDATE cottages SET " +
-                        "reserved = ?, SET name = ?, SET location = ?, SET price = ?, " +
-                        "SET area = ?, SET capacity = ?, SET description = ? " +
-                     "WHERE id = ?";
+    public void updateCottage(int ownerId, boolean reserved, String cottageName, String location, int price, int area, int capacity, String description) {
+        String sql = "UPDATE cottages SET reserved = ?, cottageName = ?, location = ?, price = ?, area = ?, capacity = ?, description = ? WHERE cottageId = ?";
 
-        try (PreparedStatement pstmt = databaseManagemer.getConnection().prepareStatement(sql)) {
+        try (PreparedStatement pstmt = databaseManager.getConnection().prepareStatement(sql)) {
             pstmt.setBoolean(1, reserved);
             pstmt.setString(2, cottageName);
             pstmt.setString(3, location);
@@ -117,22 +107,19 @@ public class CottageDAO {
             pstmt.setInt(6, capacity);
             pstmt.setString(7, description);
             pstmt.executeUpdate();
-            System.out.println("Tietokannan mökki " + owner_id + " päivitetty.");
+            System.out.println("Tietokannan mökki " + ownerId + " päivitetty.");
         } catch (SQLException e) {
-            System.out.println("Ongelma mökin " + owner_id + " tietojen päivittämisessä: " + e.getMessage());
+            System.out.println("Ongelma mökin " + ownerId + " tietojen päivittämisessä: " + e.getMessage());
         }
     }
 
     public void getAllCottages() {
         String sql = "SELECT * FROM cottages";
 
-        try (Statement stmt = databaseManagemer.getConnection().prepareStatement(sql)) {
+        try (Statement stmt = databaseManager.getConnection().prepareStatement(sql)) {
         } catch (SQLException e) {}
 
     }
-
-
-
 }
 
 

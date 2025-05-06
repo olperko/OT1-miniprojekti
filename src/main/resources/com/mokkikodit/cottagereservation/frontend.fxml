@@ -23,21 +23,23 @@
          <content>
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
-                   <TableView fx:id="cottageTableView" layoutX="193.0" layoutY="75.0" prefHeight="330.0" prefWidth="497.0">
+                   <TableView fx:id="cottageTableView" layoutX="10.0" layoutY="75.0" prefHeight="330.0" prefWidth="800.0">
                        <columns>
-                           <TableColumn fx:id="idColumn" text="ID" prefWidth="50" />
-                           <TableColumn fx:id="ownerIdColumn" text="Owner ID" prefWidth="70" />
-                           <TableColumn fx:id="nameColumn" text="Name" prefWidth="150" />
-                           <TableColumn fx:id="locationColumn" text="Location" prefWidth="150" />
-                           <TableColumn fx:id="priceColumn" text="Price" prefWidth="80" />
-                           <TableColumn fx:id="sizeColumn" text="Size" prefWidth="80" />
-                           <TableColumn fx:id="capacityColumn" text="Capacity" prefWidth="80" />
-                           <TableColumn fx:id="descriptionColumn" text="Description">
+                           <TableColumn fx:id="cottageIdColumn" text="ID" prefWidth="50" />
+                           <TableColumn fx:id="ownerIdColumn" text="Omistaja" prefWidth="70" />
+                           <TableColumn fx:id="cottageNameColumn" text="Mökin nimi" prefWidth="150" />
+                           <TableColumn fx:id="locationColumn" text="Sijainti" prefWidth="150" />
+                           <TableColumn fx:id="priceColumn" text="Hinta" prefWidth="80" />
+                           <TableColumn fx:id="areaColumn" text="Pinta-ala" prefWidth="80" />
+                           <TableColumn fx:id="capacityColumn" text="Majoituskapasiteetti" prefWidth="80" />
+                           <TableColumn fx:id="descriptionColumn" text="Kuvaus">
                            </TableColumn>
                        </columns>
                    </TableView>
                   <TextField layoutX="3.0" layoutY="35.0" />
                   <Button layoutX="152.0" layoutY="35.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" text="Etsi" />
+                   <TextField layoutX="20" layoutY="35.0" />
+                   <Button layoutX="200" layoutY="35.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Uusi mökki" />
                   <TextField layoutX="710.0" layoutY="79.0" prefHeight="25.0" prefWidth="98.0" />
                   <TextArea layoutX="710.0" layoutY="201.0" prefHeight="124.0" prefWidth="214.0" />
                   <TextField layoutX="709.0" layoutY="113.0" prefHeight="25.0" prefWidth="100.0" />
@@ -46,7 +48,6 @@
                   <Label layoutX="710.0" layoutY="39.0" prefHeight="17.0" prefWidth="198.0" text="Muokkaa mökkiä" />
                   <Label layoutX="196.0" layoutY="48.0" prefHeight="17.0" prefWidth="602.0" text="Mökin tiedot" />
                   <CheckBox layoutX="710.0" layoutY="337.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="72.0" text="Varattu" />
-                  <ListView layoutX="3.0" layoutY="74.0" prefHeight="331.0" prefWidth="171.0" />
                   <TextField layoutX="825.0" layoutY="79.0" prefHeight="25.0" prefWidth="98.0" />
                   <TextField layoutX="825.0" layoutY="113.0" prefHeight="25.0" prefWidth="98.0" />
                   <TextField layoutX="825.0" layoutY="151.0" prefHeight="25.0" prefWidth="98.0" />

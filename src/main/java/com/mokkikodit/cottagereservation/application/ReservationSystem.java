@@ -1,7 +1,6 @@
 package com.mokkikodit.cottagereservation.application;
 
 import com.mokkikodit.cottagereservation.controller.CottageManager;
-import com.mokkikodit.cottagereservation.model.Cottage;
 import com.mokkikodit.cottagereservation.util.DatabaseManagement;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -25,10 +24,10 @@ public class ReservationSystem extends Application {
         cottageDAO = new CottageDAO(databaseManagement);
 
         cottageDAO.createCottageTable();
-        cottageDAO.insertCottage(15, 0, "Mökin nimi","Mökin sijainti", 129.99, 125.5, 7, "Mökin kuvaus");
+        cottageDAO.insertCottage(16, false, "Toisen mökin nimi","Toisen mökin sijainti", 1129.99, 1255.5, 70, "Toisen mökin kuvaus");
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/mokkikodit/cottagereservation/frontend.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
+        Scene scene = new Scene(fxmlLoader.load(), 1500, 500);
 
         CottageManager cottageManager = fxmlLoader.getController();
 

@@ -8,4 +8,5 @@ module com.mokkikodit.cottagereservation {
     exports com.mokkikodit.cottagereservation.controller;
 
     opens com.mokkikodit.cottagereservation.controller to javafx.fxml;
+    opens com.mokkikodit.cottagereservation.model to javafx.base;
 }

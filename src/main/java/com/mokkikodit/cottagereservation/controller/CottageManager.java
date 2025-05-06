@@ -6,10 +6,16 @@ import com.mokkikodit.cottagereservation.util.DatabaseManagement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 
+import java.io.IOException;
 import java.sql.*;
 
 public class CottageManager {
@@ -30,6 +36,7 @@ public class CottageManager {
     @FXML private TableColumn<Cottage, Integer> capacityColumn;
     @FXML private TableColumn<Cottage, String> descriptionColumn;
 
+    @FXML private Button newCottageButton;
     @FXML private TextField cottageNameField;
     @FXML private TextField locationField;
     @FXML private TextField priceField;
@@ -63,7 +70,13 @@ public class CottageManager {
         saveChangesButton.setOnAction(event -> {
             saveCottageDetails();
         });
+
+        newCottageButton.setOnAction(event -> {
+            openNewCottageDialog();
+        });
     }
+
+
 
     public void setCottageDAO(CottageDAO cottageDAO) {
         this.cottageDAO = cottageDAO;
@@ -165,4 +178,28 @@ public class CottageManager {
             e.printStackTrace();
         }
     }
+
+    private void openNewCottageDialog() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mokkikodit/cottagereservation/NewCottage.fxml"));
+            Parent root = loader.load();
+
+            NewCottageController controller = loader.getController();
+            controller.setCottageDAO(this.cottageDAO);
+
+            controller.setOnSaveSuccess(() -> {
+                loadCottagesFromDatabase();
+            });
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Uuden mökin lisääminen");
+            dialogStage.setScene(new Scene(root));
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
+
+

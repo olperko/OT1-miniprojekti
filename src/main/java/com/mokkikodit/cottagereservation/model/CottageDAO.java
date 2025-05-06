@@ -23,8 +23,8 @@ public class CottageDAO {
             """
             CREATE TABLE IF NOT EXISTS cottages (
                 cottageId INTEGER PRIMARY KEY AUTOINCREMENT,
-                ownerId INTEGER,
                 reserved BOOLEAN,
+                ownerId INTEGER,
                 cottageName VARCHAR,
                 location VARCHAR,
                 price REAL,
@@ -95,17 +95,19 @@ public class CottageDAO {
         }
     }
 
-    public void updateCottage(int ownerId, boolean reserved, String cottageName, String location, int price, int area, int capacity, String description) {
-        String sql = "UPDATE cottages SET reserved = ?, cottageName = ?, location = ?, price = ?, area = ?, capacity = ?, description = ? WHERE cottageId = ?";
+    public void updateCottage(int cottageId, int ownerId, boolean reserved, String cottageName, String location, double price, double area, int capacity, String description) {
+        String sql = "UPDATE cottages SET ownerId = ?, reserved = ?, cottageName = ?, location = ?, price = ?, area = ?, capacity = ?, description = ? WHERE cottageId = ?";
 
         try (PreparedStatement pstmt = databaseManager.getConnection().prepareStatement(sql)) {
-            pstmt.setBoolean(1, reserved);
-            pstmt.setString(2, cottageName);
-            pstmt.setString(3, location);
-            pstmt.setInt(4, price);
-            pstmt.setInt(5, area);
-            pstmt.setInt(6, capacity);
-            pstmt.setString(7, description);
+            pstmt.setInt(1, ownerId);
+            pstmt.setBoolean(2, reserved);
+            pstmt.setString(3, cottageName);
+            pstmt.setString(4, location);
+            pstmt.setDouble(5, price);
+            pstmt.setDouble(6, area);
+            pstmt.setInt(7, capacity);
+            pstmt.setString(8, description);
+            pstmt.setInt(9, cottageId);
             pstmt.executeUpdate();
             System.out.println("Tietokannan mökki " + ownerId + " päivitetty.");
         } catch (SQLException e) {

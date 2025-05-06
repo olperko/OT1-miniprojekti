@@ -1,17 +1,20 @@
 package com.mokkikodit.cottagereservation.controller;
 
 import com.mokkikodit.cottagereservation.model.Cottage;
+import com.mokkikodit.cottagereservation.model.CottageDAO;
 import com.mokkikodit.cottagereservation.util.DatabaseManagement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+
 
 import java.sql.*;
 
 public class CottageManager {
+
+    private CottageDAO cottageDAO;
 
     @FXML
     private TableView<Cottage> cottageTableView;
@@ -27,6 +30,16 @@ public class CottageManager {
     @FXML private TableColumn<Cottage, Integer> capacityColumn;
     @FXML private TableColumn<Cottage, String> descriptionColumn;
 
+    @FXML private TextField cottageNameField;
+    @FXML private TextField locationField;
+    @FXML private TextField priceField;
+    @FXML private TextField areaField;
+    @FXML private TextField capacityField;
+    @FXML private TextField ownerIdField;
+    @FXML private TextArea descriptionArea;
+    @FXML private CheckBox reservedCheckBox;
+    @FXML private Button saveChangesButton;
+
     @FXML
     public void initialize() {
 
@@ -40,10 +53,25 @@ public class CottageManager {
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
 
         cottageTableView.setItems(cottages);
+
+        cottageTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                showCottageDetails(newSelection);
+            }
+        });
+
+        saveChangesButton.setOnAction(event -> {
+            saveCottageDetails();
+        });
+    }
+
+    public void setCottageDAO(CottageDAO cottageDAO) {
+        this.cottageDAO = cottageDAO;
     }
 
     public void setDatabaseManagement(DatabaseManagement db) {
         this.databaseManagement = db;
+        this.cottageDAO = new CottageDAO(db);
     }
 
     public void loadCottagesFromDatabase() {
@@ -76,6 +104,64 @@ public class CottageManager {
 
         } catch (SQLException e) {
             System.err.println("Error loading cottages: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void showCottageDetails(Cottage cottage) {
+        cottageNameField.setText(cottage.getCottageName());
+        locationField.setText(cottage.getLocation());
+        priceField.setText(String.valueOf(cottage.getPrice()));
+        areaField.setText(String.valueOf(cottage.getArea()));
+        capacityField.setText(String.valueOf(cottage.getCapacity()));
+        ownerIdField.setText(String.valueOf(cottage.getOwnerId()));
+        descriptionArea.setText(String.valueOf(cottage.getDescription()));
+        reservedCheckBox.setSelected(cottage.getIsReserved());
+    }
+
+    private void saveCottageDetails() {
+        Cottage selected = cottageTableView.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            return;
+        }
+
+        try {
+            int ownerId = Integer.parseInt(ownerIdField.getText());
+            String cottageName = cottageNameField.getText();
+            String location = locationField.getText();
+            double price = Double.parseDouble(priceField.getText());
+            double area = Double.parseDouble(areaField.getText());
+            int capacity = Integer.parseInt(capacityField.getText());
+            String description = descriptionArea.getText();
+            boolean isReserved = reservedCheckBox.isSelected();
+
+            cottageDAO.updateCottage(
+                    selected.getCottageId(),
+                    ownerId,
+                    isReserved,
+                    cottageName,
+                    location,
+                    price,
+                    area,
+                    capacity,
+                    description
+            );
+
+            selected.setOwnerId(ownerId);
+            selected.setCottageName(cottageName);
+            selected.setLocation(location);
+            selected.setPrice(price);
+            selected.setArea(area);
+            selected.setCapacity(capacity);
+            selected.setDescription(description);
+            selected.setIsReserved(isReserved);
+
+            cottageTableView.refresh();
+
+        } catch (NumberFormatException e) {
+            System.out.println("Syötteessä on virheellinen tyyppi (int, string tms)" + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Virhe päivittäessä mökin tietoja: " + e.getMessage());
             e.printStackTrace();
         }
     }

@@ -24,14 +24,16 @@ public class ReservationSystem extends Application {
         cottageDAO = new CottageDAO(databaseManagement);
 
         cottageDAO.createCottageTable();
-        cottageDAO.insertCottage(16, false, "Toisen mökin nimi","Toisen mökin sijainti", 1129.99, 1255.5, 70, "Toisen mökin kuvaus");
+        //cottageDAO.insertCottage(16, false, "Toisen mökin nimi","Toisen mökin sijainti", 1129.99, 1255.5, 70, "Toisen mökin kuvaus");
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/mokkikodit/cottagereservation/frontend.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1500, 500);
 
         CottageManager cottageManager = fxmlLoader.getController();
 
+        cottageManager = fxmlLoader.getController();
         cottageManager.setDatabaseManagement(databaseManagement);
+        cottageManager.setCottageDAO(cottageDAO);
         cottageManager.loadCottagesFromDatabase();
 
         primaryStage.setScene(scene);

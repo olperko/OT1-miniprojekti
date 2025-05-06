@@ -4,7 +4,7 @@ public class Review {
 
     private int reviewID;
     private int userID;
-    private int cottageID;
+    private int cottageId;
     private double score;
     private String comment;
     private String date;
@@ -13,10 +13,10 @@ public class Review {
         this.userID = userID;
     }
 
-    public Review(int reviewID, int userID, int cottageID, double score, String comment, String date) {
+    public Review(int reviewID, int userID, int cottageId, double score, String comment, String date) {
         this.reviewID = reviewID;
         this.userID = userID;
-        this.cottageID = cottageID;
+        this.cottageId = cottageId;
         this.score = score;
         this.comment = comment;
         this.date = date;
@@ -38,12 +38,12 @@ public class Review {
         this.userID = userID;
     }
 
-    public int getCottageID() {
-        return cottageID;
+    public int getCottageId() {
+        return cottageId;
     }
 
-    public void setCottageID(int cottageID) {
-        this.cottageID = cottageID;
+    public void setCottageId(int cottageId) {
+        this.cottageId = cottageId;
     }
 
     public double getScore() {

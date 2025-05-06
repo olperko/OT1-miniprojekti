@@ -32,16 +32,19 @@ public class Cottage implements Serializable {
     public void setOwnerId(int ownerId) { this.ownerId = ownerId; }
     public int getOwnerId() { return ownerId;
     }
+    public void setIsReserved(boolean reserved) { this.reserved = reserved; }
+    public boolean getIsReserved() { return reserved;
+    }
     public void setCottageName(String cottageName) { this.cottageName = cottageName; }
     public String getCottageName() { return cottageName;
     }
     public void setLocation(String location) { this.location = location; }
     public String getLocation() { return location;
     }
-    public void setPrice(int price) { this.price = price; }
+    public void setPrice(double price) { this.price = price; }
     public double getPrice() { return price;
     }
-    public void setArea(int area) { this.area = area; }
+    public void setArea(double area) { this.area = area; }
     public double getArea() { return area;
     }
     public void setCapacity(int capacity) { this.capacity = capacity; }

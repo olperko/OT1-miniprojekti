@@ -4,7 +4,7 @@ public class Reservation {
 
     private int reservationID;
     private int userID;
-    private int cottageID;
+    private int cottageId;
     private int ownerID;
     private int guestAmount;
     private String beginningDate;
@@ -14,10 +14,10 @@ public class Reservation {
     private String reservationStatus;
     private boolean paymentStatus;
 
-    public Reservation(int reservationID, int userID, int cottageID, int ownerID, int guestAmount, String beginningDate, String beginningTime, String endDate, String endTime, String reservationStatus, boolean paymentStatus) {
+    public Reservation(int reservationID, int userID, int cottageId, int ownerID, int guestAmount, String beginningDate, String beginningTime, String endDate, String endTime, String reservationStatus, boolean paymentStatus) {
         this.reservationID = reservationID;
         this.userID = userID;
-        this.cottageID = cottageID;
+        this.cottageId = cottageId;
         this.ownerID = ownerID;
         this.guestAmount = guestAmount;
         this.beginningDate = beginningDate;
@@ -44,12 +44,12 @@ public class Reservation {
         this.userID = userID;
     }
 
-    public int getCottageID() {
-        return cottageID;
+    public int getCottageId() {
+        return cottageId;
     }
 
-    public void setCottageID(int cottageID) {
-        this.cottageID = cottageID;
+    public void setCottageId(int cottageId) {
+        this.cottageId = cottageId;
     }
 
     public int getOwnerID() {

@@ -36,21 +36,22 @@
                            </TableColumn>
                        </columns>
                    </TableView>
-                  <TextField layoutX="3.0" layoutY="35.0" />
-                  <Button layoutX="152.0" layoutY="35.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" text="Etsi" />
-                   <TextField layoutX="20" layoutY="35.0" />
-                   <Button layoutX="200" layoutY="35.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Uusi mökki" />
-                  <TextField layoutX="710.0" layoutY="79.0" prefHeight="25.0" prefWidth="98.0" />
-                  <TextArea layoutX="710.0" layoutY="201.0" prefHeight="124.0" prefWidth="214.0" />
-                  <TextField layoutX="709.0" layoutY="113.0" prefHeight="25.0" prefWidth="100.0" />
-                  <TextField layoutX="709.0" layoutY="151.0" prefHeight="25.0" prefWidth="100.0" />
-                  <Button layoutX="710.0" layoutY="371.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="134.0" text="Muokkaa" fx:id="editButton" />
-                  <Label layoutX="710.0" layoutY="39.0" prefHeight="17.0" prefWidth="198.0" text="Muokkaa mökkiä" />
-                  <Label layoutX="196.0" layoutY="48.0" prefHeight="17.0" prefWidth="602.0" text="Mökin tiedot" />
-                  <CheckBox layoutX="710.0" layoutY="337.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="72.0" text="Varattu" />
-                  <TextField layoutX="825.0" layoutY="79.0" prefHeight="25.0" prefWidth="98.0" />
-                  <TextField layoutX="825.0" layoutY="113.0" prefHeight="25.0" prefWidth="98.0" />
-                  <TextField layoutX="825.0" layoutY="151.0" prefHeight="25.0" prefWidth="98.0" />
+                  <TextField layoutX="10.0" layoutY="35.0" />
+                  <Button layoutX="160.0" layoutY="35.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" text="Etsi" />
+                   <Button layoutX="250" layoutY="35.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Uusi mökki" />
+                  <Label layoutX="825.0" layoutY="39.0" prefHeight="17.0" prefWidth="198.0" text="Muokkaa mökkiä" />
+
+                   <TextField fx:id="ownerIdField" layoutX="825.0" layoutY="79.0" prefHeight="25.0" prefWidth="98.0" />
+                   <TextField fx:id="cottageNameField" layoutX="940.0" layoutY="79.0" prefHeight="25.0" prefWidth="98.0" />
+                   <TextField fx:id="locationField" layoutX="825.0" layoutY="113.0" prefHeight="25.0" prefWidth="98.0" />
+                   <TextField fx:id="priceField" layoutX="940.0" layoutY="113.0" prefHeight="25.0" prefWidth="100.0" />
+                   <TextField fx:id="areaField"  layoutX="825.0" layoutY="151.0" prefHeight="25.0" prefWidth="98.0" />
+                   <TextField fx:id="capacityField" layoutX="940.0" layoutY="151.0" prefHeight="25.0" prefWidth="100.0" />
+                   <TextArea fx:id="descriptionArea" layoutX="825.0" layoutY="201.0" prefHeight="124.0" prefWidth="214.0" />
+
+                   <CheckBox fx:id="reservedCheckBox" layoutX="825.0" layoutY="337.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="72.0" text="Varattu" />
+                   <Button fx:id="saveChangesButton" layoutX="825.0" layoutY="371.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="134.0" text="Tallenna muutokset" />
+
                </children>
             </Pane>
          </content>

@@ -1,6 +1,5 @@
 package com.mokkikodit.cottagereservation.controller;
 
-import com.mokkikodit.cottagereservation.model.Cottage;
 import com.mokkikodit.cottagereservation.model.CottageDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -8,7 +7,6 @@ import javafx.stage.Stage;
 
 public class NewCottageController {
 
-    @FXML private TableView<Cottage> cottageTableView;
     @FXML private TextField cottageNameField;
     @FXML private TextField locationField;
     @FXML private TextField ownerIdField;

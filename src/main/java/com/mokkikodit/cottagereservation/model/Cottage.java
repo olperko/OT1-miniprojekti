@@ -32,8 +32,8 @@ public class Cottage implements Serializable {
     public void setOwnerId(int ownerId) { this.ownerId = ownerId; }
     public int getOwnerId() { return ownerId;
     }
-    public void setIsReserved(boolean reserved) { this.reserved = reserved; }
-    public boolean getIsReserved() { return reserved;
+    public void setReserved(boolean reserved) { this.reserved = reserved; }
+    public boolean getReserved() { return reserved;
     }
     public void setCottageName(String cottageName) { this.cottageName = cottageName; }
     public String getCottageName() { return cottageName;

@@ -13,8 +13,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-
 import java.io.IOException;
 import java.sql.*;
 
@@ -22,12 +20,12 @@ public class CottageManager {
 
     private CottageDAO cottageDAO;
 
-    @FXML
-    private TableView<Cottage> cottageTableView;
     private DatabaseManagement databaseManagement;
     private ObservableList<Cottage> cottages = FXCollections.observableArrayList();
 
+    @FXML private TableView<Cottage> cottageTableView;
     @FXML private TableColumn<Cottage, Integer> cottageIdColumn;
+    @FXML private TableColumn<Cottage, Integer> reservedColumn;
     @FXML private TableColumn<Cottage, Integer> ownerIdColumn;
     @FXML private TableColumn<Cottage, String> cottageNameColumn;
     @FXML private TableColumn<Cottage, String> locationColumn;
@@ -51,6 +49,7 @@ public class CottageManager {
     public void initialize() {
 
         cottageIdColumn.setCellValueFactory(new PropertyValueFactory<>("cottageId"));
+        reservedColumn.setCellValueFactory(new PropertyValueFactory<>("reserved"));
         ownerIdColumn.setCellValueFactory(new PropertyValueFactory<>("ownerId"));
         cottageNameColumn.setCellValueFactory(new PropertyValueFactory<>("cottageName"));
         locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
@@ -75,7 +74,6 @@ public class CottageManager {
             openNewCottageDialog();
         });
     }
-
 
 
     public void setCottageDAO(CottageDAO cottageDAO) {
@@ -129,7 +127,7 @@ public class CottageManager {
         capacityField.setText(String.valueOf(cottage.getCapacity()));
         ownerIdField.setText(String.valueOf(cottage.getOwnerId()));
         descriptionArea.setText(String.valueOf(cottage.getDescription()));
-        reservedCheckBox.setSelected(cottage.getIsReserved());
+        reservedCheckBox.setSelected(cottage.getReserved());
     }
 
     private void saveCottageDetails() {
@@ -167,7 +165,7 @@ public class CottageManager {
             selected.setArea(area);
             selected.setCapacity(capacity);
             selected.setDescription(description);
-            selected.setIsReserved(isReserved);
+            selected.setReserved(isReserved);
 
             cottageTableView.refresh();
 

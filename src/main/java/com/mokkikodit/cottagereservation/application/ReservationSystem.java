@@ -14,7 +14,6 @@ import java.io.IOException;
 public class ReservationSystem extends Application {
     private CottageDAO cottageDAO;
     private DatabaseManagement databaseManagement;
-    private CottageManager cottageManager;
 
     public void start(Stage primaryStage) throws IOException {
 
@@ -24,10 +23,10 @@ public class ReservationSystem extends Application {
         cottageDAO = new CottageDAO(databaseManagement);
 
         cottageDAO.createCottageTable();
-        //cottageDAO.insertCottage(16, false, "Toisen mökin nimi","Toisen mökin sijainti", 1129.99, 1255.5, 70, "Toisen mökin kuvaus");
+        //cottageDAO.insertCottage(1, false, "Mökin nimi","Mökin sijainti", 123.45, 67.89, 6, "Mökin kuvaus");
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/mokkikodit/cottagereservation/frontend.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1070, 500);
+        Scene scene = new Scene(fxmlLoader.load(), 1170, 500);
 
         CottageManager cottageManager = fxmlLoader.getController();
 

@@ -1,7 +1,6 @@
 package com.mokkikodit.cottagereservation.model;
 
 import com.mokkikodit.cottagereservation.util.DatabaseManagement;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

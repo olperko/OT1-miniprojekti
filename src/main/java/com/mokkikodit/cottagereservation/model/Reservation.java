@@ -26,6 +26,7 @@ public class Reservation {
         this.endTime = endTime;
         this.reservationStatus = reservationStatus;
         this.paymentStatus = paymentStatus;
+
     }
 
     public int getReservationID() {
@@ -115,4 +116,6 @@ public class Reservation {
     public void setPaymentStatus(boolean paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
+
 }
+

@@ -24,9 +24,16 @@ public class ReservationDAO {
                 "beginningDate TEXT, " +
                 "beginningTime TEXT, " +
                 "endDate TEXT, " +
-                "endTime TEXT" +
-                "reservationStatus TEXT" +
+                "endTime TEXT," +
+                "reservationStatus TEXT," +
                 "paymentStatus BOOLEAN)";
+
+        try (Statement stmt = dbManager.getConnection().createStatement()) {
+            stmt.execute(sql);
+            System.out.println("Varaukset taulukko luotu.");
+        } catch (SQLException e) {
+            System.err.println("Virhe varaukset taulukkoa luodessa: " + e.getMessage());
+        }
     }
 
     /**

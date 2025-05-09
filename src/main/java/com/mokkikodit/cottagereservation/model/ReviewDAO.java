@@ -74,13 +74,13 @@ public class ReviewDAO {
      * @param comment käyttäjän antama kommentti
      * @param postDate arvioinnin päivämäärä
      */
-    public void updateReview(int id, int score, String comment, String postDate) {
+    public void updateReview(int id, double score, String comment, String postDate) {
         String sql = "UPDATE reviews SET " +
                         "score = ?, SET comment = ?, SET postDate = ? " +
                      "WHERE id = ?";
 
         try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(sql)) {
-            pstmt.setInt(1, score);
+            pstmt.setDouble(1, score);
             pstmt.setString(2, comment);
             pstmt.setString(3, postDate);
             pstmt.setInt(4, id);

@@ -37,7 +37,7 @@ public class ReservationManager {
     @FXML private TableColumn<Reservation, String> endDateColumn;
     @FXML private TableColumn<Reservation, String> endTimeColumn;
     @FXML private TableColumn<Reservation, String> reservationStatusColumn;
-    @FXML private TableColumn<Reservation, Integer> paymentStatusColumn; // tähän boolean ollut reserved
+    @FXML private TableColumn<Reservation, Integer> paymentStatusColumn;
 
     //Front end asiota, katsellaan tarkemmin kun front end luokan osalta tehty
     @FXML private Button newReservationButton;

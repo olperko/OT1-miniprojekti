@@ -1,5 +1,7 @@
 package com.mokkikodit.cottagereservation.model;
 
+import java.sql.Date;
+
 public class Payment {
 
     private int paymentID;
@@ -9,12 +11,13 @@ public class Payment {
     private String paymentStatus;
     private String confirmationDate;
 
-    public Payment(int paymentID, int reservationID, int amount, String paymentType, String paymentStatus) {
+    public Payment(int paymentID, int reservationID, int amount, String paymentType, String paymentStatus, String confirmatonDate) {
         this.paymentID = paymentID;
         this.reservationID = reservationID;
         this.amount = amount;
         this.paymentType = paymentType;
         this.paymentStatus = paymentStatus;
+        this.confirmationDate = confirmatonDate;
     }
 
     public int getPaymentID() {

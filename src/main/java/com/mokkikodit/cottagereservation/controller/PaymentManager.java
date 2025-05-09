@@ -19,6 +19,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 
 //KESKEN
 
@@ -35,16 +36,15 @@ public class PaymentManager {
     @FXML private TableColumn<Payment, Integer> amountColumn;
     @FXML private TableColumn<Payment, String> paymentTypeColumn;
     @FXML private TableColumn<Payment, String> paymentStatusColumn;
-    @FXML private TableColumn<Payment, String> confirmationColumn;
+    @FXML private TableColumn<Payment, Date> confirmationDateColumn;
 
-    //Front end asioita, muokataan kuntoon tarkemmin kun front end tehty
     @FXML private Button newPaymentButton;
     @FXML private TextField reservationIdField;
     @FXML private TextField amountField;
     @FXML private TextField paymentTypeField;
     @FXML private TextField paymentStatusField;
-    @FXML private TextField confirmationField;
-    @FXML private Button saveChangesButton;
+    @FXML private TextField confirmationDateField;
+    @FXML private Button savePaymentChangesButton;
 
     @FXML
     public void initialize() {
@@ -54,7 +54,7 @@ public class PaymentManager {
         amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
         paymentTypeColumn.setCellValueFactory(new PropertyValueFactory<>("paymentType"));
         paymentStatusColumn.setCellValueFactory(new PropertyValueFactory<>("paymentStatus"));
-        confirmationColumn.setCellValueFactory(new PropertyValueFactory<>("confirmation"));
+        confirmationDateColumn.setCellValueFactory(new PropertyValueFactory<>("confirmationDate"));
 
 
         paymentTableView.setItems(payments);
@@ -65,7 +65,7 @@ public class PaymentManager {
             }
         });
 
-        saveChangesButton.setOnAction(event -> {
+        savePaymentChangesButton.setOnAction(event -> {
             savePaymentDetails();
         });
 
@@ -103,7 +103,8 @@ public class PaymentManager {
                         rs.getInt("reservationId"),
                         rs.getInt("amount"),
                         rs.getString("paymentType"),
-                        rs.getString("paymentStatus")
+                        rs.getString("paymentStatus"),
+                        rs.getString("confirmatonDate")
                 );
                 payments.add(payment);
             }
@@ -117,9 +118,9 @@ public class PaymentManager {
     private void showPaymentDetails(Payment payment) {
         reservationIdField.setText(String.valueOf(payment.getReservationID()));
         amountField.setText(String.valueOf(payment.getAmount()));
-        confirmationField.setText(String.valueOf(payment.getConfirmationDate()));
         paymentStatusField.setText(String.valueOf(payment.getPaymentStatus()));
         paymentTypeField.setText(String.valueOf(payment.getPaymentType()));
+        confirmationDateField.setText(String.valueOf(payment.getConfirmationDate()));
     }
 
     private void savePaymentDetails() {
@@ -133,7 +134,7 @@ public class PaymentManager {
             int amount = Integer.parseInt(amountField.getText());
             String paymentType = paymentTypeField.getText();
             String paymentStatus = paymentStatusField.getText();
-            String confirmation = confirmationField.getText();
+            String confirmationDate = confirmationDateField.getText();
 
 
             paymentDAO.updatePayment(
@@ -141,14 +142,15 @@ public class PaymentManager {
                     reservationId,
                     amount,
                     paymentType,
-                    paymentStatus
+                    paymentStatus,
+                    confirmationDate
             );
 
             selected.setReservationID(reservationId);
             selected.setAmount(amount);
             selected.setPaymentType(paymentType);
             selected.setPaymentStatus(paymentStatus);
-            selected.setConfirmationDate(confirmation);
+            selected.setConfirmationDate(confirmationDate);
 
             paymentTableView.refresh();
 

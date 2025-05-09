@@ -1,7 +1,5 @@
 package com.mokkikodit.cottagereservation.controller;
 
-import com.mokkikodit.cottagereservation.model.Reservation;
-import com.mokkikodit.cottagereservation.model.ReservationDAO;
 import com.mokkikodit.cottagereservation.model.User;
 import com.mokkikodit.cottagereservation.model.UserDAO;
 import com.mokkikodit.cottagereservation.util.DatabaseManagement;
@@ -38,7 +36,7 @@ public class UserManager {
     @FXML private TableColumn<User, String> ownedCottagesColumn;
     @FXML private TableColumn<User, String> roleColumn;
     @FXML private TableColumn<User, Boolean> isBusinessColumn;
-    @FXML private TableColumn<User, String> additionalInfoColumn;
+    @FXML private TableColumn<User, String> additionalInfoUserColumn;
 
     @FXML private Button newUserButton;
     @FXML private TextField userIdField;
@@ -48,8 +46,8 @@ public class UserManager {
     @FXML private TextField ownedCottagesField;
     @FXML private TextField roleField;
     @FXML private CheckBox isBusinessCheckBox;
-    @FXML private TextArea additionalInfoField;
-    @FXML private Button saveChangesButton;
+    @FXML private TextArea additionalInfoUserArea;
+    @FXML private Button saveUserChangesButton;
 
     @FXML
     public void initialize() {
@@ -61,7 +59,7 @@ public class UserManager {
         ownedCottagesColumn.setCellValueFactory(new PropertyValueFactory<>("ownedCottages"));
         roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
         isBusinessColumn.setCellValueFactory(new PropertyValueFactory<>("isBusiness"));
-        additionalInfoColumn.setCellValueFactory(new PropertyValueFactory<>("additionalInfo"));
+        additionalInfoUserColumn.setCellValueFactory(new PropertyValueFactory<>("additionalInfo"));
 
         userTableView.setItems(users);
 
@@ -71,7 +69,7 @@ public class UserManager {
             }
         });
 
-        saveChangesButton.setOnAction(event -> {
+        saveUserChangesButton.setOnAction(event -> {
             saveUserDetails();
         });
 
@@ -131,7 +129,7 @@ public class UserManager {
         ownedCottagesField.setText(user.getOwnedCottages());
         roleField.setText(user.getRole());
         isBusinessCheckBox.setSelected(user.getIsBusiness());
-        additionalInfoField.setText(user.getAdditionalInfo());
+        additionalInfoUserArea.setText(user.getAdditionalInfo());
     }
 
     private void saveUserDetails() {
@@ -147,7 +145,7 @@ public class UserManager {
             String ownedCottages = ownedCottagesField.getText();
             String role = roleField.getText();
             boolean isBusiness = isBusinessCheckBox.isSelected();
-            String additionalInfo = additionalInfoField.getText();
+            String additionalInfo = additionalInfoUserArea.getText();
 
 
             userDAO.updateUser(

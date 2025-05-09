@@ -28,22 +28,13 @@ public class ReservationDAO {
 
         try (Statement stmt = dbManager.getConnection().createStatement()) {
             stmt.execute(sql);
-            System.out.println("Varaukset taulukko luotu.");
+            System.out.println("Varaukset-taulukko luotu onnistuneesti.");
         } catch (SQLException e) {
             System.err.println("Virhe varaukset taulukkoa luodessa: " + e.getMessage());
         }
     }
 
-    /**
-     * Metodi lisää uuden varauksen SQL-tietokantaan.
-     * @param userID
-     * @param cottageID
-     * @param guestAmount
-     * @param beginningDate
-     * @param beginningTime
-     * @param endDate
-     * @param endTime
-     */
+
     public void insertReservation(int userID, int cottageID, int guestAmount, String spanOfReservation, String reservationStatus, boolean paymentStatus, String additionalInfo) {
         String sql = "INSERT INTO reservations (userID, cottageID, guestAmount, beginningDate, beginningTime, endDate, endTime) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
@@ -80,14 +71,6 @@ public class ReservationDAO {
         }
     }
 
-    /**
-     * Metodi päivittää SQL-tietokannassa olevan varauksen tiedot.
-     * @param guestAmount vieraiden määrä
-     * @param beginningDate varauksen alkamispäivämäärä
-     * @param beginningTime varauksen alkamiskellonaika
-     * @param endDate varauksen päättymispäivämäärä
-     * @param endTime varauksen päättymiskellonaika
-     */
     public void updateReservation(int id, int guestAmount, String spanOfReservation, String additionalInfo, String reservationStatus, boolean paymentStatus) {
         String sql = "UPDATE reservations SET " +
                         "guestAmount = ?, " +

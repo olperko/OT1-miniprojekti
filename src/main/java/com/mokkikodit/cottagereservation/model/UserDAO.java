@@ -8,8 +8,8 @@ import java.sql.Statement;
 
 public class UserDAO {
 
-    private DatabaseManagement dbManager;
-    public UserDAO(DatabaseManagement dbManager) { this.dbManager = dbManager; }
+    private DatabaseManagement databaseManager;
+    public UserDAO(DatabaseManagement databaseManager) { this.databaseManager = databaseManager; }
 
     /**
      * Luo komentotekstin, joka luo käyttäjä-taulukon SQL-tietokantaan.
@@ -22,8 +22,17 @@ public class UserDAO {
                 "lastName TEXT, " +
                 "ownedCottages TEXT, " +
                 "role TEXT, " +
-                "isBusiness BOOLEAN)" +
-                "additionalInfo TEXT";
+                "isBusiness BOOLEAN, " +
+                "additionalInfo TEXT" +
+                ")";
+
+        try (Statement stmt = databaseManager.getConnection().createStatement()) {
+            stmt.execute(sql);
+            System.out.println("Käyttäjä-taulukko luotu onnituneesti.");
+        } catch (SQLException e) {
+            System.out.println("Taulun luonti epäonnistui: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -37,7 +46,7 @@ public class UserDAO {
     public void insertUser(String email, String firstName, String lastName, String ownedCottages, String role, boolean isBusiness, String additionalInfo) {
 
         String sql = "INSERT INTO users (email, firstName, lastName, role, isBusiness, additionalInfo) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(sql)) {
+        try (PreparedStatement pstmt = databaseManager.getConnection().prepareStatement(sql)) {
             pstmt.setString(1, email);
             pstmt.setString(2, firstName);
             pstmt.setString(3, lastName);
@@ -60,7 +69,7 @@ public class UserDAO {
     public void deleteUser(int id) {
         String sql = "DELETE FROM users WHERE id = ?";
 
-        try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(sql)) {
+        try (PreparedStatement pstmt = databaseManager.getConnection().prepareStatement(sql)) {
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
             System.out.println("Käyttäjä poistettu tietokannasta.");
@@ -84,7 +93,7 @@ public class UserDAO {
                 "email = ?, SET firstName = ?, SET lastName = ?, SET role = ?, SET isBusiness = ? , SET additionalInfo = ?" +
                 "WHERE id = ?";
 
-        try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(sql)) {
+        try (PreparedStatement pstmt = databaseManager.getConnection().prepareStatement(sql)) {
             pstmt.setString(1, email);
             pstmt.setString(2, firstName);
             pstmt.setString(3, lastName);
@@ -108,7 +117,7 @@ public class UserDAO {
         String sql = "SELECT * FROM users";
         String result ="";
 
-        try (PreparedStatement stmt = dbManager.getConnection().prepareStatement(sql);
+        try (PreparedStatement stmt = databaseManager.getConnection().prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {

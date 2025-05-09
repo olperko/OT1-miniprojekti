@@ -1,57 +1,41 @@
 package com.mokkikodit.cottagereservation.model;
 
-import java.time.LocalDate;
-
 public class Reservation {
 
-    public String getSpanOfReservation() {
-        return spanOfReservation;
-    }
-
-    public void setSpanOfReservation(String spanOfReservation) {
-        this.spanOfReservation = spanOfReservation;
-    }
-
-    public String getAdditionalInfo() {
-        return additionalInfo;
-    }
-
-    public void setAdditionalInfo(String additionalInfo) {
-        this.additionalInfo = additionalInfo;
-    }
-
-    private int reservationID;
-    private int userID;
+    private int reservationId;
+    private int userId;
     private int cottageId;
     private int guestAmount;
-    private String spanOfReservation;
+    private String startDate;
+    private String endDate;
     private String additionalInfo;
     private String reservationStatus;
     private boolean paymentStatus;
 
-    public Reservation(int reservationID, int userID, int cottageId, int guestAmount, String spanOfReservation, String reservationStatus, boolean paymentStatus, String additionalInfo) {
-        this.reservationID = reservationID;
-        this.userID = userID;
+    public Reservation(int reservationId, int userId, int cottageId, int guestAmount, String startDate, String endDate, String reservationStatus, boolean paymentStatus, String additionalInfo) {
+        this.reservationId = reservationId;
+        this.userId = userId;
         this.cottageId = cottageId;
         this.guestAmount = guestAmount;
-        this.spanOfReservation = spanOfReservation;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.reservationStatus = reservationStatus;
         this.paymentStatus = paymentStatus;
         this.additionalInfo = additionalInfo;
     }
 
-    public int getReservationID() {
-        return reservationID;
+    public int getReservationId() {
+        return reservationId;
     }
-    public void setReservationID(int reservationID) {
-        this.reservationID = reservationID;
+    public void setReservationId(int reservationID) {
+        this.reservationId = reservationID;
     }
 
-    public int getUserID() {
-        return userID;
+    public int getUserId() {
+        return userId;
     }
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setUserId(int userID) {
+        this.userId = userID;
     }
 
     public int getCottageId() {
@@ -82,5 +66,19 @@ public class Reservation {
         this.paymentStatus = paymentStatus;
     }
 
+    public void setStartDate(String startDate) { this.startDate = startDate; }
+    public String getStartDate() { return startDate; }
+
+    public void setEndDate(String endDate) { this.endDate = endDate; }
+    public String getEndDate() { return endDate; }
+
+    public String getSpanOfReservation() { return startDate + " - " + endDate; }
+
+    public String getAdditionalInfo() {
+        return additionalInfo;
+    }
+    public void setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
+    }
 }
 

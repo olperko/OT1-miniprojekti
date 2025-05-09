@@ -2,10 +2,8 @@ package com.mokkikodit.cottagereservation.model;
 
 import com.mokkikodit.cottagereservation.util.DatabaseManagement;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.time.LocalDate;
 
 public class ReservationDAO {
 
@@ -17,11 +15,12 @@ public class ReservationDAO {
      */
     public void createReservationTable() {
         String sql = "CREATE TABLE IF NOT EXISTS reservations(" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "reservationId INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "userID INTEGER, " +
                 "cottageID INTEGER, " +
                 "guestAmount INTEGER, " +
-                "spanOfReservation TEXT, " +
+                "startDate TEXT, " +
+                "endDate TEXT, " +
                 "additionalInfo TEXT," +
                 "reservationStatus TEXT," +
                 "paymentStatus BOOLEAN)";
@@ -35,15 +34,16 @@ public class ReservationDAO {
     }
 
 
-    public void insertReservation(int userID, int cottageID, int guestAmount, String spanOfReservation, String reservationStatus, boolean paymentStatus, String additionalInfo) {
-        String sql = "INSERT INTO reservations (userID, cottageID, guestAmount, beginningDate, beginningTime, endDate, endTime) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    public void insertReservation(int userID, int cottageID, int guestAmount, String startDate, String endDate, String reservationStatus, boolean paymentStatus, String additionalInfo) {
+        String sql = "INSERT INTO reservations (userID, cottageID, guestAmount, startDate, endDate, reservationStatus, paymentStatus, additionalInfo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(sql)) {
             pstmt.setInt(1, userID);
             pstmt.setInt(2, cottageID);
             pstmt.setInt(3, guestAmount);
-            pstmt.setString(4, spanOfReservation);
-            pstmt.setString(5, reservationStatus);
+            pstmt.setString(4, startDate);
+            pstmt.setString(5, endDate);
+            pstmt.setString(6, reservationStatus);
             pstmt.setBoolean(6, paymentStatus);
             pstmt.setString(7, additionalInfo);
             pstmt.executeUpdate();
@@ -71,7 +71,7 @@ public class ReservationDAO {
         }
     }
 
-    public void updateReservation(int id, int guestAmount, String spanOfReservation, String additionalInfo, String reservationStatus, boolean paymentStatus) {
+    public void updateReservation(int id, int guestAmount, LocalDate startDate , LocalDate endDate, String reservationStatus, boolean paymentStatus, String additionalInfo) {
         String sql = "UPDATE reservations SET " +
                         "guestAmount = ?, " +
                         "SET spanOfReservation = ?, SET additionalInfo = ?, " +
@@ -80,11 +80,12 @@ public class ReservationDAO {
 
         try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(sql)) {
             pstmt.setInt(1, guestAmount);
-            pstmt.setString(2, spanOfReservation);
-            pstmt.setString(3, additionalInfo);
+            pstmt.setDate(2, Date.valueOf(startDate));
+            pstmt.setDate(3, Date.valueOf(endDate));
             pstmt.setString(4, reservationStatus);
             pstmt.setBoolean(5, paymentStatus);
-            pstmt.setInt(6, id);
+            pstmt.setString(6, additionalInfo);
+            pstmt.setInt(7, id);
             pstmt.executeUpdate();
             System.out.println("Varauksen tiedot päivitetty onnistuneesti.");
         } catch (SQLException e) {
@@ -92,9 +93,6 @@ public class ReservationDAO {
         }
     }
 
-    // KESKEN
-    //
-    //
     public String getAllReservations() {
         String sql = "SELECT * FROM reservations";
         String result ="";

@@ -27,18 +27,18 @@
                   <TextField layoutX="10.0" layoutY="35.0" />
                   <Button layoutX="160.0" layoutY="35.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" text="Etsi" />
                   <Button fx:id="newCottageButton" layoutX="250" layoutY="35.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Uusi mökki" />
-                  <Label layoutX="920.0" layoutY="50.0" prefHeight="17.0" prefWidth="250.0" text="Muokka mökkiä - valitse mökki taulukosta" />
+                  <Label text="Muokka mökkiä - valitse mökki taulukosta" style="-fx-text-fill: white" layoutX="920.0" layoutY="52.0" prefHeight="17.0" prefWidth="250.0" />
 
-                  <TextField fx:id="ownerIdField" layoutX="920.0" layoutY="75.0" prefHeight="25.0" prefWidth="98.0" />
-                  <TextField fx:id="cottageNameField" layoutX="1030.0" layoutY="75.0" prefHeight="25.0" prefWidth="98.0" />
-                  <TextField fx:id="locationField" layoutX="920.0" layoutY="113.0" prefHeight="25.0" prefWidth="98.0" />
-                  <TextField fx:id="priceField" layoutX="1030.0" layoutY="113.0" prefHeight="25.0" prefWidth="100.0" />
-                  <TextField fx:id="areaField" layoutX="920.0" layoutY="151.0" prefHeight="25.0" prefWidth="98.0" />
-                  <TextField fx:id="capacityField" layoutX="1030.0" layoutY="151.0" prefHeight="25.0" prefWidth="100.0" />
-                  <TextArea fx:id="descriptionArea" layoutX="920.0" layoutY="201.0" prefHeight="124.0" prefWidth="214.0" />
+                  <TextField fx:id="ownerIdField" promptText="Omistajan ID" layoutX="920.0" layoutY="75.0" prefHeight="25.0" prefWidth="100.0" />
+                  <TextField fx:id="cottageNameField" promptText="Mökin nimi" layoutX="1030.0" layoutY="75.0" prefHeight="25.0" prefWidth="100.0" />
+                  <TextField fx:id="locationField" promptText="Sijainti" layoutX="920.0" layoutY="110.0" prefHeight="25.0" prefWidth="100.0" />
+                  <TextField fx:id="priceField" promptText="Hinta per yö" layoutX="1030.0" layoutY="110.0" prefHeight="25.0" prefWidth="100.0" />
+                  <TextField fx:id="areaField" promptText="Pinta-ala" layoutX="920.0" layoutY="145.0" prefHeight="25.0" prefWidth="100.0" />
+                  <TextField fx:id="capacityField" promptText="Vieraita" layoutX="1030.0" layoutY="145.0" prefHeight="25.0" prefWidth="100.0" />
+                  <TextArea fx:id="descriptionArea" promptText="Kuvaus" layoutX="920.0" layoutY="180.0" prefHeight="160.0" prefWidth="214.0" />
 
-                  <CheckBox fx:id="reservedCheckBox" layoutX="920.0" layoutY="337.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="72.0" text="Varattu" />
-                  <Button fx:id="saveChangesButton" layoutX="920.0" layoutY="371.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="134.0" text="Tallenna muutokset" />
+                  <CheckBox fx:id="reservedCheckBox" text="Varattu" style="-fx-text-fill: white" layoutX="920.0" layoutY="350.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="72.0" />
+                  <Button fx:id="saveChangesButton" text="Tallenna muutokset" layoutX="920.0" layoutY="380.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="134.0" />
 
                </children>
             </Pane>
@@ -49,36 +49,29 @@
             <Pane prefHeight="200.0" prefWidth="976.0">
                <children>
                   <Pane layoutX="-8.0" layoutY="-73.0" prefHeight="585.0" prefWidth="1173.0" style="-fx-background-color: #335170;" />
-                  <TableView fx:id="cottageTableView1" layoutX="14.0" layoutY="76.0" prefHeight="330.0" prefWidth="900.0">
+                  <TableView fx:id="reservationTableView" layoutX="14.0" layoutY="76.0" prefHeight="320.0" prefWidth="900.0">
                      <columns>
-                        <TableColumn fx:id="cottageIdColumn1" prefWidth="58.0" text="Asiakas" />
-                        <TableColumn fx:id="ownerIdColumn1" prefWidth="62.0" text="Sposti" />
-                        <TableColumn fx:id="reservedColumn1" prefWidth="86.0" text="Varaus ID" />
-                        <TableColumn fx:id="cottageNameColumn1" prefWidth="134.0" text="Mökki ID" />
-                        <TableColumn fx:id="locationColumn1" prefWidth="81.0" text="Alku pv" />
-                        <TableColumn fx:id="priceColumn1" prefWidth="71.0" text="Loppu pv" />
-                        <TableColumn fx:id="capacityColumn1" prefWidth="265.0" text="Lisätiedot" />
-                        <TableColumn fx:id="capacityColumn13" prefWidth="137.0" text="Maksuhistoria" />
+                        <TableColumn fx:id="reservationIdColumn" prefWidth="58.0" text="Varaus ID" />
+                        <TableColumn fx:id="cottageIdColumnReservations" prefWidth="62.0" text="Mökki ID" />
+                        <TableColumn fx:id="customerIdColumn" prefWidth="86.0" text="Asiakas ID" />
+                        <TableColumn fx:id="guestAmountColumn" prefWidth="134.0" text="Sähköposti" />
+                        <TableColumn fx:id="spanOfReservationColumn" prefWidth="81.0" text="Varauksen aika" />
+                        <TableColumn fx:id="reservationStatusColumn" prefWidth="265.0" text="Varauksen tila" />
+                        <TableColumn fx:id="paymentStatusColumn" prefWidth="137.0" text="Maksun tila" />
                      </columns>
                   </TableView>
                   <TextField layoutX="10.0" layoutY="35.0" />
                   <Button layoutX="160.0" layoutY="35.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" text="Etsi" />
-                  <Label layoutX="929.0" layoutY="52.0" prefHeight="17.0" prefWidth="250.0" text="Tee varaus / Muokkaa varausta" />
-                  <TextField fx:id="ownerIdField1" layoutX="920.0" layoutY="101.0" prefHeight="25.0" prefWidth="98.0" />
-                  <TextField fx:id="cottageNameField1" layoutX="1031.0" layoutY="101.0" prefHeight="25.0" prefWidth="98.0" />
-                  <TextField fx:id="locationField1" layoutX="920.0" layoutY="151.0" prefHeight="25.0" prefWidth="98.0" />
-                  <TextField fx:id="priceField1" layoutX="1030.0" layoutY="151.0" prefHeight="25.0" prefWidth="100.0" />
-                  <TextField fx:id="areaField1" layoutX="920.0" layoutY="193.0" prefHeight="25.0" prefWidth="98.0" />
-                  <TextField fx:id="capacityField1" layoutX="1030.0" layoutY="193.0" prefHeight="25.0" prefWidth="100.0" />
-                  <TextArea fx:id="descriptionArea1" layoutX="920.0" layoutY="226.0" prefHeight="124.0" prefWidth="217.0" />
-                  <Button fx:id="saveChangesButton1" layoutX="951.0" layoutY="381.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="134.0" text="Tallenna" />
-                  <Label layoutX="949.0" layoutY="84.0" text="Asiakas" />
-                  <Label layoutX="944.0" layoutY="134.0" text="Varaus ID" />
-                  <Label layoutX="1064.0" layoutY="84.0" text="Sposti" />
-                  <Label layoutX="1056.0" layoutY="134.0" text="Mökki ID" />
-                  <Label layoutX="949.0" layoutY="176.0" text="Alku pv" />
-                  <Label layoutX="1055.0" layoutY="176.0" text="Loppu pv" />
-                  <Label layoutX="70.0" layoutY="18.0" text="Etsi Varaus" />
+                  <Label style="-fx-text-fill: white" layoutX="920.0" layoutY="52.0" prefHeight="17.0" prefWidth="250.0" text="Muokkaa varausta - valitse varaus taulukosta" />
+                  <TextField fx:id="reservationIdField" promptText="Varaus ID" layoutX="920.0" layoutY="75.0" prefHeight="25.0" prefWidth="100.0" />
+                  <TextField fx:id="cottageIdFieldReservations" promptText="Mökki ID" layoutX="1030.0" layoutY="75.0" prefHeight="25.0" prefWidth="100.0" />
+                  <TextField fx:id="customerIdField" promptText="Asiakas ID" layoutX="920.0" layoutY="110.0" prefHeight="25.0" prefWidth="100.0" />
+                  <TextField fx:id="guestAmountField" promptText="Asiakasmäärä" layoutX="1030.0" layoutY="110.0" prefHeight="25.0" prefWidth="100.0" />
+                  <TextField fx:id="spanOfReservationField" promptText="Varauksen aika" layoutX="920.0" layoutY="145.0" prefHeight="25.0" prefWidth="100.0" />
+                  <TextField fx:id="reservationStatusField" promptText="Varauksen tila" layoutX="1030.0" layoutY="145.0" prefHeight="25.0" prefWidth="100.0" />
+                  <TextField fx:id="paymentStatusField" promptText="Maksun tila" layoutX="1030.0" layoutY="145.0" prefHeight="25.0" prefWidth="100.0" />
+                  <TextArea fx:id="additionalInfoField" promptText="Lisätiedot" layoutX="920.0" layoutY="180.0" prefHeight="124.0" prefWidth="214.0" />
+                  <Button fx:id="saveChangesButton1" layoutX="920.0" layoutY="371.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="134.0" text="Tallenna" />
                   <Button layoutX="391.0" layoutY="35.0" mnemonicParsing="false" text="Poista varaus" />
                </children>
             </Pane>

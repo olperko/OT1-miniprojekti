@@ -26,7 +26,7 @@ public class ReservationSystem extends Application {
         //cottageDAO.insertCottage(1, false, "Mökin nimi","Mökin sijainti", 123.45, 67.89, 6, "Mökin kuvaus");
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/mokkikodit/cottagereservation/frontend.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1170, 500);
+        Scene scene = new Scene(fxmlLoader.load(), 1165, 545);
 
         CottageManager cottageManager = fxmlLoader.getController();
 

@@ -46,12 +46,10 @@ public class ReservationManager {
     @FXML private TextField cottageIdField;
     @FXML private TextField ownerIdField;
     @FXML private TextField guestAmountField;
-    @FXML private TextField beginningDateField;
-    @FXML private TextField beginningTimeField;
-    @FXML private TextField endDateField;
-    @FXML private TextField endTimeField;
+    @FXML private TextField spanOfReservationField;
     @FXML private TextField reservationStatusField;
     @FXML private CheckBox paymentStatusCheckBox;
+    @FXML private TextArea additonalInfoField;
     @FXML private Button saveChangesButton;
 
     @FXML
@@ -114,14 +112,11 @@ public class ReservationManager {
                         rs.getInt("reservationId"),
                         rs.getInt("userId"),
                         rs.getInt("cottageId"),
-                        rs.getInt("ownerId"),
                         rs.getInt("guestAmount"),
-                        rs.getString("beginningDate"),
-                        rs.getString("beginningTime"),
-                        rs.getString("endDate"),
-                        rs.getString("endTime"),
+                        rs.getString("spanOfReservation"),
                         rs.getString("reservationStatus"),
-                        rs.getBoolean("paymentStatus")
+                        rs.getBoolean("paymentStatus"),
+                        rs.getString("additionalInfo")
                 );
                 reservations.add(reservation);
             }
@@ -136,12 +131,10 @@ public class ReservationManager {
         reservationIdField.setText(String.valueOf(reservation.getReservationID()));
         userIdField.setText(String.valueOf(reservation.getUserID()));
         cottageIdField.setText(String.valueOf(reservation.getCottageId()));
-        ownerIdField.setText(String.valueOf(reservation.getOwnerID()));
         guestAmountField.setText(String.valueOf(reservation.getGuestAmount()));
-        beginningDateField.setText(reservation.getBeginningDate());
-        beginningTimeField.setText(reservation.getBeginningTime());
-        endDateField.setText(reservation.getEndDate());
-        endTimeField.setText(reservation.getEndTime());
+        spanOfReservationField.setText(reservation.getSpanOfReservation());
+        reservationStatusField.setText(reservation.getReservationStatus());
+        additonalInfoField.setText(reservation.getAdditionalInfo());
 
         paymentStatusCheckBox.setSelected(reservation.isPaymentStatus());
     }
@@ -153,36 +146,28 @@ public class ReservationManager {
         }
 
         try {
-            int userId = Integer.parseInt(userIdField.getText());
-            int cottageId = Integer.parseInt(cottageIdField.getText());
-            int ownerId = Integer.parseInt(ownerIdField.getText());
+            int userID = Integer.parseInt(userIdField.getText());
             int guestAmount = Integer.parseInt(guestAmountField.getText());
-            String beginningDate = beginningDateField.getText();
-            String beginningTime = beginningTimeField.getText();
-            String endDate = endDateField.getText();
-            String endTime = endTimeField.getText();
+            String spanOfReservation = spanOfReservationField.getText();
             String reservationStatus = reservationStatusField.getText();
-            boolean paymentStatus = paymentStatusCheckBox.isSelected();
+            String paymentStatus = String.valueOf(paymentStatusCheckBox.isSelected());
+            String additionalInfo = additonalInfoField.textProperty().getValue();
 
 
             reservationDAO.updateReservation(
                     selected.getReservationID(),
                     guestAmount,
-                    beginningDate,
-                    beginningTime,
-                    endDate,
-                    endTime,
+                    spanOfReservation,
                     reservationStatus,
-                    paymentStatus
+                    paymentStatus,
+                    Boolean.parseBoolean(additionalInfo)
             );
 
             selected.setGuestAmount(guestAmount);
-            selected.setBeginningDate(beginningDate);
-            selected.setBeginningTime(beginningTime);
-            selected.setEndDate(endDate);
-            selected.setEndTime(endTime);
+            selected.setSpanOfReservation(spanOfReservation);
             selected.setReservationStatus(reservationStatus);
-            selected.setPaymentStatus(paymentStatus);
+            selected.setPaymentStatus(Boolean.parseBoolean(paymentStatus));
+            selected.setAdditionalInfo(additionalInfo);
 
             reservationTableView.refresh();
 

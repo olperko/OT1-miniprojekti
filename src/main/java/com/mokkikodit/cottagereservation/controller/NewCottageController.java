@@ -15,8 +15,8 @@ public class NewCottageController {
     @FXML private TextField capacityField;
     @FXML private TextArea descriptionArea;
     @FXML private CheckBox reservedCheckBox;
-    @FXML private Button saveButton;
-    @FXML private Button cancelButton;
+    @FXML private Button saveButtonCottage;
+    @FXML private Button cancelButtonCottage;
 
     private CottageDAO cottageDAO;
     private Runnable onSaveSuccess;
@@ -32,10 +32,10 @@ public class NewCottageController {
     @FXML
     private void initialize() {
 
-        saveButton.setOnAction(e -> saveCottage());
+        saveButtonCottage.setOnAction(e -> saveCottage());
 
-        cancelButton.setOnAction(e -> {
-            ((Stage) cancelButton.getScene().getWindow()).close();
+        cancelButtonCottage.setOnAction(e -> {
+            ((Stage) cancelButtonCottage.getScene().getWindow()).close();
         });
 
         priceField.textProperty().addListener((obs, oldValue, newValue) -> {
@@ -89,7 +89,7 @@ public class NewCottageController {
                 onSaveSuccess.run();
             }
 
-            ((Stage) saveButton.getScene().getWindow()).close();
+            ((Stage) saveButtonCottage.getScene().getWindow()).close();
 
         } catch (NumberFormatException ex) {
             showAlert(Alert.AlertType.ERROR, "Syöte virhe",

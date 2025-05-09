@@ -21,10 +21,8 @@ public class ReservationDAO {
                 "userID INTEGER, " +
                 "cottageID INTEGER, " +
                 "guestAmount INTEGER, " +
-                "beginningDate TEXT, " +
-                "beginningTime TEXT, " +
-                "endDate TEXT, " +
-                "endTime TEXT," +
+                "spanOfReservation TEXT, " +
+                "additionalInfo TEXT," +
                 "reservationStatus TEXT," +
                 "paymentStatus BOOLEAN)";
 
@@ -46,17 +44,17 @@ public class ReservationDAO {
      * @param endDate
      * @param endTime
      */
-    public void insertReservation(int userID, int cottageID, int guestAmount, String beginningDate, String beginningTime, String endDate, String endTime) {
+    public void insertReservation(int userID, int cottageID, int guestAmount, String spanOfReservation, String reservationStatus, boolean paymentStatus, String additionalInfo) {
         String sql = "INSERT INTO reservations (userID, cottageID, guestAmount, beginningDate, beginningTime, endDate, endTime) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(sql)) {
             pstmt.setInt(1, userID);
             pstmt.setInt(2, cottageID);
             pstmt.setInt(3, guestAmount);
-            pstmt.setString(4, beginningDate);
-            pstmt.setString(5, beginningTime);
-            pstmt.setString(6, endDate);
-            pstmt.setString(7, endTime);
+            pstmt.setString(4, spanOfReservation);
+            pstmt.setString(5, reservationStatus);
+            pstmt.setBoolean(6, paymentStatus);
+            pstmt.setString(7, additionalInfo);
             pstmt.executeUpdate();
             System.out.println("Tietokannan varaukset-taulukko päivitetty.");
         }
@@ -90,23 +88,20 @@ public class ReservationDAO {
      * @param endDate varauksen päättymispäivämäärä
      * @param endTime varauksen päättymiskellonaika
      */
-    public void updateReservation(int id, int guestAmount, String beginningDate, String beginningTime, String endDate, String endTime, String reservationStatus, boolean paymentStatus) {
+    public void updateReservation(int id, int guestAmount, String spanOfReservation, String additionalInfo, String reservationStatus, boolean paymentStatus) {
         String sql = "UPDATE reservations SET " +
                         "guestAmount = ?, " +
-                        "SET beginningDate = ?, SET beginningTime = ?, " +
-                        "SET endDate = ?, SET endTime = ?, " +
-                        "SET reservationStatus = ?, SET paymentStatus = ? " +
+                        "SET spanOfReservation = ?, SET additionalInfo = ?, " +
+                        "SET reservationStatus = ?, SET paymentStatus = ?, " +
                      "WHERE id = ?";
 
         try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(sql)) {
             pstmt.setInt(1, guestAmount);
-            pstmt.setString(2, beginningDate);
-            pstmt.setString(3, beginningTime);
-            pstmt.setString(4, endDate);
-            pstmt.setString(5, endTime);
-            pstmt.setString(6, reservationStatus);
-            pstmt.setBoolean(7, paymentStatus);
-            pstmt.setInt(8, id);
+            pstmt.setString(2, spanOfReservation);
+            pstmt.setString(3, additionalInfo);
+            pstmt.setString(4, reservationStatus);
+            pstmt.setBoolean(5, paymentStatus);
+            pstmt.setInt(6, id);
             pstmt.executeUpdate();
             System.out.println("Varauksen tiedot päivitetty onnistuneesti.");
         } catch (SQLException e) {
@@ -129,17 +124,15 @@ public class ReservationDAO {
                 int userId = rs.getInt("userID");
                 int cottageId = rs.getInt("cottageID");
                 int guestAmount = rs.getInt("guestAmount");
-                String beginningDate = rs.getString("beginningDate");
-                String beginningTime = rs.getString("beginningTime");
-                String endingDate = rs.getString("endDate");
-                String endingTime = rs.getString("endTime");
-                String reservationStatus = rs.getString("reservationStatus");
+                String spanOfReservation = rs.getString("beginningDate");
+                String additionalInfo = rs.getString("beginningTime");
+                String reservationStatus = rs.getString("endDate");
                 Boolean paymentStatus = rs.getBoolean("paymentStatus");
 
                 result += "Varauksen id: " + id + ". Varaajan id: " + userId + ". Mökin id: "
-                        + cottageId + ". Yöpyjien määrä: " + guestAmount + ".\n Varauksen alkamisaika " + beginningTime + ". Varauksen alkamispäivä: "
-                        + beginningDate + ". Varauksen loppumisaika: " + endingTime +
-                        ". Varauksen loppumispäivä: " + endingDate + ". Varauksen tila: " + reservationStatus + ". Maksun tila" + paymentStatus + ".\n";
+                        + cottageId + ". Yöpyjien määrä: " + guestAmount + ".\n Varauksen alkamisaika "
+                        + spanOfReservation + ". Varauksen loppumisaika: " + additionalInfo +
+                        ". Varauksen loppumispäivä: " + reservationStatus + ". Varauksen tila: " + paymentStatus + ". Maksun tila" + paymentStatus + ".\n";
             }
 
         } catch (SQLException e) {

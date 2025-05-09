@@ -20,29 +20,31 @@ public class UserDAO {
                 "email TEXT, " +
                 "firstName TEXT, " +
                 "lastName TEXT, " +
+                "ownedCottages TEXT, " +
                 "role TEXT, " +
-                "isBusiness BOOLEAN)";
+                "isBusiness BOOLEAN)" +
+                "additionalInfo TEXT";
     }
 
     /**
      * Metodi joka suorittaa käyttäjän lisäämisen SQL-tietokantaan.
-     * @param userID käyttäjä ID
      * @param email käyttäjän sähköposti
      * @param firstName käyttäjän etunimi
      * @param lastName käyttäjän sukunimi
      * @param role käyttäjän rooli alustalla ( ostaja / myyjä )
      * @param isBusiness onko käyttäjä yritys
      */
-    public void insertUser(int userID, String email, String firstName, String lastName, String role, boolean isBusiness) {
+    public void insertUser(String email, String firstName, String lastName, String ownedCottages, String role, boolean isBusiness, String additionalInfo) {
 
-        String sql = "INSERT INTO users (userID, email, firstName, lastName, role, isBusiness) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (email, firstName, lastName, role, isBusiness, additionalInfo) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(sql)) {
-            pstmt.setInt(1, userID);
-            pstmt.setString(2, email);
-            pstmt.setString(3, firstName);
-            pstmt.setString(4, lastName);
+            pstmt.setString(1, email);
+            pstmt.setString(2, firstName);
+            pstmt.setString(3, lastName);
+            pstmt.setString(4, ownedCottages);
             pstmt.setString(5, role);
             pstmt.setBoolean(6, isBusiness);
+            pstmt.setString(7, additionalInfo);
             pstmt.executeUpdate();
             System.out.println("Tietokannan käyttäjä-taulukko päivitetty.");
         }
@@ -77,17 +79,19 @@ public class UserDAO {
      * @param role käyttäjän rooli alustalla ( ostaja / myyjä )
      * @param isBusiness onko käyttäjä yritys
      */
-    public void updateUser(int userID, String email, String firstName, String lastName, String role, boolean isBusiness) {
+    public void updateUser(int userID, String email, String firstName, String lastName, String ownedCottages, String role, boolean isBusiness, String additionalInfo) {
         String sql = "UPDATE user SET " +
-                        "email = ?, SET firstName = ?, SET lastName = ?, SET role = ?, SET isBusiness = ? " +
-                     "WHERE id = ?";
+                "email = ?, SET firstName = ?, SET lastName = ?, SET role = ?, SET isBusiness = ? , SET additionalInfo = ?" +
+                "WHERE id = ?";
 
         try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(sql)) {
             pstmt.setString(1, email);
             pstmt.setString(2, firstName);
             pstmt.setString(3, lastName);
+            pstmt.setString(4, ownedCottages);
             pstmt.setString(4, role);
             pstmt.setBoolean(5, isBusiness);
+            pstmt.setString(6, additionalInfo);
             pstmt.executeUpdate();
             System.out.println("Tietokannan käyttäjä > " + userID + " < päivitetty.");
         } catch (SQLException e) {

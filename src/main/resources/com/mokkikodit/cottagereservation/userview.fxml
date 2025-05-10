@@ -53,6 +53,15 @@
         </columns>
     </TableView>
 
+    <Label
+            text="Mökkikodit - varausjärjestelmä"
+            layoutX="10" layoutY="10"
+            textFill="WHITE">
+        <font>
+            <Font name="Helvetica Bold" size="15.0"/>
+        </font>
+    </Label>
+
 
     <TextField
             promptText="Haku"
@@ -105,19 +114,19 @@
             layoutX="920" layoutY="145"
             prefHeight="25" prefWidth="100"/>
     <TextArea
+            promptText="Lisätiedot"
             fx:id="additionalInfoUserArea"
             layoutX="920" layoutY="180"
-            prefHeight="160" prefWidth="210"
-            promptText="Lisätiedot"/>
+            prefHeight="160" prefWidth="210"/>
     <CheckBox
+            text="Käyttäjä on yritys"
             fx:id="isBusinessCheckBox"
-            layoutX="920.0" layoutY="350.0"
-            textFill="WHITE"
-            text="Käyttäjä on yritys"/>
+            layoutX="920" layoutY="350"
+            textFill="WHITE"/>
     <Button
+            text="Tallenna muutokset"
             fx:id="saveUserChangesButton"
-            layoutX="920" layoutY="380"
-            text="Tallenna muutokset"/>
+            layoutX="920" layoutY="380"/>
 
 
 </Pane>

@@ -62,6 +62,17 @@
         </columns>
     </TableView>
 
+
+    <Label
+            text="Mökkikodit - varausjärjestelmä"
+            layoutX="10" layoutY="10"
+            textFill="WHITE">
+        <font>
+            <Font name="Helvetica Bold" size="15.0"/>
+        </font>
+    </Label>
+
+
     <TextField
             promptText="Haku"
                 layoutX="10.0" layoutY="35.0"

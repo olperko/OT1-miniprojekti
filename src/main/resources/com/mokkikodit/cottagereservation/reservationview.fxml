@@ -50,11 +50,20 @@
                     fx:id="paymentStatusColumn"
                     prefWidth="100.0"/>
             <TableColumn
-                    text="Lisätietoja"
+                    text="Lisätiedot"
                     fx:id="additionalReservationInfo"
-                    prefWidth="240"/>
+                    prefWidth="270"/>
         </columns>
     </TableView>
+
+    <Label
+            text="Mökkikodit - varausjärjestelmä"
+            layoutX="10" layoutY="10"
+            textFill="WHITE">
+        <font>
+            <Font name="Helvetica Bold" size="15.0"/>
+        </font>
+    </Label>
 
     <TextField
             promptText="Haku"
@@ -78,16 +87,15 @@
             prefHeight="25.0" prefWidth="87.0"
     />
 
+
     <Label
             text="Muokkaa varausta - valitse varaus"
             layoutX="920.0" layoutY="52.0"
-            textFill="WHITE"
-            >
+            textFill="WHITE">
         <font>
             <Font name="System Bold" size="12.0"/>
         </font>
     </Label>
-
 
     <TextField
             promptText="Varaus ID"
@@ -129,7 +137,7 @@
             fx:id="descriptionArea"
             layoutX="920.0" layoutY="180.0"
             prefHeight="160.0" prefWidth="210.0"
-            promptText="Kuvaus"
+            promptText="Lisätiedot"
     />
     <CheckBox
             text="Maksu suoritettu"

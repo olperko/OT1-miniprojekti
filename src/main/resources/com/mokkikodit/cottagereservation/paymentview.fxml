@@ -8,6 +8,9 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
 
+<?import javafx.scene.control.skin.ToolBarSkin.ToolBarOverflowMenu?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.CheckBox?>
 <Pane
     prefHeight="200.0" prefWidth="975.0"
     xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
@@ -15,61 +18,119 @@
     style="-fx-background-color: #335170;"
     >
 
-    <TableView fx:id="paymentTableView" layoutX="10.0" layoutY="75.0" prefHeight="330.0" prefWidth="900.0">
+    <TableView
+            fx:id="paymentTableView"
+            layoutX="10.0" layoutY="75.0"
+            prefHeight="330.0" prefWidth="900.0">
         <columns>
-            <TableColumn fx:id="paymentIdColumn" prefWidth="58.0" text="Maksu ID"/>
-            <TableColumn fx:id="reservationIdColumn" prefWidth="76.0" text="Varauksen ID"/>
-            <TableColumn fx:id="amountColumn" prefWidth="72.0" text="Maksun määrä"/>
-            <TableColumn fx:id="paymentTypeColumn" prefWidth="134.0" text="Maksun tyyppi"/>
-            <TableColumn fx:id="paymentStatusColumn" prefWidth="81.0" text="Maksun tila"/>
-            <TableColumn fx:id="confirmationDateColumn" prefWidth="81.0" text="Maksupäivä"/>
+            <TableColumn
+                    text="ID"
+                    fx:id="paymentIdColumn"
+                    prefWidth="70.0"/>
+            <TableColumn
+                    text="Varauksen ID"
+                    fx:id="reservationIdColumn"
+                    prefWidth="100"/>
+            <TableColumn
+                    text="Maksun määrä"
+                    fx:id="amountColumn"
+                    prefWidth="100"/>
+            <TableColumn
+                    text="Maksun tyyppi"
+                    fx:id="paymentTypeColumn"
+                    prefWidth="100"/>
+            <TableColumn
+                    text="Maksupäivä"
+                    fx:id="confirmationDateColumn"
+                    prefWidth="120"/>
+            <TableColumn
+                    text="Maksun tila"
+                    fx:id="paymentStatusColumn"
+                    prefWidth="100"/>
+            <TableColumn
+                text="Lisätiedot"
+                fx:id="additionalPaymentInfo"
+                prefWidth="310"/>
         </columns>
     </TableView>
 
+
+    <Label
+        text="Mökkikodit - varausjärjestelmä"
+        layoutX="10" layoutY="10"
+        textFill="WHITE">
+        <font>
+            <Font name="Helvetica Bold" size="15.0"/>
+        </font>
+    </Label>
+
+
     <TextField
             promptText="Haku"
-            layoutX="10.0" layoutY="35.0"
-    />
+            layoutX="10.0" layoutY="35.0"/>
     <Button
             text="Etsi"
             layoutX="160.0" layoutY="35.0"
-            prefHeight="25.0" prefWidth="45.0"
-    />
+            prefHeight="25.0" prefWidth="45.0"/>
     <Button
             text="Uusi maksu"
             fx:id="newPaymentButton"
             layoutX="250" layoutY="35.0"
-            prefHeight="25.0" prefWidth="80.0"
-    />
+            prefHeight="25.0" prefWidth="80.0"/>
     <Button
             text="Poista maksu"
             fx:id="removePaymentButton"
             layoutX="348.0" layoutY="35.0"
-            prefHeight="25.0" prefWidth="87.0"
-    />
+            prefHeight="25.0" prefWidth="87.0"/>
 
     <Label
             text="Muokkaa maksua - valitse maksu"
             layoutX="920.0" layoutY="52.0"
-            textFill="WHITE"
-            >
+            textFill="WHITE">
         <font>
             <Font name="System Bold" size="12.0"/>
         </font>
     </Label>
 
-    <TextField fx:id="reservationIdField" layoutX="920.0" layoutY="101.0" prefHeight="25.0" prefWidth="98.0"
-               promptText="Varaus ID"/>
-    <TextField fx:id="amountField" layoutX="1031.0" layoutY="101.0" prefHeight="25.0" prefWidth="98.0"
-               promptText="Maksun määrä"/>
-    <TextField fx:id="paymentTypeField" layoutX="920.0" layoutY="151.0" prefHeight="25.0" prefWidth="98.0"
-               promptText="Maksutyyppi"/>
-    <TextField fx:id="paymentStatusField" layoutX="1030.0" layoutY="151.0" prefHeight="25.0" prefWidth="100.0"
-               promptText="Maksun tila"/>
-    <TextField fx:id="confirmationDateField" layoutX="1030.0" layoutY="151.0" prefHeight="25.0" prefWidth="100.0"
-               promptText="Maksupäivä"/>
-    <Button fx:id="savePaymentChangesButton" layoutX="951.0" layoutY="381.0" mnemonicParsing="false" prefHeight="25.0"
-            prefWidth="134.0" text="Tallenna"/>
-    <Label layoutX="1055.0" layoutY="176.0"/>
+    <TextField
+            promptText="Varaus ID"
+            fx:id="reservationIdField"
+            layoutX="920" layoutY="75"
+            prefHeight="25" prefWidth="100"/>
+    <TextField
+            promptText="Maksun määrä"
+            fx:id="amountField"
+            layoutX="1030" layoutY="75"
+            prefHeight="25" prefWidth="100"/>
+    <TextField
+            promptText="Maksutyyppi"
+            fx:id="paymentTypeField"
+            layoutX="920" layoutY="110"
+            prefHeight="25" prefWidth="100"/>
+    <TextField
+            promptText="Maksun tila"
+            fx:id="paymentStatusField"
+            layoutX="1030" layoutY="110"
+            prefHeight="25" prefWidth="100"/>
+    <TextField
+            promptText="Maksupäivä"
+            fx:id="confirmationDateField"
+            layoutX="920" layoutY="145"
+            prefHeight="25" prefWidth="100"/>
+    <TextArea
+            promptText="Lisätiedot"
+            fx:id="additionalPaymentInfoField"
+            layoutX="920" layoutY="180"
+            prefHeight="160" prefWidth="210"/>
+    <CheckBox
+            text="Maksu suoritettu"
+            fx:id="paymentConfirmationCheckBox"
+            layoutX="920" layoutY="350"
+            textFill="WHITE"/>
+    <Button
+            text="Tallenna muutokset"
+            fx:id="savePaymentChangesButton"
+            layoutX="920" layoutY="380"/>
+
 
 </Pane>

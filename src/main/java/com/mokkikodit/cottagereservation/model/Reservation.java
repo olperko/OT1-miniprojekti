@@ -72,6 +72,7 @@ public class Reservation {
     public void setEndDate(String endDate) { this.endDate = endDate; }
     public String getEndDate() { return endDate; }
 
+
     public String getSpanOfReservation() { return startDate + " - " + endDate; }
 
     public String getAdditionalInfo() {

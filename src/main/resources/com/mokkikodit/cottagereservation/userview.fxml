@@ -8,46 +8,116 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.CheckBox?>
-<Pane prefHeight="200.0" prefWidth="976.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.mokkikodit.cottagereservation.controller.UserManager">
-    <Pane layoutX="-21.0" layoutY="-74.0" prefHeight="585.0" prefWidth="1173.0"
-          style="-fx-background-color: #335170;">
-        <Button layoutX="35.0" layoutY="485.0" mnemonicParsing="false" text="Poista käyttäjä"/>
-        <Label layoutX="999.0" layoutY="153.0" prefHeight="17.0" prefWidth="129.0" text="Muokkaa Käyttäjää"
-               textFill="WHITE"/>
-    </Pane>
-    <TableView fx:id="userTableView" layoutX="14.0" layoutY="76.0" prefHeight="330.0" prefWidth="900.0">
+<?import javafx.scene.text.Font?>
+
+<Pane prefHeight="200.0" prefWidth="975.0"
+      xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.mokkikodit.cottagereservation.controller.UserManager"
+      style="-fx-background-color: #335170;">
+
+
+    <TableView
+            fx:id="userTableView"
+            layoutX="10.0" layoutY="75.0"
+            prefHeight="330.0" prefWidth="900.0">
         <columns>
-            <TableColumn fx:id="userIdColumn" prefWidth="58.0" text="Etunimi"/>
-            <TableColumn fx:id="emailColumn" prefWidth="62.0" text="Sukunimi"/>
-            <TableColumn fx:id="firstNameColumn" prefWidth="86.0" text="Sähköposti"/>
-            <TableColumn fx:id="lastNameColumn" prefWidth="134.0" text="KäyttäjäID"/>
-            <TableColumn fx:id="ownedCottagesColumn" prefWidth="265.0" text="Lisätiedot"/>
-            <TableColumn fx:id="roleColumn" prefWidth="137.0" text="Maksuhistoria"/>
-            <TableColumn fx:id="isBusinessColumn" prefWidth="137.0" text="Maksuhistoria"/>
-            <TableColumn fx:id="additionalInfoUserColumn" prefWidth="137.0" text="Maksuhistoria"/>
+            <TableColumn
+                    fx:id="userIdColumn"
+                    text="ID"
+                    prefWidth="70"/>
+            <TableColumn
+                    fx:id="firstNameColumn"
+                    text="Etunimi"/>
+            <TableColumn
+                    fx:id="lastNameColumn"
+                    text="Sukunimi"/>
+            <TableColumn
+                    fx:id="emailColumn"
+                    text="Sähköposti"
+                    prefWidth="120"/>
+            <TableColumn
+                    fx:id="phoneNumberColumn"
+                    text="Puhelinnumero"
+                    prefWidth="120"/>
+            <TableColumn
+                    fx:id="ownedCottagesColumn"
+                    text="Omistamat mökit"
+                    prefWidth="150"/>
+            <TableColumn
+                    fx:id="isBusinessColumn"
+                    text="Yritys"/>
+            <TableColumn
+                    fx:id="additionalInfoUserColumn"
+                    text="Lisätiedot"
+                    prefWidth="200"/>
         </columns>
     </TableView>
-    <TextField layoutX="10.0" layoutY="35.0" promptText="Etsi Käyttäjä"/>
-    <Button layoutX="160.0" layoutY="35.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" text="Etsi"/>
-    <Button fx:id="newUserButton" text="Uusi käyttäjä" layoutX="160.0" layoutY="35.0" mnemonicParsing="false"
-            prefHeight="25.0" prefWidth="41.0"/>
-    <TextField fx:id="userIdField" layoutX="920.0" layoutY="101.0" prefHeight="25.0" prefWidth="98.0"
-               promptText="Sähköposti"/>
-    <TextField fx:id="emailField" layoutX="1031.0" layoutY="101.0" prefHeight="25.0" prefWidth="98.0"
-               promptText="KäyttäjäID"/>
-    <TextField fx:id="firstNameField" layoutX="920.0" layoutY="151.0" prefHeight="25.0" prefWidth="98.0"
-               promptText="Etunimi"/>
-    <TextField fx:id="lastNameField" layoutX="1030.0" layoutY="151.0" prefHeight="25.0" prefWidth="100.0"
-               promptText="Salasana"/>
-    <TextField fx:id="ownedCottagesField" layoutX="920.0" layoutY="193.0" prefHeight="25.0" prefWidth="98.0"
-               promptText="Sukunimi"/>
-    <TextField fx:id="roleField" layoutX="1030.0" layoutY="193.0" prefHeight="25.0" prefWidth="100.0"
-               promptText="Salasana uudelleen"/>
-    <CheckBox fx:id="isBusinessCheckBox" layoutX="1030.0" layoutY="151.0" prefHeight="25.0" prefWidth="100.0"/>
-    <TextArea fx:id="additionalInfoUserArea" layoutX="920.0" layoutY="226.0" prefHeight="124.0" prefWidth="217.0"
-              promptText="Kuvaus"/>
-    <Button fx:id="saveUserChangesButton" layoutX="951.0" layoutY="381.0" mnemonicParsing="false" prefHeight="25.0"
-            prefWidth="134.0" text="Lisää käyttäjä"/>
-    <Label layoutX="949.0" layoutY="176.0"/>
+
+
+    <TextField
+            promptText="Haku"
+            layoutX="10.0" layoutY="35.0"/>
+    <Button
+            text="Etsi"
+            layoutX="160.0" layoutY="35.0"
+            prefHeight="25.0" prefWidth="45.0"/>
+    <Button
+            text="Uusi käyttäjä"
+            fx:id="newUserButton"
+            layoutX="250" layoutY="35.0"/>
+    <Button
+            text="Poista käyttäjä"
+            fx:id="removeUserButton"
+            layoutX="348.0" layoutY="35.0"/>
+
+    <Label
+            text="Muokkaa käyttäjää - valitse käyttäjä"
+            layoutX="920.0" layoutY="52.0"
+            textFill="WHITE">
+        <font>
+            <Font name="System Bold" size="12.0"/>
+        </font>
+    </Label>
+
+    <TextField
+            promptText="Etunimi"
+            fx:id="firstNameField"
+            layoutX="920" layoutY="75"
+            prefHeight="25" prefWidth="100"/>
+    <TextField
+            promptText="Sukunimi"
+            fx:id="lastNameField"
+            layoutX="1030" layoutY="75"
+            prefHeight="25" prefWidth="100"/>
+    <TextField
+            promptText="Sähköposti"
+            fx:id="emailField"
+            layoutX="920" layoutY="110"
+            prefHeight="25" prefWidth="100"/>
+    <TextField
+            promptText="Puhelinnumero"
+            fx:id="phoneNumberField"
+            layoutX="1030" layoutY="110"
+            prefHeight="25" prefWidth="100"/>
+    <TextField
+            promptText="Omistamat mökit"
+            fx:id="ownedCottagesField"
+            layoutX="920" layoutY="145"
+            prefHeight="25" prefWidth="100"/>
+    <TextArea
+            fx:id="additionalInfoUserArea"
+            layoutX="920" layoutY="180"
+            prefHeight="160" prefWidth="210"
+            promptText="Lisätiedot"/>
+    <CheckBox
+            fx:id="isBusinessCheckBox"
+            layoutX="920.0" layoutY="350.0"
+            textFill="WHITE"
+            text="Käyttäjä on yritys"/>
+    <Button
+            fx:id="saveUserChangesButton"
+            layoutX="920" layoutY="380"
+            text="Tallenna muutokset"/>
+
+
 </Pane>

@@ -7,17 +7,17 @@ public class User {
     private String firstName;
     private String lastName;
     private String ownedCottages;
-    private String role;
+    private String phoneNumber;
     private boolean isBusiness;
     private String additionalInfo;
 
-    public User(int userID, String firstName, String lastName, String email, String ownedCottages, String role, boolean isBusiness, String additionalInfo) {
+    public User(int userID, String firstName, String lastName, String email, String ownedCottages, String phoneNumber, boolean isBusiness, String additionalInfo) {
         this.userID = userID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.ownedCottages = ownedCottages;
-        this.role = role;
+        this.phoneNumber = phoneNumber;
         this.isBusiness = isBusiness;
         this.additionalInfo = additionalInfo;
     }
@@ -37,8 +37,8 @@ public class User {
     public String getOwnedCottages() { return ownedCottages; }
     public void setOwnedCottages(String ownedCottages) { this.ownedCottages = ownedCottages; }
 
-    public String getRole() { return role; }
-    public void setRole(String role) { this.role = role; }
+    public String getPhoneNumber() { return phoneNumber; }
+    public void setPhoneNumber(String role) { this.phoneNumber = phoneNumber; }
 
     public boolean getIsBusiness() { return isBusiness; }
     public void setBusiness(boolean business) { isBusiness = business; }

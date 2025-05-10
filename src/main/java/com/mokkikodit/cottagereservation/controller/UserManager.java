@@ -34,7 +34,7 @@ public class UserManager {
     @FXML private TableColumn<User, String> firstNameColumn;
     @FXML private TableColumn<User, String> lastNameColumn;
     @FXML private TableColumn<User, String> ownedCottagesColumn;
-    @FXML private TableColumn<User, String> roleColumn;
+    @FXML private TableColumn<User, String> phoneNumberColumn;
     @FXML private TableColumn<User, Boolean> isBusinessColumn;
     @FXML private TableColumn<User, String> additionalInfoUserColumn;
 
@@ -44,7 +44,7 @@ public class UserManager {
     @FXML private TextField firstNameField;
     @FXML private TextField lastNameField;
     @FXML private TextField ownedCottagesField;
-    @FXML private TextField roleField;
+    @FXML private TextField phoneNumberField;
     @FXML private CheckBox isBusinessCheckBox;
     @FXML private TextArea additionalInfoUserArea;
     @FXML private Button saveUserChangesButton;
@@ -57,7 +57,7 @@ public class UserManager {
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         ownedCottagesColumn.setCellValueFactory(new PropertyValueFactory<>("ownedCottages"));
-        roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
+        phoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         isBusinessColumn.setCellValueFactory(new PropertyValueFactory<>("isBusiness"));
         additionalInfoUserColumn.setCellValueFactory(new PropertyValueFactory<>("additionalInfo"));
 
@@ -108,7 +108,7 @@ public class UserManager {
                         rs.getString("firstName"),
                         rs.getString("lastName"),
                         rs.getString("ownedCottages"),
-                        rs.getString("role"),
+                        rs.getString("phoneNumber"),
                         rs.getBoolean("isBusiness"),
                         rs.getString("additionalInfo")
                 );
@@ -127,7 +127,7 @@ public class UserManager {
         firstNameField.setText(user.getFirstName());
         lastNameField.setText(user.getLastName());
         ownedCottagesField.setText(user.getOwnedCottages());
-        roleField.setText(user.getRole());
+        phoneNumberField.setText(user.getPhoneNumber());
         isBusinessCheckBox.setSelected(user.getIsBusiness());
         additionalInfoUserArea.setText(user.getAdditionalInfo());
     }
@@ -143,7 +143,7 @@ public class UserManager {
             String firstName = firstNameField.getText();
             String lastName = lastNameField.getText();
             String ownedCottages = ownedCottagesField.getText();
-            String role = roleField.getText();
+            String phoneNumber = phoneNumberField.getText();
             boolean isBusiness = isBusinessCheckBox.isSelected();
             String additionalInfo = additionalInfoUserArea.getText();
 
@@ -154,7 +154,7 @@ public class UserManager {
                     firstName,
                     lastName,
                     ownedCottages,
-                    role,
+                    phoneNumber,
                     isBusiness,
                     additionalInfo
             );
@@ -162,7 +162,7 @@ public class UserManager {
             selected.setEmail(email);
             selected.setFirstName(firstName);
             selected.setLastName(lastName);
-            selected.setRole(role);
+            selected.setPhoneNumber(phoneNumber);
             selected.setBusiness(isBusiness);
             selected.setAdditionalInfo(additionalInfo);
 

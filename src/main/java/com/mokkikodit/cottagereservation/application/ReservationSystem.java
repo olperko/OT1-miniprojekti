@@ -14,7 +14,7 @@ public class ReservationSystem extends Application {
 
         SystemUI systemUI = new SystemUI();
         Parent root = systemUI.initializeApplication();
-        Scene scene = new Scene(root, 1165, 545);
+        Scene scene = new Scene(root, 1150, 450);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Mökkikodit varausjärjestelmä");
         primaryStage.show();
@@ -24,4 +24,3 @@ public class ReservationSystem extends Application {
         launch(args);
     }
 }
-

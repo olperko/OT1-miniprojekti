@@ -58,11 +58,18 @@ public class SystemUI {
         paymentManager.setPaymentDAO(paymentDAO);
         paymentManager.loadPaymentsFromDatabase();
 
-        return new TabPane(
-                new Tab("Mökit", cottageRoot),
-                new Tab("Varaukset", reservationRoot),
-                new Tab("Käyttäjät", userRoot),
-                new Tab("Maksut", paymentRoot)
-        );
+        Tab cottageTab = new Tab("Mökit", cottageRoot);
+        cottageTab.setClosable(false);
+
+        Tab reservationTab = new Tab("Varaukset", reservationRoot);
+        reservationTab.setClosable(false);
+
+        Tab userTab = new Tab("Käyttäjät", userRoot);
+        userTab.setClosable(false);
+
+        Tab paymentTab = new Tab("Maksut", paymentRoot);
+        paymentTab.setClosable(false);
+
+        return new TabPane(cottageTab, reservationTab, userTab, paymentTab);
     }
 }

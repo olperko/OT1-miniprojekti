@@ -55,10 +55,10 @@
 
     <Label
             text="Mökkikodit - varausjärjestelmä"
-            layoutX="10" layoutY="10"
+            layoutX="470" layoutY="23"
             textFill="WHITE">
         <font>
-            <Font name="Helvetica Bold" size="15.0"/>
+            <Font name="Helvetica Bold" size="30.0"/>
         </font>
     </Label>
 
@@ -80,7 +80,7 @@
             layoutX="348.0" layoutY="35.0"/>
 
     <Label
-            text="Muokkaa käyttäjää - valitse käyttäjä"
+            text="Valitse käyttäjä muokkaaksesi tietojaä"
             layoutX="920.0" layoutY="52.0"
             textFill="WHITE">
         <font>

@@ -183,7 +183,7 @@ public class UserManager {
             NewUserController controller = loader.getController();
             controller.setUserDAO(this.userDAO);
 
-            controller.setOnSaveSuccess(this::loadUsersFromDatabase);
+            controller.setOnSaveSuccess( this::loadUsersFromDatabase );
 
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Uuden käyttäjän lisääminen");

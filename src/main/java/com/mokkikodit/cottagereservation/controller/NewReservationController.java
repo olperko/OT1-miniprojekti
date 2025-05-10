@@ -10,7 +10,6 @@ import java.time.format.DateTimeFormatter;
 
 public class NewReservationController {
 
-    @FXML private TextField reservationIdField;
     @FXML private TextField cottageIdReservationField;
     @FXML private TextField customerIdField;
     @FXML private TextField guestAmountField;
@@ -40,12 +39,6 @@ public class NewReservationController {
 
         cancelReservationButton.setOnAction(e -> {
             ((Stage) cancelReservationButton.getScene().getWindow()).close();
-        });
-
-        reservationIdField.textProperty().addListener((obs, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                reservationIdField.setText(oldValue);
-            }
         });
 
         cottageIdReservationField.textProperty().addListener((obs, oldValue, newValue) -> {

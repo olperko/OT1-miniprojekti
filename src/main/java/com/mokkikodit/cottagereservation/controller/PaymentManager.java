@@ -43,7 +43,7 @@ public class PaymentManager {
     @FXML private TextField amountField;
     @FXML private TextField paymentTypeField;
     @FXML private TextField paymentStatusField;
-    @FXML private TextField confirmationDateField;
+    @FXML private DatePicker confirmationDatePicker;
     @FXML private Button savePaymentChangesButton;
 
     @FXML
@@ -120,7 +120,7 @@ public class PaymentManager {
         amountField.setText(String.valueOf(payment.getAmount()));
         paymentStatusField.setText(String.valueOf(payment.getPaymentStatus()));
         paymentTypeField.setText(String.valueOf(payment.getPaymentType()));
-        confirmationDateField.setText(String.valueOf(payment.getConfirmationDate()));
+        confirmationDatePicker.getValue();
     }
 
     private void savePaymentDetails() {
@@ -134,7 +134,7 @@ public class PaymentManager {
             int amount = Integer.parseInt(amountField.getText());
             String paymentType = paymentTypeField.getText();
             String paymentStatus = paymentStatusField.getText();
-            String confirmationDate = confirmationDateField.getText();
+            String paymentDate = confirmationDatePicker.getValue().toString();
 
 
             paymentDAO.updatePayment(
@@ -143,14 +143,14 @@ public class PaymentManager {
                     amount,
                     paymentType,
                     paymentStatus,
-                    confirmationDate
+                    paymentDate
             );
 
             selected.setReservationID(reservationId);
             selected.setAmount(amount);
             selected.setPaymentType(paymentType);
             selected.setPaymentStatus(paymentStatus);
-            selected.setConfirmationDate(confirmationDate);
+            selected.setConfirmationDate(paymentDate);
 
             paymentTableView.refresh();
 

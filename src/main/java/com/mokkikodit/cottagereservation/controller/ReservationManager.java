@@ -145,8 +145,6 @@ public class ReservationManager {
             int guestAmount = Integer.parseInt(guestAmountField.getText());
             LocalDate startDate = startDateField.getValue();
             LocalDate endDate = endDateField.getValue();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            String spanOfReservation = startDate.format(formatter) + " - " + endDate.format(formatter);
             String reservationStatus = (String) reservationStatusComboBox.getValue();
             Boolean paymentStatus = paymentStatusCheckBox.isSelected();
             String additionalInfo = additionalInfoField.textProperty().getValue();
@@ -172,7 +170,8 @@ public class ReservationManager {
             reservationTableView.refresh();
 
         } catch (NumberFormatException e) {
-            System.out.println("Syötteessä on virheellinen tyyppi (int, string tms)" + e.getMessage());
+            System.out.println("Virhe:" + e.getMessage());
+            e.printStackTrace();
         } catch (Exception e) {
             System.out.println("Virhe päivittäessä varauksen tietoja: " + e.getMessage());
             e.printStackTrace();

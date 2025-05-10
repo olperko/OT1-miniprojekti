@@ -13,6 +13,8 @@
 
 
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <Pane prefHeight="200.0" prefWidth="975.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.mokkikodit.cottagereservation.controller.ReservationManager"
       style="-fx-background-color: #335170;">
@@ -59,10 +61,10 @@
 
     <Label
             text="Mökkikodit - varausjärjestelmä"
-            layoutX="10" layoutY="10"
+            layoutX="470" layoutY="23"
             textFill="WHITE">
         <font>
-            <Font name="Helvetica Bold" size="15.0"/>
+            <Font name="Helvetica Bold" size="30.0"/>
         </font>
     </Label>
 
@@ -71,8 +73,8 @@
             layoutX="10.0" layoutY="35.0"
     />
     <Button text="Etsi"
-            layoutX="160.0" layoutY="35.0"
-            prefHeight="25.0" prefWidth="45.0"
+            layoutX="165.0" layoutY="35.0"
+            prefHeight="20.0" prefWidth="61.0"
     />
 
     <Button
@@ -90,7 +92,7 @@
 
 
     <Label
-            text="Muokkaa varausta - valitse varaus"
+            text="Valitse varaus muokkaaksesi tietoja"
             layoutX="920.0" layoutY="52.0"
             textFill="WHITE">
         <font>
@@ -133,17 +135,25 @@
     <ComboBox
             promptText="Varauksen tila"
             fx:id="reservationStatusComboBox"
-            layoutX="920.0" layoutY="180.0"
-            prefHeight="25.0" prefWidth="100.0"/>
+            layoutX="920.0" layoutY="180.0">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Tulossa"/>
+                <String fx:value="Käynnissä"/>
+                <String fx:value="Päättynyt"/>
+            </FXCollections>
+        </items>
+    </ComboBox>
+
     <TextArea
             promptText="Lisätiedot"
             fx:id="additionalInfoField"
             layoutX="920.0" layoutY="215.0"
-            prefHeight="150" prefWidth="210.0"/>
+            prefHeight="120" prefWidth="210.0"/>
     <CheckBox
             text="Maksu suoritettu"
             fx:id="paymentStatusCheckBox"
-            layoutX="1030.0" layoutY="180.0"
+            layoutX="920.0" layoutY="350.0"
             textFill="WHITE"/>
     <Button
             fx:id="saveChangesButton"

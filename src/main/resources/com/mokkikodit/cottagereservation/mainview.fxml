@@ -2,14 +2,18 @@
 
 <?import javafx.scene.control.*?>
 
-<Accordion maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="553.0" prefWidth="1154.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mokkikodit.cottagereservation.view.SystemUI">
+<Accordion maxHeight="-Infinity" maxWidth="-Infinity"
+           minHeight="-Infinity" minWidth="-Infinity"
+           prefHeight="553.0" prefWidth="1154.0"
+           xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.mokkikodit.cottagereservation.view.SystemUI">
     <panes>
-        <TitledPane animated="false" prefHeight="456.0" prefWidth="889.0" text="Mökkien hallinta">
+        <TitledPane prefHeight="456.0" prefWidth="889.0" text="Mökkien hallinta">
             <content>
                 <fx:include source="cottageview.fxml" />
             </content>
         </TitledPane>
-        <TitledPane animated="false" prefHeight="456.0" prefWidth="889.0" text="Varausten Hallinta">
+        <TitledPane  prefHeight="456.0" prefWidth="889.0" text="Varausten Hallinta">
             <content>
                 <fx:include source="reservationview.fxml" />
             </content>

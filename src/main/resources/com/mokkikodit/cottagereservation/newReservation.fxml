@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.mokkikodit.cottagereservation.controller.NewReservationController"
+            prefWidth="350" prefHeight="400">
+    <children>
+        <VBox spacing="10" alignment="CENTER" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10">
+            <Label text="Varauksen tiedot" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+            <TextField fx:id="reservationIdField" promptText="Varaus ID"/>
+            <TextField fx:id="cottageIdReservationField" promptText="Mökki ID"/>
+            <TextField fx:id="customerIdField" promptText="Asiakas ID"/>
+            <TextField fx:id="guestAmountField" promptText="Asiakasmäärä"/>
+            <DatePicker fx:id="startDatePicker" promptText="Alkupäivä"/>
+            <DatePicker fx:id="endDatePicker" promptText="Loppupäivä"/>
+            <ComboBox fx:id="reservationStatusComboBox" promptText="Varauksen tila">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Tulossa"/>
+                        <String fx:value="Käynnissä"/>
+                        <String fx:value="Päättynyt"/>
+                    </FXCollections>
+                </items>
+            </ComboBox>
+            <CheckBox fx:id="paymentStatusCheckBox" text="Maksun tila"/>
+            <TextArea fx:id="additionalInfoField" promptText="Kuvaus" prefRowCount="2"/>
+            <HBox spacing="10" alignment="CENTER">
+                <Button fx:id="saveReservationButton" text="Tallenna" defaultButton="true"/>
+                <Button fx:id="cancelReservationButton" text="Peruuta" cancelButton="true"/>
+            </HBox>
+        </VBox>
+    </children>
+</AnchorPane>
+

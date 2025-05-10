@@ -7,11 +7,10 @@ import javafx.stage.Stage;
 
 public class NewUserController {
 
-    @FXML private TextField emailField;
     @FXML private TextField firstNameField;
     @FXML private TextField lastNameField;
-    @FXML private TextField ownedCottagesField;
-    @FXML private TextField roleField;
+    @FXML private TextField emailField;
+    @FXML private TextField phoneNumberField;
     @FXML private CheckBox isBusinessCheckBox;
     @FXML private TextArea additionalInfoField;
     @FXML private Button saveButtonUser;
@@ -41,11 +40,10 @@ public class NewUserController {
 
     private void saveUser() {
         try {
-            String email = emailField.getText();
             String firstName = firstNameField.getText();
             String lastName = lastNameField.getText();
-            String ownedCottages = ownedCottagesField.getText();
-            String role = roleField.getText();
+            String email = emailField.getText();
+            String phoneNumber = phoneNumberField.getText();
             boolean isBusiness = isBusinessCheckBox.isSelected();
             String additionalInfo = additionalInfoField.getText();
 
@@ -54,7 +52,7 @@ public class NewUserController {
                 return;
             }
 
-            userDAO.insertUser(email, firstName, lastName, ownedCottages, role, isBusiness, additionalInfo);
+            userDAO.insertUser(firstName, lastName, email, phoneNumber, isBusiness, additionalInfo);
 
             showAlert(Alert.AlertType.INFORMATION, "Onnistui",
                     "Mökki on lisätty!",

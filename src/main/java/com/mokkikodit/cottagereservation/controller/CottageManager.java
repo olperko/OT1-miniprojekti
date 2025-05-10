@@ -44,6 +44,7 @@ public class CottageManager {
     @FXML private TextArea descriptionArea;
     @FXML private CheckBox reservedCheckBox;
     @FXML private Button saveChangesButton;
+    @FXML private Button removeCottageButton;
 
     @FXML
     public void initialize() {
@@ -72,6 +73,15 @@ public class CottageManager {
 
         newCottageButton.setOnAction(event -> {
             openNewCottageDialog();
+        });
+
+        removeCottageButton.setOnAction(event -> {
+            Cottage selected = cottageTableView.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                cottages.remove(selected);
+                cottageDAO.deleteCottage(selected.getCottageId());
+                cottageTableView.refresh();
+            }
         });
     }
 

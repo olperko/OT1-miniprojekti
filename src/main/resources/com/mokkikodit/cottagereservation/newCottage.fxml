@@ -3,24 +3,25 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.mokkikodit.cottagereservation.controller.NewCottageController"
-            prefWidth="350" prefHeight="400">
-    <children>
-        <VBox spacing="10" alignment="CENTER" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10">
-            <Label text="Mökin tiedot" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-            <TextField fx:id="cottageNameField" promptText="Mökin nimi"/>
-            <TextField fx:id="locationField" promptText="Sijainti"/>
-            <TextField fx:id="ownerIdField" promptText="Omistaja"/>
-            <TextField fx:id="priceField" promptText="Hinta per päivä"/>
-            <TextField fx:id="areaField" promptText="Pinta-ala"/>
-            <TextField fx:id="capacityField" promptText="Majoituskapasiteetti"/>
-            <TextArea fx:id="descriptionArea" promptText="Kuvaus" prefRowCount="2"/>
-            <CheckBox fx:id="reservedCheckBox" text="Varattu"/>
-            <HBox spacing="10" alignment="CENTER">
-                <Button fx:id="saveButtonCottage" text="Tallenna" defaultButton="true"/>
-                <Button fx:id="cancelButtonCottage" text="Peruuta" cancelButton="true"/>
-            </HBox>
-        </VBox>
-    </children>
+<AnchorPane
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="com.mokkikodit.cottagereservation.controller.NewCottageController"
+        prefWidth="350" prefHeight="400">
+    <VBox spacing="10" alignment="CENTER" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10"
+          AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10">
+        <Label text="Mökin tiedot" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+        <TextField fx:id="cottageNameField" promptText="Mökin nimi"/>
+        <TextField fx:id="locationField" promptText="Sijainti"/>
+        <TextField fx:id="ownerIdField" promptText="Omistaja"/>
+        <TextField fx:id="priceField" promptText="Hinta per päivä"/>
+        <TextField fx:id="areaField" promptText="Pinta-ala"/>
+        <TextField fx:id="capacityField" promptText="Majoituskapasiteetti"/>
+        <TextArea fx:id="descriptionArea" promptText="Kuvaus" prefRowCount="2"/>
+        <CheckBox fx:id="reservedCheckBox" text="Varattu"/>
+        <HBox spacing="10" alignment="CENTER">
+            <Button fx:id="saveButtonCottage" text="Tallenna" defaultButton="true"/>
+            <Button fx:id="cancelButtonCottage" text="Peruuta" cancelButton="true"/>
+        </HBox>
+    </VBox>
 </AnchorPane>
 

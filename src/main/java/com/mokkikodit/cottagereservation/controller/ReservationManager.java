@@ -35,9 +35,8 @@ public class ReservationManager {
     @FXML private TableColumn<Reservation, Integer> guestAmountColumn;
     @FXML private TableColumn<Reservation, String> spanOfReservationColumn;
     @FXML private TableColumn<Reservation, String> reservationStatusColumn;
-    @FXML private TableColumn<Reservation, Integer> paymentStatusColumn; // tähän boolean ollut reserved
+    @FXML private TableColumn<Reservation, Integer> paymentStatusColumn;
 
-    //Front end asiota, katsellaan tarkemmin kun front end luokan osalta tehty
     @FXML private Button newReservationButton;
     @FXML private TextField reservationIdField;
     @FXML private TextField userIdField;
@@ -45,7 +44,7 @@ public class ReservationManager {
     @FXML private TextField guestAmountField;
     @FXML private DatePicker startDateField;
     @FXML private DatePicker endDateField;
-    @FXML private TextField reservationStatusField;
+    @FXML private ComboBox reservationStatusComboBox;
     @FXML private CheckBox paymentStatusCheckBox;
     @FXML private TextArea additionalInfoField;
     @FXML private Button saveChangesButton;
@@ -130,7 +129,7 @@ public class ReservationManager {
         guestAmountField.setText(String.valueOf(reservation.getGuestAmount()));
         startDateField.setValue(LocalDate.parse(reservation.getStartDate()));
         endDateField.setValue(LocalDate.parse(reservation.getEndDate()));
-        reservationStatusField.setText(reservation.getReservationStatus());
+        reservationStatusComboBox.setValue(reservation.getReservationStatus());
         additionalInfoField.setText(reservation.getAdditionalInfo());
 
         paymentStatusCheckBox.setSelected(reservation.isPaymentStatus());
@@ -148,7 +147,7 @@ public class ReservationManager {
             LocalDate endDate = endDateField.getValue();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String spanOfReservation = startDate.format(formatter) + " - " + endDate.format(formatter);
-            String reservationStatus = reservationStatusField.getText();
+            String reservationStatus = (String) reservationStatusComboBox.getValue();
             Boolean paymentStatus = paymentStatusCheckBox.isSelected();
             String additionalInfo = additionalInfoField.textProperty().getValue();
 

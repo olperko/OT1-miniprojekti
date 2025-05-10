@@ -13,7 +13,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -153,7 +152,6 @@ public class UserManager {
                     email,
                     firstName,
                     lastName,
-                    ownedCottages,
                     phoneNumber,
                     isBusiness,
                     additionalInfo
@@ -162,6 +160,7 @@ public class UserManager {
             selected.setEmail(email);
             selected.setFirstName(firstName);
             selected.setLastName(lastName);
+            selected.setOwnedCottages(ownedCottages);
             selected.setPhoneNumber(phoneNumber);
             selected.setBusiness(isBusiness);
             selected.setAdditionalInfo(additionalInfo);

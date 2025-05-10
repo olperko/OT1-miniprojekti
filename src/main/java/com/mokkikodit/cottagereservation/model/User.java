@@ -11,6 +11,15 @@ public class User {
     private boolean isBusiness;
     private String additionalInfo;
 
+    public User(String firstName, String lastName, String email, String phoneNumber, boolean isBusiness, String additionalInfo) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.isBusiness = isBusiness;
+        this.additionalInfo = additionalInfo;
+    }
+
     public User(int userID, String firstName, String lastName, String email, String ownedCottages, String phoneNumber, boolean isBusiness, String additionalInfo) {
         this.userID = userID;
         this.firstName = firstName;

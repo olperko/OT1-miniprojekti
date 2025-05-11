@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="com.mokkikodit.cottagereservation.controller.NewPaymentController"
+        prefWidth="350" prefHeight="400">
+    <VBox spacing="10" alignment="CENTER" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10"
+          AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10">
+        <Label text="Maksun tiedot" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+        <TextField fx:id="paymentReservationId" promptText="Varauksen ID"/>
+        <TextField fx:id="amountField" promptText="Maksun määrä"/>
+        <TextField fx:id="paymentTypeComboBox" promptText="Maksutyyppi"/>
+        <TextField fx:id="paymentStatusComboBox" promptText="Maksun tila"/>
+        <DatePicker fx:id="paymentDatePicker" promptText="Maksupäivä"/>
+        <Button fx:id="savePaymentButton" text="Tallenna" defaultButton="true"/>
+        <Button fx:id="cancelPaymentButton" text="Peruuta" cancelButton="true"/>
+    </VBox>
+</AnchorPane>
+
+

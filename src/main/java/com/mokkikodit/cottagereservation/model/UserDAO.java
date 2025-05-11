@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO {
 
@@ -135,6 +137,47 @@ public class UserDAO {
         }
         return result;
     }
+
+    public List<User> searchUsers(int userId, String firstName, String lastName, String email) {
+        StringBuilder sql = new StringBuilder("SELECT * FROM users WHERE 1=1");
+
+        if (userId != -1) sql.append(" AND userId = ?");
+        if (firstName != null && !firstName.isEmpty()) sql.append(" AND firstName LIKE ?");
+        if (lastName != null && !lastName.isEmpty()) sql.append(" AND lastName LIKE ?");
+        if (email != null && !email.isEmpty()) sql.append(" AND email LIKE ?");
+
+        List<User> users = new ArrayList<>();
+
+        try (PreparedStatement pstmt = databaseManager.getConnection().prepareStatement(sql.toString())) {
+            int paramIndex = 1;
+
+            if (userId != -1) pstmt.setInt(paramIndex++, userId);
+            if (firstName != null && !firstName.isEmpty()) pstmt.setString(paramIndex++, "%" + firstName + "%");
+            if (lastName != null && !lastName.isEmpty()) pstmt.setString(paramIndex++, "%" + lastName + "%");
+            if (email != null && !email.isEmpty()) pstmt.setString(paramIndex++, "%" + email + "%");
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    User user = new User(
+                            rs.getInt("userId"),
+                            rs.getString("firstName"),
+                            rs.getString("lastName"),
+                            rs.getString("email"),
+                            rs.getString("phoneNumber"),
+                            rs.getString("ownedCottages"),
+                            rs.getBoolean("isBusiness"),
+                            rs.getString("additionalInfo")
+                    );
+                    users.add(user);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Virhe käyttäjien hakemisessa hakuehdolla: " + e.getMessage());
+        }
+
+        return users;
+    }
+
 
 }
 

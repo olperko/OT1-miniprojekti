@@ -19,6 +19,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class UserManager {
 
@@ -199,4 +200,59 @@ public class UserManager {
             System.out.println("Virhe 'Uusi käyttäjä' -ikkunaa avatessa: " + e.getMessage());
         }
     }
+
+    @FXML
+    private TextField searchField;
+    @FXML
+    public void handleSearchUsers() {
+        String query = searchField.getText();
+
+        int userId = -1;
+        String firstName = "";
+        String lastName = "";
+        String email = "";
+
+        // Try parsing as ID, otherwise treat as name/email
+        try {
+            userId = Integer.parseInt(query);
+        } catch (NumberFormatException e) {
+            firstName = query;
+            lastName = query;
+            email = query;
+        }
+
+        List<User> results = userDAO.searchUsers(userId, firstName, lastName, email);
+
+        StringBuilder resultText = new StringBuilder();
+        for (User user : results) {
+            resultText.append("Käyttäjän ID: ").append(user.getUserId())
+                    .append(", Etunimi: ").append(user.getFirstName())
+                    .append(", Sukunimi: ").append(user.getLastName())
+                    .append(", Sähköposti: ").append(user.getEmail())
+                    .append(", Puhelin: ").append(user.getPhoneNumber())
+                    .append(", Yritys: ").append(user.getIsBusiness() ? "Kyllä" : "Ei")
+                    .append(", Lisätiedot: ").append(user.getAdditionalInfo())
+                    .append("\n");
+        }
+
+        if (results.isEmpty()) {
+            resultText.append("Hakusanalla ").append(query).append(" ei löytynyt käyttäjiä.");
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mokkikodit/cottagereservation/user_results.fxml"));
+            Parent root = loader.load();
+
+            UserResultsController controller = loader.getController();
+            controller.setResultsText(resultText.toString());
+
+            Stage stage = new Stage();
+            stage.setTitle("Käyttäjähaku");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.mokkikodit.cottagereservation.controller;
 
+import com.mokkikodit.cottagereservation.model.Reservation;
 import com.mokkikodit.cottagereservation.model.User;
 import com.mokkikodit.cottagereservation.model.UserDAO;
 import com.mokkikodit.cottagereservation.util.DatabaseManagement;
@@ -38,7 +39,6 @@ public class UserManager {
     @FXML private TableColumn<User, String> additionalInfoUserColumn;
 
     @FXML private Button newUserButton;
-    @FXML private TextField userIdField;
     @FXML private TextField emailField;
     @FXML private TextField firstNameField;
     @FXML private TextField lastNameField;
@@ -47,14 +47,22 @@ public class UserManager {
     @FXML private CheckBox isBusinessCheckBox;
     @FXML private TextArea additionalInfoUserArea;
     @FXML private Button saveUserChangesButton;
+    @FXML private Button removeUserButton;
 
-    @FXML
-    public void initialize() {
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
 
+    public void setDatabaseManagement(DatabaseManagement db) {
+        this.databaseManagement = db;
+        this.userDAO = new UserDAO(db);
+    }
+
+    @FXML public void initialize() {
         userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
-        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
         ownedCottagesColumn.setCellValueFactory(new PropertyValueFactory<>("ownedCottages"));
         phoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         isBusinessColumn.setCellValueFactory(new PropertyValueFactory<>("isBusiness"));
@@ -75,16 +83,15 @@ public class UserManager {
         newUserButton.setOnAction(event -> {
             openNewUserDialog();
         });
-    }
 
-
-    public void setUserDAO(UserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
-
-    public void setDatabaseManagement(DatabaseManagement db) {
-        this.databaseManagement = db;
-        this.userDAO = new UserDAO(db);
+        removeUserButton.setOnAction(event -> {
+            User selected = userTableView.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                users.remove(selected);
+                userDAO.deleteUser(selected.getUserId());
+                userTableView.refresh();
+            }
+        });
     }
 
     public void loadUsersFromDatabase() {
@@ -103,9 +110,9 @@ public class UserManager {
             while (rs.next()) {
                 User user = new User(
                         rs.getInt("userId"),
-                        rs.getString("email"),
                         rs.getString("firstName"),
                         rs.getString("lastName"),
+                        rs.getString("email"),
                         rs.getString("ownedCottages"),
                         rs.getString("phoneNumber"),
                         rs.getBoolean("isBusiness"),
@@ -115,16 +122,15 @@ public class UserManager {
             }
 
         } catch (SQLException e) {
-            System.err.println("Error loading reservations: " + e.getMessage());
-            e.printStackTrace();
+            System.err.println("Virhe ladatessa käyttäjiä: " + e.getMessage());
+
         }
     }
 
     private void showUserDetails(User user) {
-        userIdField.setText(String.valueOf(user.getUserID()));
-        emailField.setText(user.getEmail());
         firstNameField.setText(user.getFirstName());
         lastNameField.setText(user.getLastName());
+        emailField.setText(user.getEmail());
         ownedCottagesField.setText(user.getOwnedCottages());
         phoneNumberField.setText(user.getPhoneNumber());
         isBusinessCheckBox.setSelected(user.getIsBusiness());
@@ -138,9 +144,9 @@ public class UserManager {
         }
 
         try {
-            String email = emailField.getText();
             String firstName = firstNameField.getText();
             String lastName = lastNameField.getText();
+            String email = emailField.getText();
             String ownedCottages = ownedCottagesField.getText();
             String phoneNumber = phoneNumberField.getText();
             boolean isBusiness = isBusinessCheckBox.isSelected();
@@ -148,18 +154,18 @@ public class UserManager {
 
 
             userDAO.updateUser(
-                    selected.getUserID(),
-                    email,
+                    selected.getUserId(),
                     firstName,
                     lastName,
+                    email,
                     phoneNumber,
                     isBusiness,
                     additionalInfo
             );
 
-            selected.setEmail(email);
             selected.setFirstName(firstName);
             selected.setLastName(lastName);
+            selected.setEmail(email);
             selected.setOwnedCottages(ownedCottages);
             selected.setPhoneNumber(phoneNumber);
             selected.setBusiness(isBusiness);
@@ -171,7 +177,6 @@ public class UserManager {
             System.out.println("Syötteessä on virheellinen tyyppi (int, string tms)" + e.getMessage());
         } catch (Exception e) {
             System.out.println("Virhe päivittäessä käyttäjän tietoja: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -191,7 +196,7 @@ public class UserManager {
             dialogStage.initModality(Modality.APPLICATION_MODAL);
             dialogStage.showAndWait();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Virhe 'Uusi käyttäjä' -ikkunaa avatessa: " + e.getMessage());
         }
     }
 }

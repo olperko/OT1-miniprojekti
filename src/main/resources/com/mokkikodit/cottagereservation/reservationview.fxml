@@ -27,31 +27,38 @@
             <TableColumn
                     text="ID"
                     fx:id="reservationIdColumn"
-                    prefWidth="70"/>
+                    prefWidth="70"
+                    style="-fx-alignment: CENTER;"/>
             <TableColumn
                     text="Mökki ID"
                     fx:id="cottageIdReservationColumn"
-                    prefWidth="70.0"/>
+                    prefWidth="70.0"
+                    style="-fx-alignment: CENTER;"/>
             <TableColumn
                     text="Asiakas ID"
                     fx:id="userIdColumn"
-                    prefWidth="70.0"/>
+                    prefWidth="70.0"
+                    style="-fx-alignment: CENTER;"/>
             <TableColumn
                     text="Asiakasmäärä"
                     fx:id="guestAmountColumn"
-                    prefWidth="100.0"/>
+                    prefWidth="100.0"
+                    style="-fx-alignment: CENTER;"/>
             <TableColumn
                     text="Varauksen aika"
                     fx:id="spanOfReservationColumn"
-                    prefWidth="150.0"/>
+                    prefWidth="150.0"
+                    style="-fx-alignment: CENTER;"/>
             <TableColumn
                     text="Varauksen tila"
                     fx:id="reservationStatusColumn"
-                    prefWidth="100.0"/>
+                    prefWidth="100.0"
+                    style="-fx-alignment: CENTER;"/>
             <TableColumn
                     text="Maksun tila"
                     fx:id="paymentStatusColumn"
-                    prefWidth="100.0"/>
+                    prefWidth="100.0"
+                    style="-fx-alignment: CENTER;"/>
             <TableColumn
                     text="Lisätiedot"
                     fx:id="additionalReservationInfo"
@@ -101,26 +108,20 @@
     </Label>
 
     <TextField
-            promptText="Varaus ID"
-            fx:id="reservationIdField"
-            layoutX="920.0" layoutY="75.0"
-            prefHeight="25.0" prefWidth="100.0"
-    />
-    <TextField
             promptText="Mökki ID"
             fx:id="cottageIdReservationField"
-            layoutX="1030.0" layoutY="75.0"
+            layoutX="920.0" layoutY="75.0"
             prefHeight="25.0" prefWidth="100.0"
     />
     <TextField
             promptText="Asiakas ID"
             fx:id="userIdField"
-            layoutX="920.0" layoutY="110.0"
+            layoutX="1030" layoutY="110"
             prefHeight="25.0" prefWidth="100.0"/>
     <TextField
             promptText="Asiakasmäärä"
             fx:id="guestAmountField"
-            layoutX="1030.0" layoutY="110.0"
+            layoutX="920.0" layoutY="110.0"
             prefHeight="25.0" prefWidth="100.0"/>
     <DatePicker
             promptText="Alkamispäivä"

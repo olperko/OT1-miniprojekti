@@ -16,21 +16,22 @@ public class UserDAO {
      */
     public void createUserTable() {
         String sql = "CREATE TABLE IF NOT EXISTS users(" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "email TEXT, " +
+                "userId INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "firstName TEXT, " +
                 "lastName TEXT, " +
+                "email TEXT, " +
+                "phoneNumber TEXT, " +
+                "pastReservations TEXT, " +
                 "ownedCottages TEXT, " +
-                "role TEXT, " +
                 "isBusiness BOOLEAN, " +
                 "additionalInfo TEXT" +
                 ")";
 
         try (Statement stmt = databaseManager.getConnection().createStatement()) {
             stmt.execute(sql);
-            System.out.println("Käyttäjä-taulukko luotu onnituneesti.");
+            System.out.println("Käyttäjä-taulukko luotu onnituneesti tietokantaan.");
         } catch (SQLException e) {
-            System.out.println("Taulun luonti epäonnistui: " + e.getMessage());
+            System.out.println("Mökki-taulukon luonti epäonnistui: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -44,7 +45,7 @@ public class UserDAO {
      */
     public void insertUser(String firstName, String lastName, String email, String phoneNumber, boolean isBusiness, String additionalInfo) {
 
-        String sql = "INSERT INTO users (firstName, lastName, email, phoneNumber, isBusiness, additionalInfo) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (firstName, lastName, email, phoneNumber, isBusiness, additionalInfo) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = databaseManager.getConnection().prepareStatement(sql)) {
             pstmt.setString(1, firstName);
             pstmt.setString(2, lastName);
@@ -53,10 +54,11 @@ public class UserDAO {
             pstmt.setBoolean(5, isBusiness);
             pstmt.setString(6, additionalInfo);
             pstmt.executeUpdate();
-            System.out.println("Tietokannan käyttäjä-taulukko päivitetty.");
+            System.out.println("Käyttäjä lisätty onnistuneesti tietokantaan.");
         }
         catch (SQLException e) {
-            System.out.println("Tietokannan käyttäjä-taulukon päivitys ei onnistunut: " + e.getMessage());
+            System.out.println("Virhe käyttäjän lisäämisessä: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -65,7 +67,7 @@ public class UserDAO {
      * @param id poistettavan käyttäjän ID.
      */
     public void deleteUser(int id) {
-        String sql = "DELETE FROM users WHERE id = ?";
+        String sql = "DELETE FROM users WHERE userId = ?";
 
         try (PreparedStatement pstmt = databaseManager.getConnection().prepareStatement(sql)) {
             pstmt.setInt(1, id);
@@ -79,16 +81,16 @@ public class UserDAO {
 
     /**
      * Metodi joka suorittaa käyttäjän tietojen päivittämisen SQL-tietokannassa.
-     * @param userID käyttäjä ID
+     * @param userId käyttäjä ID
      * @param email käyttäjän sähköposti
      * @param firstName käyttäjän etunimi
      * @param lastName käyttäjän sukunimi
      * @param isBusiness onko käyttäjä yritys
      */
-    public void updateUser(int userID, String firstName, String lastName, String email, String phoneNumber, boolean isBusiness, String additionalInfo) {
-        String sql = "UPDATE user SET " +
-                "SET firstName = ?, SET lastName = ?, email = ?,  SET phoneNumber = ?, SET isBusiness = ? , SET additionalInfo = ?" +
-                "WHERE id = ?";
+    public void updateUser(int userId, String firstName, String lastName, String email, String phoneNumber, boolean isBusiness, String additionalInfo) {
+        String sql = "UPDATE users SET " +
+                        "firstName = ?, lastName = ?, email = ?, phoneNumber = ?, isBusiness = ?, additionalInfo = ? " +
+                     "WHERE userId = ?";
 
         try (PreparedStatement pstmt = databaseManager.getConnection().prepareStatement(sql)) {
             pstmt.setString(1, firstName);
@@ -97,17 +99,13 @@ public class UserDAO {
             pstmt.setString(4, phoneNumber);
             pstmt.setBoolean(5, isBusiness);
             pstmt.setString(6, additionalInfo);
+            pstmt.setInt(7, userId);
             pstmt.executeUpdate();
-            System.out.println("Tietokannan käyttäjä > " + userID + " < päivitetty.");
+            System.out.println("Tietokannan käyttäjä > " + userId + " < päivitetty.");
         } catch (SQLException e) {
-            System.out.println("Ongelma käyttäjän > " + userID + " < tietojen päivittämisessä: " + e.getMessage());
+            System.out.println("Ongelma käyttäjän > " + userId + " < tietojen päivittämisessä: " + e.getMessage());
         }
     }
-
-    // KESKEN
-    //
-    //
-    //
 
     public String getAllUsers() {
         String sql = "SELECT * FROM users";
@@ -117,15 +115,19 @@ public class UserDAO {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                int id = rs.getInt("id");
-                String email = rs.getString("email");
+                int userId = rs.getInt("userId");
                 String firstName = rs.getString("firstName");
                 String lastName = rs.getString("lastName");
-                String role = rs.getString("role");
+                String email = rs.getString("email");
+                String phoneNumber = rs.getString("phoneNumber");
                 Boolean isBusiness = rs.getBoolean("isBusiness");
+                String additionalInfo = rs.getString("additionalInfo");
 
-                result += "Asiakkaan id: " + id + ". Sähköposti: " + email + ". etunimi: "
-                        + firstName + ". sukunimi: " + lastName + ". role: " + role + ". Onko yritys: " + isBusiness + ".\n";
+                result +=
+                        "Asiakkaan id: " + userId + ". Sähköposti: " + email +
+                        ". etunimi: " + firstName + ". sukunimi: " + lastName +
+                        ". Puhelinnumero: " + phoneNumber + ". Sähköposti: " + email +
+                        ". Onko yritys: " + isBusiness + ". Lisätiedot: " + additionalInfo + ".\n";
             }
 
         } catch (SQLException e) {

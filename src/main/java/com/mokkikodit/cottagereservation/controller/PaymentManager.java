@@ -13,21 +13,20 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.Date;
 
-//KESKEN
 
 public class PaymentManager {
     private PaymentDAO paymentDAO;
 
     private DatabaseManagement databaseManagement;
-    private ObservableList<Payment> payments = FXCollections.observableArrayList();
+    private final ObservableList<Payment> payments = FXCollections.observableArrayList();
 
     @FXML
     private TableView<Payment> paymentTableView;
@@ -36,15 +35,15 @@ public class PaymentManager {
     @FXML private TableColumn<Payment, Integer> amountColumn;
     @FXML private TableColumn<Payment, String> paymentTypeColumn;
     @FXML private TableColumn<Payment, String> paymentStatusColumn;
-    @FXML private TableColumn<Payment, Date> confirmationDateColumn;
-
+    @FXML private TableColumn<Payment, Date> paymentDateColumn;
     @FXML private Button newPaymentButton;
     @FXML private TextField reservationIdField;
     @FXML private TextField amountField;
     @FXML private TextField paymentTypeField;
     @FXML private TextField paymentStatusField;
-    @FXML private DatePicker confirmationDatePicker;
+    @FXML private DatePicker paymentDatePicker;
     @FXML private Button savePaymentChangesButton;
+    @FXML private Button removePaymentButton;
 
     @FXML
     public void initialize() {
@@ -54,8 +53,7 @@ public class PaymentManager {
         amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
         paymentTypeColumn.setCellValueFactory(new PropertyValueFactory<>("paymentType"));
         paymentStatusColumn.setCellValueFactory(new PropertyValueFactory<>("paymentStatus"));
-        confirmationDateColumn.setCellValueFactory(new PropertyValueFactory<>("confirmationDate"));
-
+        paymentDateColumn.setCellValueFactory(new PropertyValueFactory<>("paymentDate"));
 
         paymentTableView.setItems(payments);
 
@@ -65,12 +63,17 @@ public class PaymentManager {
             }
         });
 
-        savePaymentChangesButton.setOnAction(event -> {
-            savePaymentDetails();
-        });
+        savePaymentChangesButton.setOnAction(event -> savePaymentDetails());
 
-        newPaymentButton.setOnAction(event -> {
-            openNewCottageDialog();
+        newPaymentButton.setOnAction(event -> openNewPaymentDialog());
+
+        removePaymentButton.setOnAction(event -> {
+            Payment selected = paymentTableView.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                payments.remove(selected);
+                paymentDAO.deletePayment(selected.getPaymentId());
+                paymentTableView.refresh();
+            }
         });
     }
 
@@ -104,23 +107,22 @@ public class PaymentManager {
                         rs.getInt("amount"),
                         rs.getString("paymentType"),
                         rs.getString("paymentStatus"),
-                        rs.getString("confirmatonDate")
+                        rs.getString("paymentDate")
                 );
                 payments.add(payment);
             }
 
         } catch (SQLException e) {
             System.err.println("Error loading payments: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
     private void showPaymentDetails(Payment payment) {
-        reservationIdField.setText(String.valueOf(payment.getReservationID()));
+        reservationIdField.setText(String.valueOf(payment.getReservationId()));
         amountField.setText(String.valueOf(payment.getAmount()));
-        paymentStatusField.setText(String.valueOf(payment.getPaymentStatus()));
-        paymentTypeField.setText(String.valueOf(payment.getPaymentType()));
-        confirmationDatePicker.getValue();
+        paymentTypeField.setText(payment.getPaymentType());
+        paymentStatusField.setText(payment.getPaymentStatus());
+        paymentDatePicker.getValue();
     }
 
     private void savePaymentDetails() {
@@ -134,23 +136,22 @@ public class PaymentManager {
             int amount = Integer.parseInt(amountField.getText());
             String paymentType = paymentTypeField.getText();
             String paymentStatus = paymentStatusField.getText();
-            String paymentDate = confirmationDatePicker.getValue().toString();
-
+            LocalDate paymentDate = paymentDatePicker.getValue();
 
             paymentDAO.updatePayment(
-                    selected.getPaymentID(),
                     reservationId,
                     amount,
                     paymentType,
                     paymentStatus,
-                    paymentDate
+                    String.valueOf(paymentDate),
+                    selected.getPaymentId()
             );
 
-            selected.setReservationID(reservationId);
+            selected.setReservationId(reservationId);
             selected.setAmount(amount);
             selected.setPaymentType(paymentType);
             selected.setPaymentStatus(paymentStatus);
-            selected.setConfirmationDate(paymentDate);
+            selected.setPaymentDate(String.valueOf(paymentDate));
 
             paymentTableView.refresh();
 
@@ -158,22 +159,18 @@ public class PaymentManager {
             System.out.println("Syötteessä on virheellinen tyyppi (int, string tms)" + e.getMessage());
         } catch (Exception e) {
             System.out.println("Virhe päivittäessä maksun tietoja: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
-    //KESKEN, Cottage luokan metodi mallina, viimeistelen kun Payment luokan front end tehty
-    private void openNewCottageDialog() {
+    private void openNewPaymentDialog() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mokkikodit/cottagereservation/NewCottage.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mokkikodit/cottagereservation/NewPayment.fxml"));
             Parent root = loader.load();
 
-            NewCottageController controller = loader.getController();
-            //controller.setCottageDAO(this.cottageDAO);
+            NewPaymentController controller = loader.getController();
+            controller.setPaymentDAO(this.paymentDAO);
 
-            controller.setOnSaveSuccess(() -> {
-                //loadCottagesFromDatabase();
-            });
+            controller.setOnSaveSuccess(this::loadPaymentsFromDatabase);
 
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Uuden mökin lisääminen");
@@ -181,7 +178,7 @@ public class PaymentManager {
             dialogStage.initModality(Modality.APPLICATION_MODAL);
             dialogStage.showAndWait();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Virhe 'Uusi maksu' -ikkunaa avatessa: " + e.getMessage());
         }
     }
 }

@@ -17,12 +17,12 @@ public class DatabaseManagement {
             connection = DriverManager.getConnection(DATABASE_URL);
 
             if (connection != null) {
-                System.out.println("Connected to the database successfully.");
+                System.out.println("Yhteys tietokantaan onnistui.");
                 return true;
             }
 
         } catch (SQLException e) {
-            System.err.println("Database connection error: " + e.getMessage());
+            System.err.println("Yhteyttä tietokantaan ei saatu: " + e.getMessage());
             e.printStackTrace();
         }
         return false;
@@ -45,7 +45,7 @@ public class DatabaseManagement {
                 connect();
             }
         } catch (SQLException e) {
-            System.err.println("Error checking connection: " + e.getMessage());
+            System.err.println("Virhe tietokannan yhteyden saamisessa: " + e.getMessage());
             e.printStackTrace();
         }
 

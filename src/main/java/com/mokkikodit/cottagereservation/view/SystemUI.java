@@ -50,6 +50,8 @@ public class SystemUI {
         Parent userRoot = userLoader.load();
         UserManager userManager = userLoader.getController();
         userManager.setDatabaseManagement(databaseManagement);
+        userManager.setUserDAO(userDAO);
+        userManager.loadUsersFromDatabase();
 
         FXMLLoader paymentLoader = new FXMLLoader(getClass().getResource("/com/mokkikodit/cottagereservation/paymentview.fxml"));
         Parent paymentRoot = paymentLoader.load();

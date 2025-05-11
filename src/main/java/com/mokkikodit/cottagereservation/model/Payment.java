@@ -1,39 +1,37 @@
 package com.mokkikodit.cottagereservation.model;
 
-import java.sql.Date;
-
 public class Payment {
 
-    private int paymentID;
-    private int reservationID;
+    private int paymentId;
+    private int reservationId;
     private int amount;
     private String paymentType;
     private String paymentStatus;
-    private String confirmationDate;
+    private String paymentDate;
 
-    public Payment(int paymentID, int reservationID, int amount, String paymentType, String paymentStatus, String confirmatonDate) {
-        this.paymentID = paymentID;
-        this.reservationID = reservationID;
+    public Payment(int paymentId, int reservationId, int amount, String paymentType, String paymentStatus, String confirmatonDate) {
+        this.paymentId = paymentId;
+        this.reservationId = reservationId;
         this.amount = amount;
         this.paymentType = paymentType;
         this.paymentStatus = paymentStatus;
-        this.confirmationDate = confirmatonDate;
+        this.paymentDate = confirmatonDate;
     }
 
-    public int getPaymentID() {
-        return paymentID;
+    public int getPaymentId() {
+        return paymentId;
     }
 
-    public void setPaymentID(int paymentID) {
-        this.paymentID = paymentID;
+    public void setPaymentId(int paymentId) {
+        this.paymentId = paymentId;
     }
 
-    public int getReservationID() {
-        return reservationID;
+    public int getReservationId() {
+        return reservationId;
     }
 
-    public void setReservationID(int reservationID) {
-        this.reservationID = reservationID;
+    public void setReservationId(int reservationId) {
+        this.reservationId = reservationId;
     }
 
     public int getAmount() {
@@ -60,11 +58,11 @@ public class Payment {
         this.paymentStatus = paymentStatus;
     }
 
-    public String getConfirmationDate() {
-        return confirmationDate;
+    public String getPaymentDate() {
+        return paymentDate;
     }
 
-    public void setConfirmationDate(String confirmationDate) {
-        this.confirmationDate = confirmationDate;
+    public void setPaymentDate(String paymentDate) {
+        this.paymentDate = paymentDate;
     }
 }

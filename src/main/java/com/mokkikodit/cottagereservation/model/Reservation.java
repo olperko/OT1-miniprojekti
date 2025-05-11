@@ -1,18 +1,21 @@
 package com.mokkikodit.cottagereservation.model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Reservation {
 
     private int reservationId;
     private int userId;
     private int cottageId;
     private int guestAmount;
-    private String startDate;
-    private String endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String additionalInfo;
     private String reservationStatus;
     private boolean paymentStatus;
 
-    public Reservation(int reservationId, int userId, int cottageId, int guestAmount, String startDate, String endDate, String reservationStatus, boolean paymentStatus, String additionalInfo) {
+    public Reservation(int reservationId, int userId, int cottageId, int guestAmount, LocalDate startDate, LocalDate endDate, String reservationStatus, boolean paymentStatus, String additionalInfo) {
         this.reservationId = reservationId;
         this.userId = userId;
         this.cottageId = cottageId;
@@ -66,14 +69,17 @@ public class Reservation {
         this.paymentStatus = paymentStatus;
     }
 
-    public void setStartDate(String startDate) { this.startDate = startDate; }
-    public String getStartDate() { return startDate; }
+    public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
+    public LocalDate getStartDate() { return startDate; }
 
-    public void setEndDate(String endDate) { this.endDate = endDate; }
-    public String getEndDate() { return endDate; }
+    public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
+    public LocalDate getEndDate() { return endDate; }
 
 
-    public String getSpanOfReservation() { return startDate + " - " + endDate; }
+    public String getSpanOfReservation() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        return startDate.format(formatter) + " - " + endDate.format(formatter);
+    }
 
     public String getAdditionalInfo() {
         return additionalInfo;

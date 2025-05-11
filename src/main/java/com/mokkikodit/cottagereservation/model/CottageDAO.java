@@ -35,9 +35,9 @@ public class CottageDAO {
 
         try (Statement stmt = databaseManager.getConnection().createStatement()) {
             stmt.execute(sql);
-            System.out.println("Mökki-taulukko luotu onnituneesti.");
+            System.out.println("Mökki-taulukko luotu onnituneesti tietokantaan.");
         } catch (SQLException e) {
-            System.out.println("Taulun luonti epäonnistui: " + e.getMessage());
+            System.out.println("Mökki-taulukon luonti epäonnistui: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -66,9 +66,9 @@ public class CottageDAO {
             pstmt.setInt(7, capacity);
             pstmt.setString(8, description);
             pstmt.executeUpdate();
-            System.out.println("Cottage inserted successfully.");
+            System.out.println("Mökki lisätty onnistuneesti tietokantaan.");
         } catch (SQLException e) {
-            System.out.println("Failed to insert cottage: " + e.getMessage());
+            System.out.println("Virhe mökin lisäämisessä: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -76,7 +76,7 @@ public class CottageDAO {
     public boolean deleteCottage(int cottageId) {
         Connection conn = databaseManager.getConnection();
         if (conn == null) {
-            System.err.println("Mökkiä ei voitu poistaa, tietokannan yhteys on > null <.");
+            System.err.println("Mökkiä ei voitu poistaa, ei yhteyttä tietokantaan.");
             return false;
         }
 
@@ -108,7 +108,7 @@ public class CottageDAO {
             pstmt.setString(8, description);
             pstmt.setInt(9, cottageId);
             pstmt.executeUpdate();
-            System.out.println("Tietokannan mökki " + ownerId + " päivitetty.");
+            System.out.println("Tietokannan mökki " + cottageId + " päivitetty.");
         } catch (SQLException e) {
             System.out.println("Ongelma mökin " + ownerId + " tietojen päivittämisessä: " + e.getMessage());
         }

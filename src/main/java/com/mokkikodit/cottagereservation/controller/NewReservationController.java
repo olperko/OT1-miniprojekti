@@ -5,9 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 public class NewReservationController {
 
     @FXML private TextField cottageIdReservationField;
@@ -24,18 +21,17 @@ public class NewReservationController {
     private ReservationDAO reservationDAO;
     private Runnable onSaveSuccess;
 
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
-
     public void setReservationDAO(ReservationDAO dao) { this.reservationDAO = dao; }
-
     public void setOnSaveSuccess(Runnable r) {
         this.onSaveSuccess = r;
     }
 
-    @FXML
-    private void initialize() {
 
-        saveReservationButton.setOnAction(e -> saveReservation());
+    @FXML private void initialize() {
+
+        saveReservationButton.setOnAction(e ->
+                saveReservation()
+        );
 
         cancelReservationButton.setOnAction(e -> {
             ((Stage) cancelReservationButton.getScene().getWindow()).close();
@@ -70,7 +66,12 @@ public class NewReservationController {
             String endDate = String.valueOf(endDatePicker.getValue());
             String startDateStr = (startDate != null) ? startDate.toString() : null;
             String endDateStr = (endDate != null) ? endDate.toString() : null;
-            String reservationStatus = reservationStatusComboBox.getValue().toString();
+            Object selectedStatus = reservationStatusComboBox.getSelectionModel().getSelectedItem();
+            if (selectedStatus == null) {
+                showAlert(Alert.AlertType.ERROR, "Virhe", "Varauksen tila puuttuu", "Valitse varauksen tila alasvetovalikosta.");
+                return;
+            }
+            String reservationStatus = selectedStatus.toString();
             boolean paymentStatus = paymentStatusCheckBox.isSelected();
             String additionalInfo = additionalInfoField.getText();
 

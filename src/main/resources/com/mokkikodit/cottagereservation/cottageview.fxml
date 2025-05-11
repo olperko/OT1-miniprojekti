@@ -22,35 +22,42 @@
             <TableColumn
                     text="ID"
                     fx:id="cottageIdColumn"
-                    prefWidth="70"/>
+                    prefWidth="70"
+                    style="-fx-alignment: CENTER;"/>
             <TableColumn
                     text="Omistaja"
                     fx:id="ownerIdColumn"
-                    prefWidth="70"/>
+                    prefWidth="70"
+                    style="-fx-alignment: CENTER;"/>
             <TableColumn
                     fx:id="reservedColumn"
                     text="Varattu"
-                    prefWidth="60"/>
+                    prefWidth="60"
+                    style="-fx-alignment: CENTER;"/>
             <TableColumn
                     fx:id="cottageNameColumn"
                     text="Mökin nimi"
-                    prefWidth="120"/>
+                    prefWidth="130"/>
             <TableColumn
                     fx:id="locationColumn"
                     text="Sijainti"
-                    prefWidth="120"/>
+                    prefWidth="110"
+                    />
             <TableColumn
                     fx:id="priceColumn"
                     text="Hinta"
-                    prefWidth="70"/>
+                    prefWidth="60"
+                    style="-fx-alignment: CENTER;"/>
             <TableColumn
                     fx:id="areaColumn"
                     text="Pinta-ala"
-                    prefWidth="70"/>
+                    prefWidth="70"
+                    style="-fx-alignment: CENTER;"/>
             <TableColumn
                     fx:id="capacityColumn"
                     text="Kapasiteetti"
-                    prefWidth="100"/>
+                    prefWidth="90"
+                    style="-fx-alignment: CENTER;"/>
             <TableColumn
                     fx:id="descriptionColumn"
                     text="Kuvaus"

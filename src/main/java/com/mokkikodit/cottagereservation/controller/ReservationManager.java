@@ -15,18 +15,16 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.*;
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
 
-
-//KESKEN
-//Muokataan lopullisesti kuntoon kun luokan front end valmistuu
 public class ReservationManager {
 
     private ReservationDAO reservationDAO;
 
     private DatabaseManagement databaseManagement;
-    private ObservableList<Reservation> reservations = FXCollections.observableArrayList();
+    private final ObservableList<Reservation> reservations = FXCollections.observableArrayList();
 
     @FXML private TableView<Reservation> reservationTableView;
     @FXML private TableColumn<Reservation, Integer> reservationIdColumn;
@@ -36,9 +34,9 @@ public class ReservationManager {
     @FXML private TableColumn<Reservation, String> spanOfReservationColumn;
     @FXML private TableColumn<Reservation, String> reservationStatusColumn;
     @FXML private TableColumn<Reservation, Integer> paymentStatusColumn;
+    @FXML private TableColumn<Reservation, String> additionalReservationInfo;
 
     @FXML private Button newReservationButton;
-    @FXML private TextField reservationIdField;
     @FXML private TextField userIdField;
     @FXML private TextField cottageIdReservationField;
     @FXML private TextField guestAmountField;
@@ -48,6 +46,7 @@ public class ReservationManager {
     @FXML private CheckBox paymentStatusCheckBox;
     @FXML private TextArea additionalInfoField;
     @FXML private Button saveChangesButton;
+    @FXML private Button removeReservationButton;
 
     @FXML
     public void initialize() {
@@ -59,6 +58,7 @@ public class ReservationManager {
         spanOfReservationColumn.setCellValueFactory(new PropertyValueFactory<>("spanOfReservation"));
         reservationStatusColumn.setCellValueFactory(new PropertyValueFactory<>("reservationStatus"));
         paymentStatusColumn.setCellValueFactory(new PropertyValueFactory<>("paymentStatus"));
+        additionalReservationInfo.setCellValueFactory(new PropertyValueFactory<>("additionalInfo"));
 
         reservationTableView.setItems(reservations);
 
@@ -68,12 +68,17 @@ public class ReservationManager {
             }
         });
 
-        saveChangesButton.setOnAction(event -> {
-            saveReservationDetails();
-        });
+        saveChangesButton.setOnAction(event -> saveReservationDetails());
 
-        newReservationButton.setOnAction(event -> {
-            openNewReservationDialog();
+        newReservationButton.setOnAction(event -> openNewReservationDialog());
+
+        removeReservationButton.setOnAction(event -> {
+            Reservation selected = reservationTableView.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                reservations.remove(selected);
+                reservationDAO.deleteReservation(selected.getReservationId());
+                reservationTableView.refresh();
+            }
         });
     }
 
@@ -101,13 +106,27 @@ public class ReservationManager {
             ResultSet rs = stmt.executeQuery("SELECT * FROM reservations");
 
             while (rs.next()) {
+                String startDateStr = rs.getString("startDate");
+                String endDateStr = rs.getString("endDate");
+                LocalDate startDate, endDate;
+                try {
+                    startDate = LocalDate.parse(startDateStr);
+                } catch (Exception e) {
+                    startDate = Instant.ofEpochMilli(Long.parseLong(startDateStr)).atZone(ZoneId.systemDefault()).toLocalDate();
+                }
+                try {
+                    endDate = LocalDate.parse(endDateStr);
+                } catch (Exception e) {
+                    endDate = Instant.ofEpochMilli(Long.parseLong(endDateStr)).atZone(ZoneId.systemDefault()).toLocalDate();
+                }
+
                 Reservation reservation = new Reservation(
                         rs.getInt("reservationId"),
                         rs.getInt("userId"),
                         rs.getInt("cottageId"),
                         rs.getInt("guestAmount"),
-                        rs.getString("startDate"),
-                        rs.getString("endDate"),
+                        startDate,
+                        endDate,
                         rs.getString("reservationStatus"),
                         rs.getBoolean("paymentStatus"),
                         rs.getString("additionalInfo")
@@ -123,16 +142,14 @@ public class ReservationManager {
 
     private void showReservationDetails(Reservation reservation) {
 
-        reservationIdField.setText(String.valueOf(reservation.getReservationId()));
         userIdField.setText(String.valueOf(reservation.getUserId()));
         cottageIdReservationField.setText(String.valueOf(reservation.getCottageId()));
         guestAmountField.setText(String.valueOf(reservation.getGuestAmount()));
-        startDateField.setValue(LocalDate.parse(reservation.getStartDate()));
-        endDateField.setValue(LocalDate.parse(reservation.getEndDate()));
+        startDateField.setValue(reservation.getStartDate());
+        endDateField.setValue(reservation.getEndDate());
         reservationStatusComboBox.setValue(reservation.getReservationStatus());
-        additionalInfoField.setText(reservation.getAdditionalInfo());
-
         paymentStatusCheckBox.setSelected(reservation.isPaymentStatus());
+        additionalInfoField.setText(reservation.getAdditionalInfo());
     }
 
     private void saveReservationDetails() {
@@ -147,7 +164,7 @@ public class ReservationManager {
             LocalDate endDate = endDateField.getValue();
             String reservationStatus = (String) reservationStatusComboBox.getValue();
             Boolean paymentStatus = paymentStatusCheckBox.isSelected();
-            String additionalInfo = additionalInfoField.textProperty().getValue();
+            String additionalInfo = additionalInfoField.getText();
 
 
             reservationDAO.updateReservation(
@@ -161,8 +178,8 @@ public class ReservationManager {
             );
 
             selected.setGuestAmount(guestAmount);
-            selected.setStartDate(String.valueOf(startDate));
-            selected.setEndDate(String.valueOf(endDate));
+            selected.setStartDate(startDate);
+            selected.setEndDate(endDate);
             selected.setReservationStatus(reservationStatus);
             selected.setPaymentStatus(paymentStatus);
             selected.setAdditionalInfo(additionalInfo);

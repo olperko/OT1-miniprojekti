@@ -2,7 +2,7 @@ package com.mokkikodit.cottagereservation.model;
 
 public class User {
 
-    private int userID;
+    private int userId;
     private String email;
     private String firstName;
     private String lastName;
@@ -21,7 +21,7 @@ public class User {
     }
 
     public User(int userID, String firstName, String lastName, String email, String ownedCottages, String phoneNumber, boolean isBusiness, String additionalInfo) {
-        this.userID = userID;
+        this.userId = userID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -31,8 +31,8 @@ public class User {
         this.additionalInfo = additionalInfo;
     }
 
-    public int getUserID() { return userID; }
-    public void setUserID(int userID) { this.userID = userID; }
+    public int getUserId() { return userId; }
+    public void setUserId(int userID) { this.userId = userID; }
 
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }

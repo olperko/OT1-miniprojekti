@@ -5,6 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.w3c.dom.Text;
+import javafx.scene.Scene;
+import javafx.scene.control.TextField;
+
 
 public class NewPaymentController {
 
@@ -15,6 +18,7 @@ public class NewPaymentController {
     @FXML private DatePicker paymentDatePicker ;
     @FXML private Button savePaymentButton;
     @FXML private Button cancelPaymentButton;
+    @FXML private TextField haku;
 
     private PaymentDAO paymentDAO;
     private Runnable onSaveSuccess;
@@ -89,5 +93,6 @@ public class NewPaymentController {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
 }
 

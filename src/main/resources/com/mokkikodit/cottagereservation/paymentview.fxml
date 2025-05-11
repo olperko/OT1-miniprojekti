@@ -71,12 +71,14 @@
     </TableView>
 
     <TextField
+            fx:id="searchField"
             promptText="Haku"
             layoutX="10.0" layoutY="35.0"/>
     <Button
             text="Etsi"
             layoutX="160.0" layoutY="35.0"
-            prefHeight="25.0" prefWidth="45.0"/>
+            prefHeight="25.0" prefWidth="45.0"
+            onAction="#handleSearchPayments"/>
     <Button
             text="Uusi maksu"
             fx:id="newPaymentButton"

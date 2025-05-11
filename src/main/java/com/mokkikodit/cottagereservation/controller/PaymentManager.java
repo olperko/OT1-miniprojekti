@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 
 public class PaymentManager {
@@ -181,5 +182,59 @@ public class PaymentManager {
             System.out.println("Virhe 'Uusi maksu' -ikkunaa avatessa: " + e.getMessage());
         }
     }
+
+    @FXML
+    private TextField searchField;
+
+    @FXML
+    public void handleSearchPayments() {
+        String query = searchField.getText();
+
+        int paymentId = -1;
+        int reservationId = -1;
+        String paymentType = "";
+        String paymentStatus = "";
+
+        try {
+            paymentId = Integer.parseInt(query);
+        } catch (NumberFormatException e) {
+            paymentType = query;
+            paymentStatus = query;
+        }
+
+        List<Payment> results = paymentDAO.searchPayments(paymentId, reservationId, paymentType, paymentStatus);
+
+        StringBuilder resultText = new StringBuilder();
+        for (Payment payment : results) {
+            resultText.append("Maksun ID: ").append(payment.getPaymentId())
+                    .append(", Varaus ID: ").append(payment.getReservationId())
+                    .append(", Summa: ").append(payment.getAmount())
+                    .append(", Tyyppi: ").append(payment.getPaymentType())
+                    .append(", Tila: ").append(payment.getPaymentStatus())
+                    .append(", Päivämäärä: ").append(payment.getPaymentDate())
+                    .append("\n");
+        }
+
+        if(results.isEmpty()) {
+            resultText.append("Tuloksia haulle: " + query + " ei löytynyt");
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mokkikodit/cottagereservation/payment_results.fxml"));
+
+            Parent root = loader.load();
+
+            PaymentResultsController controller = loader.getController();
+            controller.setResultsText(resultText.toString());
+
+            Stage stage = new Stage();
+            stage.setTitle("Hakutulokset");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 

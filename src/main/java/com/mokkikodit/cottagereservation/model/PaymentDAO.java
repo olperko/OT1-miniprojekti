@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PaymentDAO {
 
@@ -135,6 +137,47 @@ public class PaymentDAO {
         }
         return result;
     }
+
+
+    public List<Payment> searchPayments(int paymentId, int reservationId, String paymentType, String paymentStatus) {
+        StringBuilder sql = new StringBuilder("SELECT * FROM payments WHERE 1=1");
+        if (paymentId != -1) sql.append(" AND paymentId = ?");
+        if (reservationId != -1) sql.append(" AND reservationId = ?");
+        if (paymentType != null && !paymentType.isEmpty()) sql.append(" AND paymentType LIKE ?");
+        if (paymentStatus != null && !paymentStatus.isEmpty()) sql.append(" AND paymentStatus LIKE ?");
+
+        List<Payment> payments = new ArrayList<>();
+
+        try (PreparedStatement pstmt = databaseManager.getConnection().prepareStatement(sql.toString())) {
+            int paramIndex = 1;
+
+            if (paymentId != -1) pstmt.setInt(paramIndex++, paymentId);
+            if (reservationId != -1) pstmt.setInt(paramIndex++, reservationId);
+            if (paymentType != null && !paymentType.isEmpty()) pstmt.setString(paramIndex++, "%" + paymentType + "%");
+            if (paymentStatus != null && !paymentStatus.isEmpty()) pstmt.setString(paramIndex++, "%" + paymentStatus + "%");
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Payment payment = new Payment(
+                            rs.getInt("paymentId"),
+                            rs.getInt("reservationId"),
+                            rs.getInt("amount"),
+                            rs.getString("paymentType"),
+                            rs.getString("paymentStatus"),
+                            rs.getString("paymentDate")
+                    );
+                    payments.add(payment);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Virhe maksujen hakemisessa hakuehdolla: " + e.getMessage());
+        }
+
+        return payments;
+    }
+
+
+
 
 }
 

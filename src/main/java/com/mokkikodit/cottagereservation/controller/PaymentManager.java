@@ -21,6 +21,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 public class PaymentManager {
@@ -71,9 +72,17 @@ public class PaymentManager {
         removePaymentButton.setOnAction(event -> {
             Payment selected = paymentTableView.getSelectionModel().getSelectedItem();
             if (selected != null) {
-                payments.remove(selected);
-                paymentDAO.deletePayment(selected.getPaymentId());
-                paymentTableView.refresh();
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Vahvista poisto");
+                alert.setHeaderText("Haluatko varmasti poistaa maksun?");
+                alert.setContentText("Olet poistamassa maksun: " + selected.getReservationId());
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    payments.remove(selected);
+                    paymentDAO.deletePayment(selected.getPaymentId());
+                    paymentTableView.refresh();
+                }
             }
         });
     }
@@ -216,7 +225,7 @@ public class PaymentManager {
         }
 
         if(results.isEmpty()) {
-            resultText.append("Tuloksia haulle: " + query + " ei löytynyt");
+            resultText.append("Tuloksia haulle: ").append(query).append(" ei löytynyt");
         }
 
         try {
@@ -232,6 +241,7 @@ public class PaymentManager {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
+            System.out.println("Virhe hakutoiminnossa:" + e.getMessage());
             e.printStackTrace();
         }
     }

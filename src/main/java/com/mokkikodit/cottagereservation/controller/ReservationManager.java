@@ -19,6 +19,7 @@ import java.sql.*;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Optional;
 
 public class ReservationManager {
 
@@ -37,6 +38,7 @@ public class ReservationManager {
     @FXML private TableColumn<Reservation, Integer> paymentStatusColumn;
     @FXML private TableColumn<Reservation, String> additionalReservationInfo;
 
+    @FXML private TextField searchField;
     @FXML private Button newReservationButton;
     @FXML private TextField userIdField;
     @FXML private TextField cottageIdReservationField;
@@ -76,9 +78,17 @@ public class ReservationManager {
         removeReservationButton.setOnAction(event -> {
             Reservation selected = reservationTableView.getSelectionModel().getSelectedItem();
             if (selected != null) {
-                reservations.remove(selected);
-                reservationDAO.deleteReservation(selected.getReservationId());
-                reservationTableView.refresh();
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Vahvista poisto");
+                alert.setHeaderText("Haluatko varmasti poistaa varauksen?");
+                alert.setContentText("Olet poistamassa varauksen: " + selected.getReservationId());
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    reservations.remove(selected);
+                    reservationDAO.deleteReservation(selected.getReservationId());
+                    reservationTableView.refresh();
+                }
             }
         });
     }
@@ -164,7 +174,7 @@ public class ReservationManager {
             LocalDate startDate = startDateField.getValue();
             LocalDate endDate = endDateField.getValue();
             String reservationStatus = (String) reservationStatusComboBox.getValue();
-            Boolean paymentStatus = paymentStatusCheckBox.isSelected();
+            boolean paymentStatus = paymentStatusCheckBox.isSelected();
             String additionalInfo = additionalInfoField.getText();
 
 
@@ -216,8 +226,6 @@ public class ReservationManager {
         }
     }
 
-    @FXML
-    private TextField searchField;
     public void handleSearchReservations() {
         String query = searchField.getText();
 
@@ -225,7 +233,7 @@ public class ReservationManager {
         try {
             reservationId = Integer.parseInt(query);
         } catch (NumberFormatException e) {
-
+            System.out.println("Virhe hakutoiminnossa:" + e.getMessage());
         }
 
         StringBuilder resultText = new StringBuilder();
@@ -247,7 +255,7 @@ public class ReservationManager {
             resultText.append(reservationDAO.getAllReservations());
         }
 
-        if (resultText.length() == 0) {
+        if (resultText.isEmpty()) {
             resultText.append("Hakusanalla ").append(query).append(" ei löytynyt varauksia.");
         }
 
@@ -263,6 +271,7 @@ public class ReservationManager {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
+            System.out.println("Virhe hakutoiminnossa:" + e.getMessage());
             e.printStackTrace();
         }
     }

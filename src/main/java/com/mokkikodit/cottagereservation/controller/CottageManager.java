@@ -16,13 +16,14 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.*;
 import java.util.List;
+import java.util.Optional;
 
 public class CottageManager {
 
     private CottageDAO cottageDAO;
 
     private DatabaseManagement databaseManagement;
-    private ObservableList<Cottage> cottages = FXCollections.observableArrayList();
+    private final ObservableList<Cottage> cottages = FXCollections.observableArrayList();
 
     @FXML private TableView<Cottage> cottageTableView;
     @FXML private TableColumn<Cottage, Integer> cottageIdColumn;
@@ -35,6 +36,7 @@ public class CottageManager {
     @FXML private TableColumn<Cottage, Integer> capacityColumn;
     @FXML private TableColumn<Cottage, String> descriptionColumn;
 
+    @FXML private TextField searchField;
     @FXML private Button newCottageButton;
     @FXML private TextField cottageNameField;
     @FXML private TextField locationField;
@@ -68,20 +70,24 @@ public class CottageManager {
             }
         });
 
-        saveChangesButton.setOnAction(event -> {
-            saveCottageDetails();
-        });
+        saveChangesButton.setOnAction(event -> saveCottageDetails());
 
-        newCottageButton.setOnAction(event -> {
-            openNewCottageDialog();
-        });
+        newCottageButton.setOnAction(event -> openNewCottageDialog());
 
         removeCottageButton.setOnAction(event -> {
             Cottage selected = cottageTableView.getSelectionModel().getSelectedItem();
             if (selected != null) {
-                cottages.remove(selected);
-                cottageDAO.deleteCottage(selected.getCottageId());
-                cottageTableView.refresh();
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Vahvista poisto");
+                alert.setHeaderText("Haluatko varmasti poistaa mökin?");
+                alert.setContentText("Olet poistamassa mökin: " + selected.getCottageId());
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    cottages.remove(selected);
+                    cottageDAO.deleteCottage(selected.getCottageId());
+                    cottageTableView.refresh();
+                }
             }
         });
     }
@@ -196,9 +202,7 @@ public class CottageManager {
             NewCottageController controller = loader.getController();
             controller.setCottageDAO(this.cottageDAO);
 
-            controller.setOnSaveSuccess(() -> {
-                loadCottagesFromDatabase();
-            });
+            controller.setOnSaveSuccess(() -> loadCottagesFromDatabase());
 
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Uuden mökin lisääminen");
@@ -210,10 +214,7 @@ public class CottageManager {
         }
     }
 
-    @FXML
-    private TextField searchField;
-    @FXML
-    public void handleSearchCottages() {
+    @FXML public void handleSearchCottages() {
         String query = searchField.getText();
 
         int cottageId = -1;

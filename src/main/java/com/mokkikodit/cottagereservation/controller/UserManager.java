@@ -1,6 +1,5 @@
 package com.mokkikodit.cottagereservation.controller;
 
-import com.mokkikodit.cottagereservation.model.Reservation;
 import com.mokkikodit.cottagereservation.model.User;
 import com.mokkikodit.cottagereservation.model.UserDAO;
 import com.mokkikodit.cottagereservation.util.DatabaseManagement;
@@ -20,13 +19,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Optional;
 
 public class UserManager {
 
     private UserDAO userDAO;
 
     private DatabaseManagement databaseManagement;
-    private ObservableList<User> users = FXCollections.observableArrayList();
+    private final ObservableList<User> users = FXCollections.observableArrayList();
 
     @FXML
     private TableView<User> userTableView;
@@ -77,20 +77,24 @@ public class UserManager {
             }
         });
 
-        saveUserChangesButton.setOnAction(event -> {
-            saveUserDetails();
-        });
+        saveUserChangesButton.setOnAction(event -> saveUserDetails());
 
-        newUserButton.setOnAction(event -> {
-            openNewUserDialog();
-        });
+        newUserButton.setOnAction(event -> openNewUserDialog());
 
         removeUserButton.setOnAction(event -> {
             User selected = userTableView.getSelectionModel().getSelectedItem();
             if (selected != null) {
-                users.remove(selected);
-                userDAO.deleteUser(selected.getUserId());
-                userTableView.refresh();
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Vahvista poisto");
+                alert.setHeaderText("Haluatko varmasti poistaa käyttäjän?");
+                alert.setContentText("Olet poistamassa käyttäjän: " + selected.getUserId());
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    users.remove(selected);
+                    userDAO.deleteUser(selected.getUserId());
+                    userTableView.refresh();
+                }
             }
         });
     }
@@ -251,7 +255,7 @@ public class UserManager {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Virhe hakutoiminnossa:" + e.getMessage());
         }
     }
 

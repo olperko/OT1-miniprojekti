@@ -212,7 +212,7 @@ public class UserManager {
         String lastName = "";
         String email = "";
 
-        // Try parsing as ID, otherwise treat as name/email
+        //Kesken
         try {
             userId = Integer.parseInt(query);
         } catch (NumberFormatException e) {

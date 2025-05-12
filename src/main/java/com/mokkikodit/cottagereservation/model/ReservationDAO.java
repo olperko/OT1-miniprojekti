@@ -4,6 +4,8 @@ import com.mokkikodit.cottagereservation.util.DatabaseManagement;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReservationDAO {
 
@@ -119,6 +121,35 @@ public class ReservationDAO {
             System.out.println("Virhe varausten hakemisessa: " + e.getMessage());
         }
         return result.toString();
+    }
+
+    public List<Reservation> searchReservations(int reservationId) {
+        List<Reservation> reservations = new ArrayList<>();
+        String sql = "SELECT * FROM reservations WHERE reservationId = ?";
+
+        try (PreparedStatement stmt = dbManager.getConnection().prepareStatement(sql)) {
+            stmt.setInt(1, reservationId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Reservation reservation = new Reservation(
+                        rs.getInt("reservationId"),
+                        rs.getInt("userId"),
+                        rs.getInt("cottageId"),
+                        rs.getInt("guestAmount"),
+                        LocalDate.parse(rs.getString("startDate")),
+                        LocalDate.parse(rs.getString("endDate")),
+                        rs.getString("reservationStatus"),
+                        rs.getBoolean("paymentStatus"),
+                        rs.getString("additionalInfo")
+                );
+                reservations.add(reservation);
+            }
+        } catch (SQLException e) {
+            System.err.println("Virhe haettaessa varausta: " + e.getMessage());
+        }
+
+        return reservations;
     }
 
 }

@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
+
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.*;
@@ -214,6 +215,77 @@ public class ReservationManager {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private TextField searchField;
+    public void handleSearchReservations() {
+        String query = searchField.getText();
+
+        int reservationId = -1;
+        try {
+            reservationId = Integer.parseInt(query);
+        } catch (NumberFormatException e) {
+
+        }
+
+        StringBuilder resultText = new StringBuilder();
+
+        if (reservationId != -1) {
+            String sql = "SELECT * FROM reservations WHERE reservationId = ?";
+            try (PreparedStatement stmt = databaseManagement.getConnection().prepareStatement(sql)) {
+                stmt.setInt(1, reservationId);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        resultText.append(formatReservation(rs));
+                    }
+                }
+            } catch (SQLException e) {
+                resultText.append("Virhe varauksen hakemisessa: ").append(e.getMessage());
+            }
+        } else {
+            ReservationDAO reservationDAO = new ReservationDAO(databaseManagement);
+            resultText.append(reservationDAO.getAllReservations());
+        }
+
+        if (resultText.length() == 0) {
+            resultText.append("Hakusanalla ").append(query).append(" ei löytynyt varauksia.");
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mokkikodit/cottagereservation/reservation_results.fxml"));
+            Parent root = loader.load();
+
+            ReservationResultsController controller = loader.getController();
+            controller.setResultsText(resultText.toString());
+
+            Stage stage = new Stage();
+            stage.setTitle("Varaushaku");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //Resultsetin muotoilu yhdeksi varaukseksi
+    private String formatReservation(ResultSet rs) throws SQLException {
+        int id = rs.getInt("reservationId");
+        int userId = rs.getInt("userId");
+        int cottageId = rs.getInt("cottageId");
+        int guestAmount = rs.getInt("guestAmount");
+        String startDate = rs.getString("startDate");
+        String endDate = rs.getString("endDate");
+        String additionalInfo = rs.getString("additionalInfo");
+        String reservationStatus = rs.getString("reservationStatus");
+        boolean paymentStatus = rs.getBoolean("paymentStatus");
+
+        return String.format(
+                "Varaus ID: %d, Käyttäjä ID: %d, Mökki ID: %d, Yöpyjien määrä: %d\nAlkupäivä: %s, Loppupäivä: %s\nTila: %s, Maksu: %s\nLisätiedot: %s\n\n",
+                id, userId, cottageId, guestAmount, startDate, endDate,
+                reservationStatus, paymentStatus ? "Maksettu" : "Ei maksettu", additionalInfo
+        );
+    }
+
 }
 
 

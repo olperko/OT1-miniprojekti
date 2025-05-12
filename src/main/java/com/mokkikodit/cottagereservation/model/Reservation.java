@@ -3,6 +3,7 @@ package com.mokkikodit.cottagereservation.model;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+
 public class Reservation {
 
     private int reservationId;
@@ -87,5 +88,7 @@ public class Reservation {
     public void setAdditionalInfo(String additionalInfo) {
         this.additionalInfo = additionalInfo;
     }
+
+
 }
 

@@ -32,6 +32,9 @@ public class SystemUI {
         paymentDAO.createPaymentTable();
         reviewDAO.createReviewTable();
 
+        FXMLLoader infoLoader = new FXMLLoader(getClass().getResource("/com/mokkikodit/cottagereservation/info.fxml"));
+        Parent infoRoot = infoLoader.load();
+
         FXMLLoader cottageLoader = new FXMLLoader(getClass().getResource("/com/mokkikodit/cottagereservation/cottageview.fxml"));
         Parent cottageRoot = cottageLoader.load();
         CottageManager cottageManager = cottageLoader.getController();
@@ -60,6 +63,9 @@ public class SystemUI {
         paymentManager.setPaymentDAO(paymentDAO);
         paymentManager.loadPaymentsFromDatabase();
 
+        Tab infoTab = new Tab("Info", infoRoot);
+        infoTab.setClosable(false);
+
         Tab cottageTab = new Tab("Mökit", cottageRoot);
         cottageTab.setClosable(false);
 
@@ -72,6 +78,6 @@ public class SystemUI {
         Tab paymentTab = new Tab("Maksut", paymentRoot);
         paymentTab.setClosable(false);
 
-        return new TabPane(cottageTab, reservationTab, userTab, paymentTab);
+        return new TabPane(infoTab, cottageTab, reservationTab, userTab, paymentTab);
     }
 }

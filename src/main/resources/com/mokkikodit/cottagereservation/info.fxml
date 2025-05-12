@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.TextArea?>
+
+
+<HBox
+        xmlns="http://javafx.com/javafx"
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="com.mokkikodit.cottagereservation.controller.InfoController"
+        prefHeight="400.0" prefWidth="600.0">
+
+    <TextArea fx:id="welcomeTextArea" editable="false" wrapText="true"
+              prefHeight="418" prefWidth="575"
+
+              text="&#10;
+                   Tervetuloa Mökkikodit varausjärjestelmään!&#10;&#10;
+
+                   Ohjelmisto on tarkoitettu Mökkikodit sisäiseen käyttöön.&#10;
+                    Tällä ohjelmistolla voit käsitellä tietokannan mökkejä, käyttäjiä, varauksia ja maksuja.&#10;&#10;
+                    Alapuolelta löydät yleiset ohjeet sovelluksen navigointiin.&#10;
+                    Oikealta löydät tarkemmat ohjeeet sovelluksen käyttämiseen.&#10;&#10;
+
+
+                    NAVIGOINTI&#10;&#10;
+                        - Ikkunan yläosasta voit navigoida eri hallintapaneelien välillä.&#10;
+                        - Tietokantaan tehdyt listaukset näkyvät pnaeeleissa olevassa taulukossa.&#10;
+                        - Paneelissa on hakukenttä, lisäys- ja poistonapit.&#10;
+                        - Taulukon oikealta puolelta voit muokata valittua listausta.&#10;&#10;
+                        ">
+    </TextArea>
+
+    <TextArea fx:id="guideTextArea" editable="false" wrapText="true"
+              prefHeight="418" prefWidth="575"
+              text="&#10;
+                    KÄYTTÖOHJEET&#10;&#10;
+                    LISÄÄMINEN&#10;&#10;
+                        - 'Uusi ____' -napista voit tehdä tietokantaan uuden listauksen.&#10;
+                        - Nappia painamalla aukeaa uusi ikkuna, johon listauksen tiedot syötetään.&#10;&#10;
+                    POISTAMINEN&#10;&#10;
+                        - 'Poista ____' -napista voit poistaa tietokannassa olevia listauksia.&#10;
+                        - Valitse poistettava listaus taulukosta ja paina 'Poista' -nappia.&#10;
+                        - Varmista tai peru poistaminen auenneesta ikkunasta.&#10;&#10;
+                    MUOKKAAMINEN&#10;&#10;
+                        - Muokkaus tapahtuu paneelin oikealla puolella.&#10;
+                        - Valitse muokattava listaus taulukosta&#10;
+                        - Muuta tietoja ja paina 'Tallenna muutokset' -nappia.&#10;&#10;
+                    HAKEMINEN&#10;&#10;
+                        - Hakukentän avulla voit hakea tietokannasta olemassa olevia listauksia.
+                ">
+    </TextArea>
+
+</HBox>
+

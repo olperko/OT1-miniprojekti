@@ -8,25 +8,30 @@
            xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="com.mokkikodit.cottagereservation.view.SystemUI">
     <panes>
-        <TitledPane prefHeight="456.0" prefWidth="889.0" text="Mökkien hallinta">
-            <content>
-                <fx:include source="cottageview.fxml" />
-            </content>
+        <TitledPane
+                text="Info"
+                prefHeight="456" prefWidth="889">
+                <fx:include source="info.fxml"/>
         </TitledPane>
-        <TitledPane  prefHeight="456.0" prefWidth="889.0" text="Varausten Hallinta">
-            <content>
-                <fx:include source="reservationview.fxml" />
-            </content>
+        <TitledPane
+                text="Mökkien hallinta"
+                prefHeight="456.0" prefWidth="889.0">
+                <fx:include source="cottageview.fxml"/>
         </TitledPane>
-        <TitledPane animated="false" prefHeight="456.0" prefWidth="889.0" text="Käyttäjän Hallinta">
-            <content>
-                <fx:include source="userview.fxml" />
-            </content>
+        <TitledPane
+                text="Varausten Hallinta"
+                prefHeight="456.0" prefWidth="889.0">
+                <fx:include source="reservationview.fxml"/>
         </TitledPane>
-        <TitledPane animated="false" prefHeight="456.0" prefWidth="889.0" text="Maksujen Hallinta">
-            <content>
-                <fx:include source="paymentview.fxml" />
-            </content>
+        <TitledPane
+                text="Käyttäjän Hallinta"
+                prefHeight="456.0" prefWidth="889.0">
+                <fx:include source="userview.fxml"/>
+        </TitledPane>
+        <TitledPane
+                text="Maksujen Hallinta"
+                prefHeight="456.0" prefWidth="889.0">
+                <fx:include source="paymentview.fxml"/>
         </TitledPane>
     </panes>
 </Accordion>

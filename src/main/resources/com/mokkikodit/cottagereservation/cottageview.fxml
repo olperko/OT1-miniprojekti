@@ -81,6 +81,7 @@
 
 
     <TextField
+            fx:id="searchField"
             promptText="Haku"
                 layoutX="10.0" layoutY="35.0"
     />
@@ -88,7 +89,7 @@
             text="Etsi"
                 layoutX="160.0" layoutY="35.0"
                 prefHeight="25.0" prefWidth="45.0"
-    />
+            onAction="#handleSearchCottages"/>
     <Button
             text="Uusi mökki"
             fx:id="newCottageButton"

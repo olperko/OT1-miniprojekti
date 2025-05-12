@@ -1,10 +1,10 @@
 package com.mokkikodit.cottagereservation.model;
 
 import com.mokkikodit.cottagereservation.util.DatabaseManagement;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CottageDAO {
 
@@ -121,6 +121,50 @@ public class CottageDAO {
         } catch (SQLException e) {}
 
     }
+
+    public List<Cottage> searchCottages(int cottageId, String cottageName, String location) {
+        List<Cottage> results = new ArrayList<>();
+        String sql;
+        boolean hasId = cottageId != -1;
+
+        try {
+            Connection conn = databaseManager.getConnection();
+            PreparedStatement stmt;
+
+            if (hasId) {
+                sql = "SELECT * FROM cottages WHERE cottageId = ?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setInt(1, cottageId);
+            } else {
+                sql = "SELECT * FROM cottages WHERE cottageName LIKE ? OR location LIKE ?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, "%" + cottageName + "%");
+                stmt.setString(2, "%" + location + "%");
+            }
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Cottage cottage = new Cottage(
+                        rs.getInt("cottageId"),
+                        rs.getBoolean("reserved"),
+                        rs.getInt("ownerId"),
+                        rs.getString("cottageName"),
+                        rs.getString("location"),
+                        rs.getDouble("price"),
+                        rs.getDouble("area"),
+                        rs.getInt("capacity"),
+                        rs.getString("description")
+                );
+                results.add(cottage);
+            }
+        } catch (SQLException e) {
+            System.err.println("Virhe mökkien hakemisessa: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return results;
+    }
+
 }
 
 

@@ -225,11 +225,11 @@ public class UserManager {
 
         StringBuilder resultText = new StringBuilder();
         for (User user : results) {
-            resultText.append("Käyttäjän ID: ").append(user.getUserId())
+            resultText.append("Käyttäjän-ID: ").append(user.getUserId())
                     .append(", Etunimi: ").append(user.getFirstName())
                     .append(", Sukunimi: ").append(user.getLastName())
                     .append(", Sähköposti: ").append(user.getEmail())
-                    .append(", Puhelin: ").append(user.getPhoneNumber())
+                    .append(", Puhelinnumero: ").append(user.getPhoneNumber())
                     .append(", Yritys: ").append(user.getIsBusiness() ? "Kyllä" : "Ei")
                     .append(", Lisätiedot: ").append(user.getAdditionalInfo())
                     .append("\n");

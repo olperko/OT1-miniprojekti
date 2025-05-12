@@ -209,7 +209,7 @@ public class PaymentManager {
             resultText.append("Maksun ID: ").append(payment.getPaymentId())
                     .append(", Varaus ID: ").append(payment.getReservationId())
                     .append(", Summa: ").append(payment.getAmount())
-                    .append(", Tyyppi: ").append(payment.getPaymentType())
+                    .append(", Maksun Tyyppi: ").append(payment.getPaymentType())
                     .append(", Tila: ").append(payment.getPaymentStatus())
                     .append(", Päivämäärä: ").append(payment.getPaymentDate())
                     .append("\n");

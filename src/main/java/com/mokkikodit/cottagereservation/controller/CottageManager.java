@@ -15,6 +15,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.*;
+import java.util.List;
 
 public class CottageManager {
 
@@ -208,6 +209,59 @@ public class CottageManager {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private TextField searchField;
+    @FXML
+    public void handleSearchCottages() {
+        String query = searchField.getText();
+
+        int cottageId = -1;
+        String name = "", location = "";
+
+        try {
+            cottageId = Integer.parseInt(query);
+        } catch (NumberFormatException e) {
+            name = query;
+            location = query;
+        }
+
+        List<Cottage> results = cottageDAO.searchCottages(cottageId, name, location);
+
+        StringBuilder resultText = new StringBuilder();
+        for (Cottage c : results) {
+            resultText.append("Mökki-ID: ").append(c.getCottageId())
+                    .append(", Nimi: ").append(c.getCottageName())
+                    .append(", Sijainti: ").append(c.getLocation())
+                    .append(", Hinta: ").append(c.getPrice())
+                    .append(", Pinta-Ala: ").append(c.getArea())
+                    .append(", Kapasiteetti: ").append(c.getCapacity())
+                    .append(", Omistaja-ID: ").append(c.getOwnerId())
+                    .append(", Varattu: ").append(c.getReserved() ? "Kyllä" : "Ei")
+                    .append("\nKuvaus: ").append(c.getDescription())
+                    .append("\n\n");
+        }
+
+        if (results.isEmpty()) {
+            resultText.append("Hakusanalla ").append(query).append(" ei löytynyt mökkejä.");
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mokkikodit/cottagereservation/cottage_results.fxml"));
+            Parent root = loader.load();
+
+            CottageResultsController controller = loader.getController();
+            controller.setResultsText(resultText.toString());
+
+            Stage stage = new Stage();
+            stage.setTitle("Mökkihaku");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
 

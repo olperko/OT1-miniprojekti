@@ -231,15 +231,15 @@ public class CottageManager {
 
         StringBuilder resultText = new StringBuilder();
         for (Cottage c : results) {
-            resultText.append("Mökki-ID: ").append(c.getCottageId())
-                    .append(", Nimi: ").append(c.getCottageName())
-                    .append(", Sijainti: ").append(c.getLocation())
-                    .append(", Hinta: ").append(c.getPrice())
-                    .append(", Pinta-Ala: ").append(c.getArea())
-                    .append(", Kapasiteetti: ").append(c.getCapacity())
-                    .append(", Omistaja-ID: ").append(c.getOwnerId())
-                    .append(", Varattu: ").append(c.getReserved() ? "Kyllä" : "Ei")
-                    .append("\nKuvaus: ").append(c.getDescription())
+            resultText.append("Mökki-ID: ").append(c.getCottageId()).append("\n")
+                    .append("Nimi: ").append(c.getCottageName()).append("\n")
+                    .append("Sijainti: ").append(c.getLocation()).append("\n")
+                    .append("Hinta: ").append(c.getPrice()).append("\n")
+                    .append("Pinta-Ala: ").append(c.getArea()).append("\n")
+                    .append("Kapasiteetti: ").append(c.getCapacity()).append("\n")
+                    .append("Omistaja-ID: ").append(c.getOwnerId()).append("\n")
+                    .append("Varattu: ").append(c.getReserved() ? "Kyllä" : "Ei").append("\n")
+                    .append("Kuvaus: ").append(c.getDescription()).append("\n")
                     .append("\n\n");
         }
 

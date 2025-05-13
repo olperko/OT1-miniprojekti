@@ -216,7 +216,6 @@ public class UserManager {
         String lastName = "";
         String email = "";
 
-        //Kesken
         try {
             userId = Integer.parseInt(query);
         } catch (NumberFormatException e) {
@@ -229,13 +228,13 @@ public class UserManager {
 
         StringBuilder resultText = new StringBuilder();
         for (User user : results) {
-            resultText.append("Käyttäjän-ID: ").append(user.getUserId())
-                    .append(", Etunimi: ").append(user.getFirstName())
-                    .append(", Sukunimi: ").append(user.getLastName())
-                    .append(", Sähköposti: ").append(user.getEmail())
-                    .append(", Puhelinnumero: ").append(user.getPhoneNumber())
-                    .append(", Yritys: ").append(user.getIsBusiness() ? "Kyllä" : "Ei")
-                    .append(", Lisätiedot: ").append(user.getAdditionalInfo())
+            resultText.append("Käyttäjän-ID: ").append(user.getUserId()).append("\n")
+                    .append("Etunimi: ").append(user.getFirstName()).append("\n")
+                    .append("Sukunimi: ").append(user.getLastName()).append("\n")
+                    .append("Sähköposti: ").append(user.getEmail()).append("\n")
+                    .append("Puhelinnumero: ").append(user.getPhoneNumber()).append("\n")
+                    .append("Yritys: ").append(user.getIsBusiness() ? "Kyllä" : "Ei").append("\n")
+                    .append("Lisätiedot: ").append(user.getAdditionalInfo()).append("\n")
                     .append("\n");
         }
 

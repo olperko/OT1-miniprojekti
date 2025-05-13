@@ -215,12 +215,12 @@ public class PaymentManager {
 
         StringBuilder resultText = new StringBuilder();
         for (Payment payment : results) {
-            resultText.append("Maksun ID: ").append(payment.getPaymentId())
-                    .append(", Varaus ID: ").append(payment.getReservationId())
-                    .append(", Summa: ").append(payment.getAmount())
-                    .append(", Maksun Tyyppi: ").append(payment.getPaymentType())
-                    .append(", Tila: ").append(payment.getPaymentStatus())
-                    .append(", Päivämäärä: ").append(payment.getPaymentDate())
+            resultText.append("Maksun ID: ").append(payment.getPaymentId()).append("\n")
+                    .append("Varaus ID: ").append(payment.getReservationId()).append("\n")
+                    .append("Summa: ").append(payment.getAmount()).append("\n")
+                    .append("Maksun Tyyppi: ").append(payment.getPaymentType()).append("\n")
+                    .append("Tila: ").append(payment.getPaymentStatus()).append("\n")
+                    .append("Päivämäärä: ").append(payment.getPaymentDate()).append("\n")
                     .append("\n");
         }
 

@@ -289,7 +289,7 @@ public class ReservationManager {
         boolean paymentStatus = rs.getBoolean("paymentStatus");
 
         return String.format(
-                "Varaus ID: %d, Käyttäjä ID: %d, Mökki ID: %d, Yöpyjien määrä: %d\nAlkupäivä: %s, Loppupäivä: %s\nTila: %s, Maksu: %s\nLisätiedot: %s\n\n",
+                "Varaus ID: %d \nKäyttäjä ID: %d \nMökki ID: %d \nYöpyjien määrä: %d\nAlkupäivä: %s \nLoppupäivä: %s\nTila: %s \nMaksu: %s\nLisätiedot: %s\n\n",
                 id, userId, cottageId, guestAmount, startDate, endDate,
                 reservationStatus, paymentStatus ? "Maksettu" : "Ei maksettu", additionalInfo
         );

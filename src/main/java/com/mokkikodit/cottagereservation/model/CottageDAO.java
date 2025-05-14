@@ -30,6 +30,7 @@ public class CottageDAO {
                 area REAL,
                 capacity INTEGER,
                 description VARCHAR
+                FOREIGN KEY (ownerId) REFERENCES users(userId)
             );
             """;
 

@@ -1,6 +1,14 @@
 package com.mokkikodit.cottagereservation.model;
 
-public class User {
+import com.mokkikodit.cottagereservation.util.DatabaseManager;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class UserDAO {
+
+    private static final String DB_URL = "jdbc:sqlite:database.db";
 
     private int userId;
     private String email;

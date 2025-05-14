@@ -25,7 +25,10 @@ public class ReservationDAO {
                 "endDate TEXT, " +
                 "additionalInfo TEXT," +
                 "reservationStatus TEXT," +
-                "paymentStatus BOOLEAN)";
+                "paymentStatus BOOLEAN," +
+                "FOREIGN KEY (userId) REFERENCES users(userId)," +
+                "FOREIGN KEY (cottageId) REFERENCES cottages(cottageId)" +
+                ")";
 
         try (Statement stmt = dbManager.getConnection().createStatement()) {
             stmt.execute(sql);

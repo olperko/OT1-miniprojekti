@@ -16,13 +16,16 @@ public class ReviewDAO {
      * Luo komentotekstin, joka luo varaukset-taulukon SQL-tietokantaan.
      */
     public void createReviewTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS reservations(" +
-                     "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                     "userID INTEGER, " +
-                     "cottageID INTEGER, " +
+        String sql = "CREATE TABLE IF NOT EXISTS reviews(" +
+                     "reviewId INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                     "userId INTEGER, " +
+                     "cottageId INTEGER, " +
                      "score REAL, " +
                      "comment TEXT, " +
-                     "date TEXT)";
+                     "date TEXT)," +
+                     "FOREIGN KEY (userID) REFERENCES users(userId)," +
+                     "FOREIGN KEY (cottageID) REFERENCES cottages(cottageId))"
+        ;
     }
 
     /**

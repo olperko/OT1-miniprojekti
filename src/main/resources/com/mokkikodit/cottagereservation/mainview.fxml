@@ -33,5 +33,10 @@
                 prefHeight="456.0" prefWidth="889.0">
                 <fx:include source="paymentview.fxml"/>
         </TitledPane>
+        <TitledPane
+                text="Arviointien Hallinta"
+                prefHeight="456.0" prefWidth="889.0">
+                <fx:include source="reviewview.fxml"/>
+        </TitledPane>
     </panes>
 </Accordion>

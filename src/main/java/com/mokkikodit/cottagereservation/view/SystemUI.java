@@ -1,9 +1,6 @@
 package com.mokkikodit.cottagereservation.view;
 
-import com.mokkikodit.cottagereservation.controller.CottageManager;
-import com.mokkikodit.cottagereservation.controller.PaymentManager;
-import com.mokkikodit.cottagereservation.controller.ReservationManager;
-import com.mokkikodit.cottagereservation.controller.UserManager;
+import com.mokkikodit.cottagereservation.controller.*;
 import com.mokkikodit.cottagereservation.model.*;
 import com.mokkikodit.cottagereservation.util.DatabaseManagement;
 import javafx.fxml.FXMLLoader;
@@ -63,6 +60,13 @@ public class SystemUI {
         paymentManager.setPaymentDAO(paymentDAO);
         paymentManager.loadPaymentsFromDatabase();
 
+        FXMLLoader reviewLoader = new FXMLLoader(getClass().getResource("/com/mokkikodit/cottagereservation/reviewview.fxml"));
+        Parent reviewRoot = reviewLoader.load();
+        ReviewManager reviewManager = reviewLoader.getController();
+        reviewManager.setDatabaseManagement(databaseManagement);
+        reviewManager.setReviewDAO(reviewDAO);
+        reviewManager.loadReviewsFromDatabase();
+
         Tab infoTab = new Tab("Info", infoRoot);
         infoTab.setClosable(false);
 
@@ -78,6 +82,9 @@ public class SystemUI {
         Tab paymentTab = new Tab("Maksut", paymentRoot);
         paymentTab.setClosable(false);
 
-        return new TabPane(infoTab, cottageTab, reservationTab, userTab, paymentTab);
+        Tab reviewTab = new Tab("Arvioinnit", reviewRoot);
+        reviewTab.setClosable(false);
+
+        return new TabPane(infoTab, cottageTab, reservationTab, userTab, paymentTab, reviewTab);
     }
 }

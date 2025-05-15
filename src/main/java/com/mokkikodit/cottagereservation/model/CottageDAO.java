@@ -8,7 +8,7 @@ import java.util.List;
 
 public class CottageDAO {
 
-    private DatabaseManagement databaseManager;
+    private final DatabaseManagement databaseManager;
 
     public CottageDAO(DatabaseManagement databaseManager) {
         this.databaseManager = databaseManager;
@@ -29,7 +29,7 @@ public class CottageDAO {
                 price REAL,
                 area REAL,
                 capacity INTEGER,
-                description VARCHAR
+                description VARCHAR,
                 FOREIGN KEY (ownerId) REFERENCES users(userId)
             );
             """;
@@ -39,22 +39,9 @@ public class CottageDAO {
             System.out.println("Mökki-taulukko luotu onnituneesti tietokantaan.");
         } catch (SQLException e) {
             System.out.println("Mökki-taulukon luonti epäonnistui: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
-    /**
-     * Asettaa yksittäisen mökin tiedot SQL-komennolla
-     *
-     * @param ownerId
-     * @param reserved
-     * @param cottageName
-     * @param location
-     * @param price
-     * @param area
-     * @param capacity
-     * @param description
-     */
     public void insertCottage(int ownerId, boolean reserved, String cottageName, String location, double price, double area, int capacity, String description) {
         String sql = "INSERT INTO cottages (ownerId, reserved, cottageName, location, price, area, capacity, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = databaseManager.getConnection().prepareStatement(sql)) {
@@ -70,15 +57,14 @@ public class CottageDAO {
             System.out.println("Mökki lisätty onnistuneesti tietokantaan.");
         } catch (SQLException e) {
             System.out.println("Virhe mökin lisäämisessä: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
-    public boolean deleteCottage(int cottageId) {
+    public void deleteCottage(int cottageId) {
         Connection conn = databaseManager.getConnection();
         if (conn == null) {
             System.err.println("Mökkiä ei voitu poistaa, ei yhteyttä tietokantaan.");
-            return false;
+            return;
         }
 
         String sql = "DELETE FROM cottages WHERE cottageId = ?";
@@ -86,12 +72,9 @@ public class CottageDAO {
             pstmt.setInt(1, cottageId);
             pstmt.executeUpdate();
             System.out.println("Mökki poistettu tietokannasta.");
-            return true;
         }
         catch (SQLException e)    {
             System.out.println("Ongelma mökin poistamisessa tietokannasta." + e.getMessage());
-            e.printStackTrace();
-            return false;
         }
     }
 
@@ -115,13 +98,6 @@ public class CottageDAO {
         }
     }
 
-    public void getAllCottages() {
-        String sql = "SELECT * FROM cottages";
-
-        try (Statement stmt = databaseManager.getConnection().prepareStatement(sql)) {
-        } catch (SQLException e) {}
-
-    }
 
     public List<Cottage> searchCottages(int cottageId, String cottageName, String location) {
         List<Cottage> results = new ArrayList<>();
@@ -160,7 +136,6 @@ public class CottageDAO {
             }
         } catch (SQLException e) {
             System.err.println("Virhe mökkien hakemisessa: " + e.getMessage());
-            e.printStackTrace();
         }
 
         return results;

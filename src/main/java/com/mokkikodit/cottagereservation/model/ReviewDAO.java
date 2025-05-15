@@ -2,49 +2,52 @@ package com.mokkikodit.cottagereservation.model;
 
 import com.mokkikodit.cottagereservation.util.DatabaseManagement;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReviewDAO {
 
-    private DatabaseManagement dbManager;
-    public ReviewDAO(DatabaseManagement dbManager) { this.dbManager = dbManager; }
+    private final DatabaseManagement databaseManager;
+    public ReviewDAO(DatabaseManagement databaseManager) { this.databaseManager = databaseManager; }
 
     /**
      * Luo komentotekstin, joka luo varaukset-taulukon SQL-tietokantaan.
      */
     public void createReviewTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS reviews(" +
-                     "reviewId INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                     "userId INTEGER, " +
-                     "cottageId INTEGER, " +
-                     "score REAL, " +
-                     "comment TEXT, " +
-                     "date TEXT)," +
-                     "FOREIGN KEY (userID) REFERENCES users(userId)," +
-                     "FOREIGN KEY (cottageID) REFERENCES cottages(cottageId))"
-        ;
+        String sql = "CREATE TABLE IF NOT EXISTS reviews (" +
+                "reviewId INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "reservationId INTEGER, " +
+                "score REAL, " +
+                "comment TEXT, " +
+                "date TEXT, " +
+                "FOREIGN KEY (reservationId) REFERENCES reservations(reservationId)" +
+                ");";
+        try (Connection conn = databaseManager.getConnection();
+             Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+            System.out.println("Reviews-taulukko luotu onnistuneesti tietokantaan.");
+        } catch (SQLException e) {
+            System.out.println("Reviews-taulukon luonti epäonnistui: " + e.getMessage());
+        }
     }
+
 
     /**
      * Metodi lisää uuden arvioinnin SQL-tietokantaan.
-     * @param userID arvin tekijän käyttäjä ID
-     * @param cottageID arvioidun mökin ID
+     * @param reservationId arvin tekijän käyttäjä ID
      * @param score käyttäjän antamat pisteet
      * @param comment käyttäjän antama kommentti
      * @param date arvioinnin päivämäärä
      */
-    public void insertReview(int userID, int cottageID, int score, String comment, String date) {
-        String sql = "INSERT INTO reservations (userID, cottageID, score, comment, date) VALUES (?, ?, ?, ?, ?)";
+    public void insertReview(int reservationId, double score, String comment, String date) {
+        String sql = "INSERT INTO reviews (reservationId, score, comment, date) VALUES (?, ?, ?, ?)";
 
-        try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(sql)) {
-            pstmt.setInt(1, userID);
-            pstmt.setInt(2, cottageID);
-            pstmt.setDouble(3, score);
-            pstmt.setString(4, comment);
-            pstmt.setString(5, date);
+        try (PreparedStatement pstmt = databaseManager.getConnection().prepareStatement(sql)) {
+            pstmt.setInt(1, reservationId);
+            pstmt.setDouble(2, score);
+            pstmt.setString(3, comment);
+            pstmt.setString(4, date);
             pstmt.executeUpdate();
             System.out.println("Tietokannan arvioinnit-taulukko päivitetty.");
         }
@@ -58,9 +61,9 @@ public class ReviewDAO {
      * @param id arvioinnin ID
      */
     public void deleteReview(int id) {
-        String sql = "DELETE FROM reviews WHERE id = ?";
+        String sql = "DELETE FROM reviews WHERE reviewId = ?";
 
-        try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(sql)) {
+        try (PreparedStatement pstmt = databaseManager.getConnection().prepareStatement(sql)) {
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
             System.out.println("Arviointi poistettu tietokannasta.");
@@ -73,20 +76,20 @@ public class ReviewDAO {
     /**
      * Metodi päivittää arvioinnin SQL-tietokannassa.
      * @param id arvioinnin ID
+     * @param reservationId varauksen ID
      * @param score käyttäjän antamat pisteet
      * @param comment käyttäjän antama kommentti
-     * @param postDate arvioinnin päivämäärä
+     * @param date arvioinnin päivämäärä
      */
-    public void updateReview(int id, double score, String comment, String postDate) {
-        String sql = "UPDATE reviews SET " +
-                        "score = ?, SET comment = ?, SET postDate = ? " +
-                     "WHERE id = ?";
+    public void updateReview(int id, int reservationId, double score, String comment, String date) {
+        String sql = "UPDATE reviews SET reservationId = ?, score = ?, comment = ?, date = ? WHERE reviewId = ?";
 
-        try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(sql)) {
-            pstmt.setDouble(1, score);
-            pstmt.setString(2, comment);
-            pstmt.setString(3, postDate);
-            pstmt.setInt(4, id);
+        try (PreparedStatement pstmt = databaseManager.getConnection().prepareStatement(sql)) {
+            pstmt.setInt(1, reservationId);
+            pstmt.setDouble(2, score);
+            pstmt.setString(3, comment);
+            pstmt.setString(4, date);
+            pstmt.setInt(5, id);
             pstmt.executeUpdate();
             System.out.println("Arvioinnin tiedot päivitetty onnistuneesti.");
         } catch (SQLException e) {
@@ -94,32 +97,67 @@ public class ReviewDAO {
         }
     }
 
-    // KESKEN
-    //
-    //
+
     public String getAllReviews() {
         String sql = "SELECT * FROM reviews";
-        String result ="";
+        StringBuilder result = new StringBuilder();
 
-        try (PreparedStatement stmt = dbManager.getConnection().prepareStatement(sql);
+        try (PreparedStatement stmt = databaseManager.getConnection().prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                int id = rs.getInt("id");
-                int userId = rs.getInt("userID");
-                int cottageId = rs.getInt("cottageID");
+                int id = rs.getInt("reviewId");
+                int reservationId = rs.getInt("reservationId");
                 double score = rs.getDouble("score");
                 String comment = rs.getString("comment");
                 String date = rs.getString("date");
 
-                result += "Arvion id: " + id + ". Arvioijan id: " + userId + ". Mökin id: "
-                        + cottageId + ". Pisteet: " + score + ". Kommentti " + comment + ". Päivämäärä: " + date + ".\n";
+                result.append("Arvion id: ").append(id).append(". Varaus id: ").append(reservationId).append(". Pisteet: ").append(score).append(". Kommentti ").append(comment).append(". Päivämäärä: ").append(date).append(".\n");
             }
 
         } catch (SQLException e) {
             System.out.println("Virhe arvostelujen hakemisessa: " + e.getMessage());
         }
-        return result;
+        return result.toString();
+    }
+
+    public List<Review> searchReviews(int reviewId, String reservationId, String score) {
+        List<Review> results = new ArrayList<>();
+        String sql;
+        boolean hasId = reviewId != -1;
+
+        try {
+            Connection conn = databaseManager.getConnection();
+            PreparedStatement stmt;
+
+            if (hasId) {
+                sql = "SELECT * FROM reviews WHERE reviewId = ?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setInt(1, reviewId);
+            } else {
+                sql = "SELECT * FROM reviews WHERE reservationId LIKE ? OR score LIKE ?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, "%" + reservationId + "%");
+                stmt.setString(2, "%" + score + "%");
+            }
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Review review = new Review(
+                        rs.getInt("reviewId"),
+                        rs.getInt("reservationId"),
+                        rs.getDouble("score"),
+                        rs.getString("comment"),
+                        rs.getString("date")
+                );
+                results.add(review);
+            }
+        } catch (SQLException e) {
+            System.err.println("Virhe arviointien hakemisessa: " + e.getMessage());
+
+        }
+
+        return results;
     }
 
 }

@@ -2,48 +2,35 @@ package com.mokkikodit.cottagereservation.model;
 
 public class Review {
 
-    private int reviewID;
-    private int userID;
-    private int cottageId;
+    private int reviewId;
+    private int reservationId;
     private double score;
     private String comment;
     private String date;
 
-    public Review(int userID) {
-        this.userID = userID;
-    }
 
-    public Review(int reviewID, int userID, int cottageId, double score, String comment, String date) {
-        this.reviewID = reviewID;
-        this.userID = userID;
-        this.cottageId = cottageId;
+    public Review(int reviewId, int reservationId, double score, String comment, String date) {
+        this.reviewId = reviewId;
+        this.reservationId = reservationId;
         this.score = score;
         this.comment = comment;
         this.date = date;
     }
 
-    public int getReviewID() {
-        return reviewID;
+    public int getReviewId() {
+        return reviewId;
     }
 
-    public void setReviewID(int reviewID) {
-        this.reviewID = reviewID;
+    public void setReviewId(int reviewID) {
+        this.reviewId = reviewID;
     }
 
-    public int getUserID() {
-        return userID;
+    public int getReservationId() {
+        return reservationId;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
-
-    public int getCottageId() {
-        return cottageId;
-    }
-
-    public void setCottageId(int cottageId) {
-        this.cottageId = cottageId;
+    public void setReservationId(int reservationId) {
+        this.reservationId = reservationId;
     }
 
     public double getScore() {

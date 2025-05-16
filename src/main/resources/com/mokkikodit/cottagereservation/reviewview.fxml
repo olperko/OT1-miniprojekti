@@ -31,16 +31,17 @@
             <TableColumn
                     fx:id="scoreColumn"
                     text="Pisteet"
-                    prefWidth="130"/>
+                    prefWidth="80"
+                    style="-fx-alignment: CENTER;"/>
             <TableColumn
                     fx:id="commentColumn"
                     text="Kommentti"
-                    prefWidth="110"
+                    prefWidth="622"
             />
             <TableColumn
                     fx:id="dateColumn"
                     text="Päivämäärä"
-                    prefWidth="60"
+                    prefWidth="80"
                     style="-fx-alignment: CENTER;"/>
         </columns>
     </TableView>

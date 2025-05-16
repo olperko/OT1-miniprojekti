@@ -10,10 +10,15 @@
     <VBox spacing="10" alignment="CENTER" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10"
           AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10">
         <Label text="Maksun tiedot" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+        <Label text="Varauksen ID"/>
         <TextField fx:id="paymentReservationId" promptText="Varauksen ID"/>
+        <Label text="Maksun € määrä"/>
         <TextField fx:id="amountField" promptText="Maksun määrä"/>
+        <Label text="Maksutyyppi"/>
         <TextField fx:id="paymentTypeComboBox" promptText="Maksutyyppi"/>
+        <Label text="Maksun tila"/>
         <TextField fx:id="paymentStatusComboBox" promptText="Maksun tila"/>
+        <Label text="Maksupäivä"/>
         <DatePicker fx:id="paymentDatePicker" promptText="Maksupäivä"/>
         <Button fx:id="savePaymentButton" text="Tallenna" defaultButton="true"/>
         <Button fx:id="cancelPaymentButton" text="Peruuta" cancelButton="true"/>

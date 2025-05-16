@@ -81,8 +81,8 @@
             layoutX="10.0" layoutY="35.0"
     />
     <Button text="Etsi"
-            layoutX="165.0" layoutY="35.0"
-            prefHeight="20.0" prefWidth="61.0"
+            layoutX="160.0" layoutY="35.0"
+            prefHeight="20.0" prefWidth="45.0"
             onAction="#handleSearchReservations"/>
 
     <Button

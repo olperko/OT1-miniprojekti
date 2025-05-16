@@ -10,14 +10,21 @@
     <VBox spacing="10" alignment="CENTER" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10"
           AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10">
         <Label text="Mökin tiedot" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+        <Label text="Mökin nimi"/>
         <TextField fx:id="cottageNameField" promptText="Mökin nimi"/>
-        <TextField fx:id="locationField" promptText="Sijainti"/>
+        <Label text="Mökin osoite"/>
+        <TextField fx:id="locationField" promptText="Osoite"/>
+        <Label text="Mökin omistajan ID"/>
         <TextField fx:id="ownerIdField" promptText="Omistaja"/>
+        <Label text="Hinta per päivä"/>
         <TextField fx:id="priceField" promptText="Hinta per päivä"/>
+        <Label text="Pinta-ala"/>
         <TextField fx:id="areaField" promptText="Pinta-ala"/>
+        <Label text="Majoituskapasiteetti"/>
         <TextField fx:id="capacityField" promptText="Majoituskapasiteetti"/>
+        <Label text="Kuvaus"/>
         <TextArea fx:id="descriptionArea" promptText="Kuvaus" prefRowCount="2"/>
-        <CheckBox fx:id="reservedCheckBox" text="Varattu"/>
+        <CheckBox fx:id="reservedCheckBox" text="Mökki on varattu"/>
         <HBox spacing="10" alignment="CENTER">
             <Button fx:id="saveButtonCottage" text="Tallenna" defaultButton="true"/>
             <Button fx:id="cancelButtonCottage" text="Peruuta" cancelButton="true"/>

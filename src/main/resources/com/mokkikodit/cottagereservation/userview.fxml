@@ -49,7 +49,7 @@
             <TableColumn
                     fx:id="additionalInfoUserColumn"
                     text="Lisätiedot"
-                    prefWidth="200"/>
+                    prefWidth="250"/>
         </columns>
     </TableView>
 
